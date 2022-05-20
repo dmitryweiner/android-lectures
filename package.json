@@ -1,0 +1,25 @@
+{
+  "name": "lectures",
+  "version": "1.0.0",
+  "description": "Frontend Lectures in CI NSU",
+  "main": "index.js",
+  "directories": {
+    "doc": "docs"
+  },
+  "scripts": {
+    "build": "reveal-md src --static docs --theme serif",
+    "serve": "npx http-server docs",
+    "start": "reveal-md src -w --theme serif"
+  },
+  "dependencies": {
+    "reveal-md": "^5.1.3"
+  },
+  "keywords": [
+    "javascript",
+    "frontend",
+    "react",
+    "redux"
+  ],
+  "author": "Dmitry Weiner",
+  "license": "ISC"
+}
