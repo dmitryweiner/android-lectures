@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+
+    <title>Лекции по фронтенду</title>
+    <link rel="shortcut icon" href="./favicon.ico" />
+    <link rel="stylesheet" href="./dist/reset.css" />
+    <link rel="stylesheet" href="./dist/reveal.css" />
+    <link rel="stylesheet" href="./dist/theme/serif.css" id="theme" />
+    <link rel="stylesheet" href="./css/highlight/base16/zenburn.css" />
+
+
+  </head>
+  <body>
+    <div class="reveal">
+      <div class="slides"><section  data-markdown><script type="text/template">![Kotlin logo](assets/kotlin/logo.png)
+
+## Основы
+
+[все лекции](https://github.com/dmitryweiner/android-lectures/blob/main/README.md)</script></section><section  data-markdown><script type="text/template">
+### История создания
+* Дата создания: июль 2011.
+* Автор: [Андрей Бреслав](https://twitter.com/abreslav).
+* Котлин &mdash; остров в Финском заливе.
+* [Документация](https://kotlinlang.org/docs/home.html).
+
+![Андрей Бреслав](assets/kotlin/breslav.png)</script></section><section  data-markdown><script type="text/template">
+### Основные особенности
+* Статически типизирован.
+* Умеет выводить типы (как TypeScript).
+* Компилируется в байт-код.
+* Исполняется на JVM.
+* Полностью функционально совместим с Java (лёгкая миграция).
+* Есть ООП.</script></section><section  data-markdown><script type="text/template">
+### Почему Kotlin, а не Java
+* Лаконичность.
+* Легче работать с типами.
+* Легче создавать классы.
+
+![kotlin-vs-java-meme](assets/kotlin/kotlin-vs-java-meme.png)</script></section><section  data-markdown><script type="text/template">
+![kotlin-vs-java](assets/kotlin/kotlin-vs-java.png)</script></section><section  data-markdown><script type="text/template">
+![kotlin-vs-java](assets/kotlin/kotlin-vs-java-2.png)</script></section><section  data-markdown><script type="text/template">
+![kotlin-vs-java](assets/kotlin/kotlin-vs-java-3.png)</script></section><section  data-markdown><script type="text/template">
+### Объявление переменных
+* val для неизменных переменных:
+```kotlin
+val a = 1
+```
+* var для изменяемых переменных:
+```kotlin
+var i: Int
+i = 1
+i++
+```
+* **Всегда** лучше предпочитать val для [иммутабельности данных](https://ru.wikipedia.org/wiki/%D0%9D%D0%B5%D0%B8%D0%B7%D0%BC%D0%B5%D0%BD%D1%8F%D0%B5%D0%BC%D1%8B%D0%B9_%D0%BE%D0%B1%D1%8A%D0%B5%D0%BA%D1%82).
+</script></section><section  data-markdown><script type="text/template">
+### Типы данных
+* Целые: Byte (8), Short (16), Int (32), Long (64).
+* Дробные: Float (32), Double (64).
+* Boolean.
+* Char, String.
+* Array.
+* Object.
+* [Подробнее](https://kotlinlang.org/docs/basic-types.html).</script></section><section  data-markdown><script type="text/template">
+### Автоматический вывод типа
+* Если переменной при объявлении присваивается значение, тип указывать **не надо**:
+```kotlin
+val a = 1 // Int
+val s = "123" // String
+```</script></section><section  data-markdown><script type="text/template">
+### Строки и шаблоны
+* Char:
+```kotlin
+val ch = '1' // Char
+```
+* Многострочная строка:
+```kotlin
+val text = """
+    for (c in "foo")
+    print(c)
+"""
+```
+* Использование шаблонов:
+```kotlin
+val i = 10
+println("i = $i") // prints "i = 10"
+```</script></section><section  data-markdown><script type="text/template">
+### Явная конвертация типов
+```kotlin
+val b: Byte = 1 // OK, literals are checked statically
+// val i: Int = b // ERROR
+val i1: Int = b.toInt()
+```
+* toByte(): Byte
+* toShort(): Short
+* toInt(): Int
+* toLong(): Long
+* toFloat(): Float
+* toDouble(): Double
+* toChar(): Char</script></section><section  data-markdown><script type="text/template">
+### Проверка и приведение типа
+* Проверка типа:
+```kotlin
+if (x is String) {
+    print(x.length)
+}
+```
+* Приведение типа:
+```kotlin
+val x: String = y as String
+```
+* [Подробнее](https://kotlinlang.org/docs/typecasts.html).</script></section><section  data-markdown><script type="text/template">
+### Null safety
+https://kotlinlang.org/docs/null-safety.html
+</script></section><section  data-markdown><script type="text/template">
+### Операторы
+</script></section><section  data-markdown><script type="text/template">
+### Ветвление
+</script></section><section  data-markdown><script type="text/template">
+### Функции
+</script></section><section  data-markdown><script type="text/template">
+### Именованные аргументы
+</script></section><section  data-markdown><script type="text/template">
+### Лямбды
+</script></section><section  data-markdown><script type="text/template">
+### Полезные ссылки
+* [Документация](https://kotlinlang.org/docs/home.html).
+* [Игровая площадка](https://play.kotlinlang.org/).
+* [Задачи с решениями](https://play.kotlinlang.org/koans/Introduction/Hello,%20world!/Task.kt).
+* [Учебник по Kotlin (англ.)](https://www.youtube.com/watch?v=F9UC9DY-vIU).
+* [Учебник по Kotlin (рус.)](https://www.youtube.com/watch?v=30tchn0TjaM).
+
+
+</script></section></div>
+    </div>
+
+    <script src="./dist/reveal.js"></script>
+
+    <script src="./plugin/markdown/markdown.js"></script>
+    <script src="./plugin/highlight/highlight.js"></script>
+    <script src="./plugin/zoom/zoom.js"></script>
+    <script src="./plugin/notes/notes.js"></script>
+    <script src="./plugin/math/math.js"></script>
+    <script>
+      function extend() {
+        var target = {};
+        for (var i = 0; i < arguments.length; i++) {
+          var source = arguments[i];
+          for (var key in source) {
+            if (source.hasOwnProperty(key)) {
+              target[key] = source[key];
+            }
+          }
+        }
+        return target;
+      }
+
+      // default options to init reveal.js
+      var defaultOptions = {
+        controls: true,
+        progress: true,
+        history: true,
+        center: true,
+        transition: 'default', // none/fade/slide/convex/concave/zoom
+        plugins: [
+          RevealMarkdown,
+          RevealHighlight,
+          RevealZoom,
+          RevealNotes,
+          RevealMath
+        ]
+      };
+
+      // options from URL query string
+      var queryOptions = Reveal().getQueryHash() || {};
+
+      var options = extend(defaultOptions, {}, queryOptions);
+    </script>
+
+
+    <script>
+      Reveal.initialize(options);
+    </script>
+  </body>
+</html>
