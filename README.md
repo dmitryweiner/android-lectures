@@ -1,37 +1,26 @@
 # Лекции по разработке на Android
 * Язык Kotlin:
   * [Основы языка](https://dmitryweiner.github.io/android-lectures/Kotlin-basics.html).
-  * ООП, работа с объектами.
-    * Классы: создание, наследование.
-    * Модификаторы видимости.
-    * Специальные классы: data, sealed, inline и другие.
-    * Интерфейсы.
-    * Делегаты: lazy, lateinit.
-  * Коллекции.
-  * Stream API.
-* Android Studio.
-  * Основы работы.
-  * Компиляция в APK, нужные галочки.
-* Анатомия приложения.
-  * Конфиги: Manifest.xml, gradle.
-  * Код.
-  * Тесты.
-  * Строки.
-  * Картинки, видео.
-* Activity, Fragment. 
-* Жизненный цикл Activity.
-* Intent'ы.
-  * Для чего нужны?
-  * Переходы между Activity c помощью Activity.
-  * Открытие системных элементов: выбор файла (пример).
-* Разметка: 
+  * [Объекты, классы, наследование](https://dmitryweiner.github.io/android-lectures/Kotlin-objects.html).
+  * [Коллекции, stream API](https://dmitryweiner.github.io/android-lectures/Kotlin-collections.html).
+* [Android Studio. Основы работы. Компиляция в APK](https://dmitryweiner.github.io/android-lectures/Android-studio.html).
+* [Анатомия приложения](https://dmitryweiner.github.io/android-lectures/Application-structure.html).
+* Разметка:
   * Constraint Layout.
   * Linear Layout.
   * Другие лейауты.
-* Работа с View на Activity.
+* Работа с компонентами.
+  * Виды компонентов.
   * Поиск.
+  * Binding.
   * Чтение введённых данных.
   * Реакция на события.
+  * Тосты.
+  * Диалоги.
+* Activity.
+  * Жизненный цикл Activity.
+  * Навигация между Activity c помощью Intent.
+  * Открытие системных элементов: выбор файла (пример).
 * Запрос разрешений.
   * Разрешения в Manifest.xml.
   * Запрос разрешений в коде.
@@ -58,6 +47,7 @@
   * https://developer.android.com/guide
   * https://metanit.com/java/android/
   * https://learntodroid.com/
+  * https://github.com/skydoves/android-developer-roadmap
   * [Очень хороший канал на Youtube](https://www.youtube.com/channel/UCofyDdGnCssPNwABNkxLFKg)
   * [Биржа заказов](https://workspace.ru/tasks/mobile-programming/)
   * [20 Open Source проектов](https://apptractor.ru/info/articles/20-open-source-proektov-dlya-android-kotoryie-mogut-nauchit-vas-novomu.html)
