@@ -146,6 +146,9 @@ https://kotlinlang.org/docs/null-safety.html
 
 ---
 
+### Задачи
+---
+
 ### Полезные ссылки
 * [Документация](https://kotlinlang.org/docs/home.html).
 * [Игровая площадка](https://play.kotlinlang.org/).
