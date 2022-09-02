@@ -23,7 +23,7 @@
 ### История создания
 * Дата создания: июль 2011.
 * Автор: [Андрей Бреслав](https://twitter.com/abreslav).
-* Котлин &mdash; остров в Финском заливе.
+* [Котлин](https://ru.wikipedia.org/wiki/%D0%9A%D0%BE%D1%82%D0%BB%D0%B8%D0%BD) &mdash; остров в Финском заливе.
 * [Документация](https://kotlinlang.org/docs/home.html).
 
 ![Андрей Бреслав](assets/kotlin/breslav.png)</script></section><section  data-markdown><script type="text/template">
@@ -107,25 +107,177 @@ if (x is String) {
     print(x.length)
 }
 ```
-* Приведение типа:
+* Приведение типа оператором `as`:
 ```kotlin
 val x: String = y as String
 ```
 * [Подробнее](https://kotlinlang.org/docs/typecasts.html).</script></section><section  data-markdown><script type="text/template">
 ### Null safety
-https://kotlinlang.org/docs/null-safety.html
-</script></section><section  data-markdown><script type="text/template">
+* Если у переменной явно указан тип, она точно не `null`. Это называется [null safety](https://kotlinlang.org/docs/null-safety.html).
+```kotlin
+var a: String = "abc" // Regular initialization means non-null by default
+a = null // compilation error
+```
+* Если она может содержать `null`, это указывается при объявлении типа знаком `?`:
+```kotlin
+var b: String? = "abc" // can be set to null
+b = null // ok
+```</script></section><section  data-markdown><script type="text/template">
+### Проверка на `null`
+* Явная:
+
+```kotlin
+val b: String? = "Kotlin"
+if (b != null && b.length > 0) {
+    print("String of length ${b.length}")
+} else {
+    print("Empty string")
+}
+```
+
+* Через оператор `?.`:
+
+```kotlin
+val b: String? = null
+println(b?.length)
+```</script></section><section  data-markdown><script type="text/template">
 ### Операторы
-</script></section><section  data-markdown><script type="text/template">
+* `+, -, *, /, %` - математические операторы.
+* `=` - присваивание.
+* `+=, -=, *=, /=, %=` - присваивание вместе с операцией.
+* `++, --` - инкремент, декремент.
+* `&&, ||, !` - логические операторы.
+* `==, !=` - проверка равенства по значению.
+* `===, !==` - равенство по ссылке.
+* `<, >, <=, >=` - сравнение.
+* `[, ]` - доступ по индексу.</script></section><section  data-markdown><script type="text/template">
+### Операторы
+* `!!` - точно не null, иначе NPE.
+* `?.` - безопасный вызов или обращение к свойству, если не null.
+* `?:` - [Элвис-оператор](https://en.wikipedia.org/wiki/Elvis_operator) 🕺.
+* `::` - ссылка на класс или элемент класса.
+* `..` - диапазон.
+* [Полный список операторов](https://kotlinlang.org/docs/keyword-reference.html#operators-and-special-symbols).</script></section><section  data-markdown><script type="text/template">
 ### Ветвление
-</script></section><section  data-markdown><script type="text/template">
+* `if/else`:
+```kotlin
+if (a > b) {
+    max = a
+} else {
+    max = b
+}
+```
+* Switch:
+```kotlin
+when (x) {
+    1 -> print("x == 1")
+    2 -> print("x == 2")
+    else -> {
+        print("x is neither 1 nor 2")
+    }
+}
+```</script></section><section  data-markdown><script type="text/template">
+### Циклы
+* for:
+```kotlin
+for (i in 1..3) {
+    println(i)
+}
+for (i in 6 downTo 0 step 2) {
+    println(i)
+}
+for (item in collection) print(item)
+```
+* while:
+```kotlin
+while (x > 0) {
+    x--
+}
+do {
+    val y = retrieveData()
+} while (y != null) // y is visible here!
+```</script></section><section  data-markdown><script type="text/template">
 ### Функции
-</script></section><section  data-markdown><script type="text/template">
-### Именованные аргументы
-</script></section><section  data-markdown><script type="text/template">
+* Обычная функция:
+```kotlin
+fun double(x: Int): Int {
+    return 2 * x
+}
+val result = double(2)
+```
+* Параметры по умолчанию:
+```kotlin
+fun read(
+    b: ByteArray,
+    off: Int = 0,
+    len: Int = b.size,
+) { /*...*/ } 
+```</script></section><section  data-markdown><script type="text/template">
+### Именованые аргументы
+* Можно явно указывать имена аргументов функции, если хочется передать их в изменённом порядке:
+
+```kotlin
+fun pow(base, exponent) { /*...*/ }
+
+pow(exponent = 5, base = 2)
+```</script></section><section  data-markdown><script type="text/template">
 ### Лямбды
-</script></section><section  data-markdown><script type="text/template">
-### Задачи</script></section><section  data-markdown><script type="text/template">
+* Функцию, выполняющая одно действие, удобно записать в виде 
+[лямбды](https://ru.wikipedia.org/wiki/%D0%9B%D1%8F%D0%BC%D0%B1%D0%B4%D0%B0-%D0%B2%D1%8B%D1%80%D0%B0%D0%B6%D0%B5%D0%BD%D0%B8%D0%B5):
+```kotlin
+val sum: (Int, Int) -> Int = { x: Int, y: Int -> x + y }
+```
+* Или короче:
+```kotlin
+val sum = { x: Int, y: Int -> x + y }
+```
+* [Подробнее](https://kotlinlang.org/docs/lambdas.html).</script></section><section  data-markdown><script type="text/template">
+### Передача лямбды в аргументе
+* Если функция принимает лямбду как аргумент и этот аргумент последний (trailing lambda), можно указывать её
+вне скобок функции:
+
+```kotlin
+fun max(a: Int, b: Int, compare: (Int, Int) -> Boolean): Boolean {
+  return compare(a, b)
+}
+
+max(1, 2, {a, b -> a > b})
+max(1, 2) {a, b -> a > b}
+```</script></section><section  data-markdown><script type="text/template">
+### Trailing lambda
+* Если лямбда - единственный аргумент функции, то можно и круглые скобки не писать:
+
+```kotlin
+run { println("...") }
+ints.filter { it > 0 }
+
+// или даже так:
+strings.filter { it.length == 5 }.sortedBy { it }.map { it.uppercase() }
+```</script></section><section  data-markdown><script type="text/template">
+### Деструктурирование параметров
+* Если в параметре лямбды интересны только отдельные поля, можно их указать явно:
+```kotlin
+{ a -> ... } // one parameter
+{ a, b -> ... } // two parameters
+{ (a, b) -> ... } // a destructured pair
+{ (a, b), c -> ... } // a destructured pair and another parameter
+```
+* Пример:
+```kotlin
+map.mapValues { entry -> "${entry.value}!" }
+map.mapValues { (key, value) -> "$value!" }
+```
+* [Подробнее](https://kotlinlang.org/docs/destructuring-declarations.html#destructuring-in-lambdas).</script></section><section  data-markdown><script type="text/template">
+### Задачи
+#### Написать функции, выполняющие следующую работу:
+* Вернуть число в обратном порядке 123 -> 321.
+* Вернуть число без повторяющихся цифр 111333456 -> 13456.
+* Посчитать, сколько раз в данном числе встречается данная цифра (1355567, 5) -> 3.
+* Посчитать самую длинную последовательность нулей/единиц в двоичной записи данного числа.</script></section><section  data-markdown><script type="text/template">
+### Задачи
+* Найти самый первый неповторяющийся символ в строке: 'фывфавыапрс' -> 'п'.
+* Cгенерировать строку заданной длины из случайных символов, взятых из набора английскийх букв и цифр: (5) -> '2fvg6'.
+* Вернуть только уникальные символы строки: 'позволяеткопироватьтекстиз' -> 'позвляеткираьс'.</script></section><section  data-markdown><script type="text/template">
 ### Полезные ссылки
 * [Документация](https://kotlinlang.org/docs/home.html).
 * [Игровая площадка](https://play.kotlinlang.org/).
