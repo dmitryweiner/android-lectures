@@ -3,6 +3,8 @@
 ## Основы
 
 [все лекции](https://github.com/dmitryweiner/android-lectures/blob/main/README.md)
+
+[видео](https://youtu.be/negdjkC0hLg)
 ---
 
 ### История создания
@@ -173,6 +175,44 @@ println(b?.length)
 * `::` - ссылка на класс или элемент класса.
 * `..` - диапазон.
 * [Полный список операторов](https://kotlinlang.org/docs/keyword-reference.html#operators-and-special-symbols).
+---
+
+### Сравнение по ссылке и по значению
+* Оператор `==` сравнивает по значению (вызывает `.equals()`),
+`===` сравнивает ссылки ([подробнее](https://kotlinlang.org/docs/equality.html#structural-equality)):
+
+```kotlin
+class Person(val p : String) {
+  override fun equals(other: Any?): Boolean {
+    if(other is Person) {
+      return p == other?.p
+    }
+    return false
+  }
+}
+val a = Person("abc")
+val b = Person("abc")
+println(a == b) // true
+println(a === b) // false
+```
+---
+
+### Сравнение по ссылке и по значению
+* Однако, в случае с Int значения от -127 до 128 кешируются.
+Значения вне этого диапазона [не кешируются](https://kotlinlang.org/docs/numbers.html#numbers-representation-on-the-jvm), а сравнение по ссылке даёт `false`.
+
+```kotlin
+val a: Int = 100
+val boxedA: Int? = a
+val anotherBoxedA: Int? = a
+
+val b: Int = 10000
+val boxedB: Int? = b
+val anotherBoxedB: Int? = b
+
+println(boxedA === anotherBoxedA) // true
+println(boxedB === anotherBoxedB) // false
+```
 ---
 
 ### Ветвление
