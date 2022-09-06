@@ -15,9 +15,55 @@
   </head>
   <body>
     <div class="reveal">
-      <div class="slides"><section  data-markdown><script type="text/template">* Android Studio.
-    * Основы работы.
-    * Компиляция в APK, нужные галочки.</script></section></div>
+      <div class="slides"><section  data-markdown><script type="text/template">### Android Studio
+
+![Android studio](assets/android-studio/logo.png)
+
+[все лекции](https://github.com/dmitryweiner/android-lectures/blob/main/README.md)
+
+[видео]()</script></section><section  data-markdown><script type="text/template">
+### Где скачать?
+* [Качать здесь](https://developer.android.com/studio#downloads).
+* Доступные операционные системы:
+  * Linux
+  * Windows
+  * MacOS</script></section><section  data-markdown><script type="text/template">  
+### Запуск
+![Песец](assets/android-studio/startup.png)</script></section><section  data-markdown><script type="text/template">
+### Начальный экран
+![Startup screen](assets/android-studio/startup-2.png)</script></section><section  data-markdown><script type="text/template">
+### Выбор типа приложения
+![Choose activity](assets/android-studio/choose-activity.png)</script></section><section  data-markdown><script type="text/template">
+### Выбор языка
+![choose language](assets/android-studio/choose-language.png)</script></section><section  data-markdown><script type="text/template">
+### Свежесозданное приложение
+![Свежесозданное приложение](assets/android-studio/app.png)</script></section><section  data-markdown><script type="text/template">
+### Настройка эмулятора
+* Tools -> Device manager -> Create device
+
+![Create device](assets/android-studio/device.png)</script></section><section  data-markdown><script type="text/template">
+### Настройка эмулятора
+* Надо скачать эмулятор ОС. Рекомендую Android 11 (API 30):
+
+![OS](assets/android-studio/os.png)</script></section><section  data-markdown><script type="text/template">
+### Подключение телефона по USB
+* Войти в "Developer options" в настройках. Для разных оболочек это делается по-разному,
+обычно [множественными кликами на версию билда в настройках](https://www.digitaltrends.com/mobile/how-to-get-developer-options-on-android/).
+* В Developer options выбрать следующие опции:
+  * USB debugging.
+  * Install via USB.</script></section><section  data-markdown><script type="text/template">  
+![developer-options](assets/android-studio/developer-options.png)
+</script></section><section  data-markdown><script type="text/template">
+### Компиляция в `*.APK`
+* Чтобы работала компиляция в APK, что может понадобиться для публикации приложения,
+необходимо поставить следующие пакеты.
+* Tools -> SDK Manager -> вкладка SDK Tools:
+  * Android SDK Platform Tools</script></section><section  data-markdown><script type="text/template">
+![SDK Tools](assets/android-studio/sdk.png)</script></section><section  data-markdown><script type="text/template">
+### Где лежит APK?
+![locate](assets/android-studio/locate.png)</script></section><section  data-markdown><script type="text/template">
+### Полезные ссылки
+* https://developer.android.com/studio/intro</script></section></div>
     </div>
 
     <script src="./dist/reveal.js"></script>
