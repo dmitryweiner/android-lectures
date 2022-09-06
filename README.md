@@ -1,7 +1,7 @@
 # Лекции по разработке на Android
 * Язык Kotlin:
   * [Основы языка](https://dmitryweiner.github.io/android-lectures/Kotlin-basics.html).
-  * [Объекты, классы, наследование](https://dmitryweiner.github.io/android-lectures/Kotlin-objects.html).
+  * [Классы, наследование, объекты](https://dmitryweiner.github.io/android-lectures/Kotlin-objects.html).
   * [Коллекции, stream API](https://dmitryweiner.github.io/android-lectures/Kotlin-collections.html).
 * [Android Studio. Основы работы. Компиляция в APK](https://dmitryweiner.github.io/android-lectures/Android-studio.html).
 * [Анатомия приложения](https://dmitryweiner.github.io/android-lectures/Application-structure.html).
@@ -41,6 +41,9 @@
 * Язык Kotlin:
   * [Документация по Kotlin](https://kotlinlang.org/docs/getting-started.html)
   * [Интерактивный учебник](https://play.kotlinlang.org/koans/Introduction/Hello,%20world!/Task.kt)
+  * https://kotlinlang.ru/
+  * https://developer.alexanderklimov.ru/android/kotlin/
+  * https://bimlibik.github.io/
 * Программирование под Android:
   * https://startandroid.ru/ru/
   * http://developer.alexanderklimov.ru/android/
