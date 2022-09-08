@@ -281,7 +281,7 @@ print(s.filter({ ch: Char -> ch != 'l' }))
 * Его можно заменить служебным словом `it`, опустив стрелку `->`:
 ```kotlin
 var s = "Hello world!"
-print(s.filter({ it != ' l' }))
+print(s.filter({ it != 'l' }))
 ```</script></section><section  data-markdown><script type="text/template">
 ### Передача лямбды в аргументе
 * Если функция принимает лямбду как аргумент и этот аргумент последний (trailing lambda), можно указывать её

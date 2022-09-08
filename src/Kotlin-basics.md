@@ -312,7 +312,7 @@ print(s.filter({ ch: Char -> ch != 'l' }))
 * Его можно заменить служебным словом `it`, опустив стрелку `->`:
 ```kotlin
 var s = "Hello world!"
-print(s.filter({ it != ' l' }))
+print(s.filter({ it != 'l' }))
 ```
 ---
 
