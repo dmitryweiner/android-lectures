@@ -19,7 +19,7 @@
 
 ## Основы
 
-[все лекции](https://github.com/dmitryweiner/android-lectures/blob/main/README.md)
+[все лекции](https://github.com/dmitryweiner/android-lectures/blob/master/README.md)
 
 [видео](https://youtu.be/negdjkC0hLg)</script></section><section  data-markdown><script type="text/template">
 ### История создания
@@ -215,6 +215,7 @@ when (x) {
 ```</script></section><section  data-markdown><script type="text/template">
 ### Циклы
 * for:
+
 ```kotlin
 for (i in 1..3) {
     println(i)
@@ -225,10 +226,12 @@ for (i in 6 downTo 0 step 2) {
 for (item in collection) print(item)
 ```
 * while:
+
 ```kotlin
 while (x > 0) {
     x--
 }
+
 do {
     val y = retrieveData()
 } while (y != null) // y is visible here!
@@ -268,6 +271,18 @@ val sum: (Int, Int) -> Int = { x: Int, y: Int -> x + y }
 val sum = { x: Int, y: Int -> x + y }
 ```
 * [Подробнее](https://kotlinlang.org/docs/lambdas.html).</script></section><section  data-markdown><script type="text/template">
+### Короткая запись лямбды
+* Если лямбда содержит один аргумент и его тип можно вывести:
+```kotlin
+var s = "Hello world!"
+print(s.filter({ ch: Char -> ch != 'l' }))
+// Heo word!
+```
+* Его можно заменить служебным словом `it`, опустив стрелку `->`:
+```kotlin
+var s = "Hello world!"
+print(s.filter({ it != ' l' }))
+```</script></section><section  data-markdown><script type="text/template">
 ### Передача лямбды в аргументе
 * Если функция принимает лямбду как аргумент и этот аргумент последний (trailing lambda), можно указывать её
 вне скобок функции:
