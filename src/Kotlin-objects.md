@@ -169,11 +169,17 @@ class Child : MyInterface {
   * `equals()/hashCode()`
   * `toString()` "User(name=John, age=42)"
   * `copy()`
-* [Подробнее](https://kotlinlang.org/docs/data-classes.html).
+* [Подробнее](https://kotlinlang.org/docs/data-classes.html), [ещё](https://bimlibik.github.io/posts/kotlin-data-classes/).
 
 ```kotlin
 data class User(val name: String, val age: Int)
 ```
+---
+
+### data class
+* В основном конструкторе должен быть как минимум один параметр.
+* Все параметры основного конструктора должны быть отмечены ключевыми слова val или var (рекомендуется val).
+* Классы данных не могут быть отмечены ключевыми словами `abstract, open, sealed, inner`.
 ---
 
 ### sealed class
@@ -293,6 +299,6 @@ https://play.kotlinlang.org/koans/Classes/Data%20classes/Task.kt
 ---
 
 ### Полезные ссылки
-* https://kotlinlang.ru/
-* https://developer.alexanderklimov.ru/android/kotlin/
-* https://bimlibik.github.io/
+* https://kotlinlang.ru/docs/classes.html
+* https://developer.alexanderklimov.ru/android/kotlin/class.php
+* https://bimlibik.github.io/tags/kotlin/

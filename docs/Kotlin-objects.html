@@ -164,11 +164,15 @@ class Child : MyInterface {
   * `equals()/hashCode()`
   * `toString()` "User(name=John, age=42)"
   * `copy()`
-* [Подробнее](https://kotlinlang.org/docs/data-classes.html).
+* [Подробнее](https://kotlinlang.org/docs/data-classes.html), [ещё](https://bimlibik.github.io/posts/kotlin-data-classes/).
 
 ```kotlin
 data class User(val name: String, val age: Int)
 ```</script></section><section  data-markdown><script type="text/template">
+### data class
+* В основном конструкторе должен быть как минимум один параметр.
+* Все параметры основного конструктора должны быть отмечены ключевыми слова val или var (рекомендуется val).
+* Классы данных не могут быть отмечены ключевыми словами `abstract, open, sealed, inner`.</script></section><section  data-markdown><script type="text/template">
 ### sealed class
 * Добавление модификатора sealed к суперклассу ограничивает возможность создания подклассов. 
 * Все прямые подклассы должны быть вложены в суперкласс. 
@@ -270,9 +274,9 @@ import org.example.* // everything in 'org.example' becomes accessible
 https://play.kotlinlang.org/koans/Classes/Data%20classes/Task.kt
 </script></section><section  data-markdown><script type="text/template">
 ### Полезные ссылки
-* https://kotlinlang.ru/
-* https://developer.alexanderklimov.ru/android/kotlin/
-* https://bimlibik.github.io/
+* https://kotlinlang.ru/docs/classes.html
+* https://developer.alexanderklimov.ru/android/kotlin/class.php
+* https://bimlibik.github.io/tags/kotlin/
 </script></section></div>
     </div>
 
