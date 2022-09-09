@@ -1,4 +1,4 @@
-### Коллекции, Stream API![img.png](assets/kotlin-collections/collections.png)![img_1.png](img_1.png)
+### Коллекции, Stream API
 
 ![Kotlin classes](assets/kotlin-collections/collections.png)
 
