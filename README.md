@@ -46,6 +46,7 @@
   * https://bimlibik.github.io/
   * https://exercism.org/tracks/kotlin/exercises
   * https://www.programiz.com/kotlin-programming/examples
+  * https://stepik.org/course/5448/promo
 * Программирование под Android:
   * https://startandroid.ru/ru/
   * http://developer.alexanderklimov.ru/android/
