@@ -294,8 +294,10 @@ import org.example.* // everything in 'org.example' becomes accessible
 ---
 
 ### Задачи
-https://play.kotlinlang.org/koans/Classes/Data%20classes/Task.kt
-
+* https://play.kotlinlang.org/koans/Classes/Data%20classes/Task.kt
+* Описать класс для хранения комплексных чисел `Complex` и функцию для сложения их `fun add(c1: Complex, c2: Complex): Complex`.
+* Описать классы для хранения фигур: родитель Shape, потомки Rectangle и Square. У родителя абстрактный метод вычисления площади
+и периметра. Реализовать методы в потомках, проверить.
 ---
 
 ### Полезные ссылки

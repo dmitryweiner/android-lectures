@@ -44,6 +44,8 @@
   * https://kotlinlang.ru/
   * https://developer.alexanderklimov.ru/android/kotlin/
   * https://bimlibik.github.io/
+  * https://exercism.org/tracks/kotlin/exercises
+  * https://www.programiz.com/kotlin-programming/examples
 * Программирование под Android:
   * https://startandroid.ru/ru/
   * http://developer.alexanderklimov.ru/android/
