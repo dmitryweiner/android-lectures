@@ -293,11 +293,59 @@ import org.example.* // everything in 'org.example' becomes accessible
 * [Подробнее](https://kotlinlang.org/docs/packages.html).
 ---
 
+### Именованный импорт
+* При импорте можно задать имя, чтобы оно не пересекалось с другим импортом:
+```kotlin
+import kotlin.random.Random as KRandom
+import java.util.Random as JRandom
+```
+---
+
 ### Задачи
 * https://play.kotlinlang.org/koans/Classes/Data%20classes/Task.kt
-* Описать класс для хранения комплексных чисел `Complex` и функцию для сложения их `fun add(c1: Complex, c2: Complex): Complex`.
+* Описать класс для хранения комплексных чисел `Complex` и функцию для сложения их `fun sum(c1: Complex, c2: Complex): Complex`.
+
+```kotlin
+class Complex /* ... */
+
+fun sum(c1: Complex, c2: Complex): Complex {
+    /* ... */
+}
+
+fun main() {
+    val c1 = Complex(1, 2)
+    val c2 = Complex(2, 5)
+    println(sum(c1, c2)) // Complex(3, 7)
+}
+```
+---
+
 * Описать классы для хранения фигур: родитель `Shape`, потомки `Rectangle` и `Square`. У родителя абстрактный метод вычисления площади
 и периметра. Реализовать методы в потомках, проверить.
+
+```kotlin```
+abstract class Shape {
+    abstract fun area(): Int
+    abstract fun perimeter(): Int
+}
+
+class Square(val a: Int): Shape {
+    override fun area(): Int { /* ... */ }
+    override fun perimeter(): Int { /* ... */ }
+}
+
+class Rectangle(val a: Int, val b: Int): {
+    override fun area(): Int { /* ... */ }
+    override fun perimeter(): Int { /* ... */ }
+}
+
+fun main() {
+    val s = Square(4)
+    val r = Rectangle(2, 5)
+    println(s.area()) // 16
+    println(r.area()) // 10
+}
+```
 ---
 
 ### Полезные ссылки
