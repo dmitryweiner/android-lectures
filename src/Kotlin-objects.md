@@ -323,7 +323,7 @@ fun main() {
 * Описать классы для хранения фигур: родитель `Shape`, потомки `Rectangle` и `Square`. У родителя абстрактный метод вычисления площади
 и периметра. Реализовать методы в потомках, проверить.
 
-```kotlin```
+```kotlin
 abstract class Shape {
     abstract fun area(): Int
     abstract fun perimeter(): Int
