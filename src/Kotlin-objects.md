@@ -333,7 +333,7 @@ class Square(val a: Int) /* TODO */ {
     /* TODO */
 }
 
-class Rectangle(val a: Int, val b: Int): {
+class Rectangle(val a: Int, val b: Int) /* TODO */ {
     /* TODO */
 }
 
