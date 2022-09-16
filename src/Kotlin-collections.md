@@ -283,5 +283,6 @@ mostRare("ток кот кукож ток кот") // "кукож"
 
 ### Полезные ссылки
 * https://developer.alexanderklimov.ru/android/kotlin/array.php
+* https://metanit.com/kotlin/tutorial/2.3.php
 * https://bimlibik.github.io/posts/kotlin-collections/
 * https://kotlinlang.ru/docs/collections-overview.html
