@@ -4,7 +4,7 @@
 
 [все лекции](https://github.com/dmitryweiner/android-lectures/blob/main/README.md)
 
-[видео]()
+[видео](https://youtu.be/EpPdwcr5vJw)
 ---
 
 ### Создание массива
@@ -237,9 +237,29 @@ val numbersMap = mapOf("key1" to 1, "key2" to 2, "key3" to 3, "key4" to 1)
 
 println("All keys: ${numbersMap.keys}") // [key1, key2, key3, key4]
 println("All values: ${numbersMap.values}") // [1, 2, 3, 1]
+
 if ("key2" in numbersMap) println("Value by key \"key2\": ${numbersMap["key2"]}")    
 if (1 in numbersMap.values) println("The value 1 is in the map")
 if (numbersMap.containsValue(1)) println("The value 1 is in the map") // аналогичен предыдущему условию
+```
+---
+
+### Mutable Map
+```kotlin
+val map = mutableMapOf(
+        "key1" to 1,
+        "key2" to 2,
+        "key3" to 3,
+        "key4" to 4)
+
+// добавить новое значение
+map.put("key5", 5)
+
+// инкрементировать значение
+map["key4"] = map["key4"]!! + 1
+
+// или так
+map["key4"] = map.getOrDefault("key4", 0) + 1
 ```
 ---
 
