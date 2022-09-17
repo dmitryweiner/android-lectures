@@ -73,5 +73,37 @@
 ![locate](assets/android-studio/locate.png)
 ---
 
+### Debug
+* При нажатии на 🪲 попадаем в режим дебага.
+* Дебаггер останавливается на точках останова (красная точка слева от кода).
+* Можно смотреть значения переменных.
+---
+
+![](assets/android-studio/debug.png)
+---
+
+### Логи
+* Во время работы приложение может [писать в логи](https://developer.android.com/reference/android/util/Log)
+  с помощью конструкции:
+```kotlin
+private val APP_TAG = "MyActivity";
+Log.d(APP_TAG, "Я написал в логи!")
+```
+* `.d` уровень логгирования DEBUG, бывают:
+```kotlin
+    public static final int ASSERT = 7;
+    public static final int DEBUG = 3;
+    public static final int ERROR = 6;
+    public static final int INFO = 4;
+    public static final int VERBOSE = 2;
+    public static final int WARN = 5;
+```
+* По ним можно фильтровать.
+---
+
+### Логи
+![](assets/android-studio/logs.png)
+---
+
 ### Полезные ссылки
 * https://developer.android.com/studio/intro
