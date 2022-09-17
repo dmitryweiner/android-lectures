@@ -1,7 +1,7 @@
 {
-  "name": "lectures",
+  "name": "android-lectures",
   "version": "1.0.0",
-  "description": "Frontend Lectures in CI NSU",
+  "description": "Android applications development, the lectures shown in CI NSU",
   "main": "index.js",
   "directories": {
     "doc": "docs"
@@ -15,10 +15,8 @@
     "reveal-md": "^5.1.3"
   },
   "keywords": [
-    "javascript",
-    "frontend",
-    "react",
-    "redux"
+    "kotlin",
+    "android"
   ],
   "author": "Dmitry Weiner",
   "license": "ISC"

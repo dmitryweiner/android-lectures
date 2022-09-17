@@ -54,7 +54,33 @@ i = 1
 i++
 ```
 * **Всегда** лучше предпочитать val для [иммутабельности данных](https://ru.wikipedia.org/wiki/%D0%9D%D0%B5%D0%B8%D0%B7%D0%BC%D0%B5%D0%BD%D1%8F%D0%B5%D0%BC%D1%8B%D0%B9_%D0%BE%D0%B1%D1%8A%D0%B5%D0%BA%D1%82).
+---
 
+### Область видимости
+* Переменная не видна до того, как объявлена:
+```kotlin
+println(j) // Unresolved reference: j
+val j = 1
+```
+* [Подробнее](https://kotlinlang.org/spec/scopes-and-identifiers.html).
+---
+
+### Область видимости
+* Переменная видна внутри `{блока}`, в котором она объявлена:
+```kotlin
+if (i != 2) {
+    val j = 1
+    println(j)
+}
+println(j) // Unresolved reference: j
+```
+* Внутри `{блока}` видны переменные, объявленные снаружи:
+```kotlin
+val j = 1
+if (j != 2) {
+    println(j) // 1
+}
+```
 ---
 
 ### Типы данных
