@@ -58,8 +58,10 @@ println(arr.size) // 3
 * Используется оператор `in`:
 ```kotlin
 val arr = arrayOf(1, 2, 3)
+println(2 in arr)      // true
+
 println(4 in arr)       // false
-println(2 !in arr)      // true
+println(4 !in arr)      // true
 ```
 ---
 
