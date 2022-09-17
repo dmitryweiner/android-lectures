@@ -283,7 +283,7 @@ f(arrayOf()) // 0
 ```kotlin
 signCount(arrayOf(1, 0, -1, -3, -5, 5, -1)) === 3
 signCount(arrayOf(1, 0, 1, 3, 5, 5, 1)) === 0
-signCount(arrayOf(11, 1, 3, 5, 1)) === 1
+signCount(arrayOf(-11, 1, 3, 5, 1)) === 1
 ```
 ---
 
