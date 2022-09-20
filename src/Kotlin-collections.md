@@ -1,4 +1,4 @@
-### Коллекции, Stream API
+### Массивы и коллекции
 
 ![Kotlin classes](assets/kotlin-collections/collections.png)
 

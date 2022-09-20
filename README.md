@@ -2,21 +2,10 @@
 * Язык Kotlin:
   * [Основы языка](https://dmitryweiner.github.io/android-lectures/Kotlin-basics.html).
   * [Классы, наследование, объекты](https://dmitryweiner.github.io/android-lectures/Kotlin-objects.html).
-  * [Коллекции, stream API](https://dmitryweiner.github.io/android-lectures/Kotlin-collections.html).
+  * [Массивы и коллекции](https://dmitryweiner.github.io/android-lectures/Kotlin-collections.html).
 * [Android Studio. Основы работы. Компиляция в APK](https://dmitryweiner.github.io/android-lectures/Android-studio.html).
 * [Анатомия приложения](https://dmitryweiner.github.io/android-lectures/Application-structure.html).
-* Разметка:
-  * Constraint Layout.
-  * Linear Layout.
-  * Другие лейауты.
-* Работа с компонентами.
-  * Виды компонентов.
-  * Поиск.
-  * Binding.
-  * Чтение введённых данных.
-  * Реакция на события.
-  * Тосты.
-  * Диалоги.
+* [Разметка. Работа с компонентами](https://dmitryweiner.github.io/android-lectures/Layout-forms.html).
 * Activity.
   * Жизненный цикл Activity.
   * Навигация между Activity c помощью Intent.
