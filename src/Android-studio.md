@@ -89,14 +89,14 @@
 private val APP_TAG = "MyActivity";
 Log.d(APP_TAG, "Я написал в логи!")
 ```
-* `.d` уровень логгирования DEBUG, бывают:
+* `.d` уровень логгирования DEBUG, бывают (по степени серьёзности):
 ```kotlin
-    public static final int ASSERT = 7;
-    public static final int DEBUG = 3;
-    public static final int ERROR = 6;
-    public static final int INFO = 4;
     public static final int VERBOSE = 2;
+    public static final int DEBUG = 3;
+    public static final int INFO = 4;
     public static final int WARN = 5;
+    public static final int ERROR = 6;
+    public static final int ASSERT = 7;
 ```
 * По ним можно фильтровать.
 ---

@@ -202,6 +202,13 @@ class ExampleUnitTest {
 ```
 ---
 
+### Задача
+* Разработать кликер с возможностью уменьшения и увеличения числа. 
+При уменьшении числа значение не должно уходить в минус.
+
+![](assets/android-application/clicker.png)
+---
+
 ### Полезные ссылки
 * https://developer.alexanderklimov.ru/android/theory/
 * https://developer.android.com/guide
