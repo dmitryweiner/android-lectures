@@ -2,7 +2,7 @@
 
 ![Android anatomy](assets/android-application/android-update.gif)
 
-[все лекции](https://github.com/dmitryweiner/android-lectures/blob/master/README.md), [видео]()
+[все лекции](https://github.com/dmitryweiner/android-lectures/blob/master/README.md), [видео](https://youtu.be/iuZPXyOTI1s)
 ---
 
 #### Приложение компилируется в 
