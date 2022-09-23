@@ -50,6 +50,29 @@
 ![](assets/layout/views1.png) ![](assets/layout/views2.png) ![](assets/layout/views3.png)
 ---
 
+### Текст
+
+```xml
+<TextView
+    android:id="@+id/textView"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:text="TextView" />
+```
+
+```kotlin
+class MainActivity : AppCompatActivity() {
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_main)
+
+        val textView = findViewById<TextView>(R.id.textView)
+        textView.text = "У рыб нет зуб"
+    }
+}
+```
+---
+
 ### Кнопка
 ```xml
 <Button
@@ -77,20 +100,70 @@ class MainActivity : AppCompatActivity() {
 * `setOnClickListener` навешивает обработчик на событие "клик" у найденной кнопки.
 * Обработчик состоит из лямбды, изменяющей текст кнопки.
 ---
+
+### Кликер
+```xml
+<TextView android:id="@+id/textView"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:text="TextView" />
+<Button android:id="@+id/button"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:text="Button" />
+```
+
+```kotlin
+class MainActivity : AppCompatActivity() {
+    var i = 0
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_main)
+        val textView = findViewById<TextView>(R.id.textView)
+        val button = findViewById<Button>(R.id.button)
+        button.setOnClickListener {
+            textView.text = i.toString()
+            i++
+        }
+    }
+}
+```
+---
  
-###
+### Поле ввода
+```xml
+<TextView android:id="@+id/textView"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:text="TextView" />
+<Button android:id="@+id/button"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:text="Button" />
+```
+
+```kotlin
+class MainActivity : AppCompatActivity() {
+    var i = 0
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_main)
+        val textView = findViewById<TextView>(R.id.textView)
+        val button = findViewById<Button>(R.id.button)
+        button.setOnClickListener {
+            textView.text = i.toString()
+            i++
+        }
+    }
+}
+```
+---
+ 
+### Типизированные поля ввода
 
 ---
  
-###
-
----
- 
-###
-
----
- 
-###
+### Подписка на изменения поля
 
 ---
  

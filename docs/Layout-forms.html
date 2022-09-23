@@ -53,6 +53,27 @@
 ### Палитра компонентов
 
 ![](assets/layout/views1.png) ![](assets/layout/views2.png) ![](assets/layout/views3.png)</script></section><section  data-markdown><script type="text/template">
+### Текст
+
+```xml
+<TextView
+    android:id="@+id/textView"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:text="TextView" />
+```
+
+```kotlin
+class MainActivity : AppCompatActivity() {
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_main)
+
+        val textView = findViewById<TextView>(R.id.textView)
+        textView.text = "У рыб нет зуб"
+    }
+}
+```</script></section><section  data-markdown><script type="text/template">
 ### Кнопка
 ```xml
 <Button
@@ -76,14 +97,64 @@ class MainActivity : AppCompatActivity() {
 ### Как это работает?
 * Функция `findViewById` ищет нужный View для навешивания обработчиков или изменения состояния.
 * `setOnClickListener` навешивает обработчик на событие "клик" у найденной кнопки.
-* Обработчик состоит из лямбды, изменяющей текст кнопки.</script></section><section  data-markdown><script type="text/template"> 
-###
+* Обработчик состоит из лямбды, изменяющей текст кнопки.</script></section><section  data-markdown><script type="text/template">
+### Кликер
+```xml
+<TextView android:id="@+id/textView"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:text="TextView" />
+<Button android:id="@+id/button"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:text="Button" />
+```
+
+```kotlin
+class MainActivity : AppCompatActivity() {
+    var i = 0
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_main)
+        val textView = findViewById<TextView>(R.id.textView)
+        val button = findViewById<Button>(R.id.button)
+        button.setOnClickListener {
+            textView.text = i.toString()
+            i++
+        }
+    }
+}
+```</script></section><section  data-markdown><script type="text/template"> 
+### Поле ввода
+```xml
+<TextView android:id="@+id/textView"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:text="TextView" />
+<Button android:id="@+id/button"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:text="Button" />
+```
+
+```kotlin
+class MainActivity : AppCompatActivity() {
+    var i = 0
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_main)
+        val textView = findViewById<TextView>(R.id.textView)
+        val button = findViewById<Button>(R.id.button)
+        button.setOnClickListener {
+            textView.text = i.toString()
+            i++
+        }
+    }
+}
+```</script></section><section  data-markdown><script type="text/template"> 
+### Типизированные поля ввода
 </script></section><section  data-markdown><script type="text/template"> 
-###
-</script></section><section  data-markdown><script type="text/template"> 
-###
-</script></section><section  data-markdown><script type="text/template"> 
-###
+### Подписка на изменения поля
 </script></section><section  data-markdown><script type="text/template"> 
 ###
 </script></section><section  data-markdown><script type="text/template"> 
