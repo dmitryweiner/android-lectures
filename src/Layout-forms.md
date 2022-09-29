@@ -45,6 +45,11 @@
 ![](assets/layout/recyclerview21.gif)
 ---
 
+### Единицы измерения
+https://material.io/design/layout/pixel-density.html#pixel-density-on-android
+https://stackoverflow.com/questions/2025282/what-is-the-difference-between-px-dip-dp-and-sp
+---
+
 ### Палитра компонентов
 
 ![](assets/layout/views1.png) ![](assets/layout/views2.png) ![](assets/layout/views3.png)
@@ -304,7 +309,15 @@ toast.show();
 * Написать кликер с + и -. Сделать так, чтобы он не заходил в отрицательные числа.
 
 ![](assets/layout/clicker.png)
+  
+        // Счетчик не должен уходить
+        // в минус
 
+        // 2. при нажатии на [-] если значение 0 показывать Toast
+        // "в минус уходить нельзя"
+
+        // 3. Сделать текстовое числовое поле, где лежит, на сколько
+        // прибавлять или убавлять основное значение
 
 ---
 
