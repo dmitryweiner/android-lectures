@@ -38,8 +38,25 @@
 * [Исчерпывающее руководство](https://developer.alexanderklimov.ru/android/layout/constraintlayout.php).
 * Основная идея: для "резиновой" вёрстки позиционировать компоненты относительно родителя или соседей:
 
-![](assets/layout/constraint-layout.png)
-</script></section><section  data-markdown><script type="text/template">
+![](assets/layout/constraint-layout.png)</script></section><section  data-markdown><script type="text/template">
+### Система позиционирования в Constraint Layout
+
+![](assets/layout/cl1.png) ![](assets/layout/cl2.png)</script></section><section  data-markdown><script type="text/template">
+### Единицы измерения в Android
+* Можно указывать размер текста и различные расстояния в следующих единицах:
+  * px - пиксели экрана.
+  * in - дюймы.
+  * mm - миллиметры.
+  * pt - линии (1/72 дюйма).
+  * dp - независящие от плотности экрана пиксели.
+  * sp - масштабируемые dp (в зависимости от выбранного размера шрифта).
+* [Подробнее](https://material.io/design/layout/pixel-density.html#pixel-density-on-android),
+  [ещё](https://stackoverflow.com/questions/2025282/what-is-the-difference-between-px-dip-dp-and-sp).</script></section><section  data-markdown><script type="text/template">
+### Старайтесь указывать размер в dp
+* Размер экранных элементов надо указывать в dp.
+* Размер текста в полях и лейблах указывать в sp.
+
+![](assets/layout/density.png)</script></section><section  data-markdown><script type="text/template">
 ### Linear Layout
 * [Руководство](http://developer.alexanderklimov.ru/android/layout/linearlayout.php).
 * Идея: располагать элементы в строку либо в столбец.
@@ -50,9 +67,9 @@
 * Идея: переиспользовать элементы списка для отображения следующих элементов.
 
 ![](assets/layout/recyclerview21.gif)</script></section><section  data-markdown><script type="text/template">
-### Палитра компонентов
+#### [Палитра компонентов](https://developer.alexanderklimov.ru/android/views/)
 
-![](assets/layout/views1.png) ![](assets/layout/views2.png) ![](assets/layout/views3.png)</script></section><section  data-markdown><script type="text/template">
+![](assets/layout/views3.png) ![](assets/layout/views1.png) ![](assets/layout/views2.png)</script></section><section  data-markdown><script type="text/template">
 ### Текст
 
 ```xml
@@ -264,6 +281,38 @@ spinner.setOnItemClickListener {
 }
 ```
 * [Как настроить его вид и задавать данные для списка](https://developer.alexanderklimov.ru/android/views/spinner.php).</script></section><section  data-markdown><script type="text/template">
+### Ползунок
+<input type="range">
+
+```xml
+<SeekBar
+   android:id="@+id/seekBar"
+   android:layout_width="0dp"
+   android:layout_height="wrap_content" />
+```
+
+```kotlin
+val seekBar = findViewById<SeekBar>(R.id.seekBar)
+
+// текущее значение
+seekBar.progress
+```
+
+[Подробнее](https://developer.alexanderklimov.ru/android/views/seekbar.php)</script></section><section  data-markdown><script type="text/template">
+### Ползунок: реакция на изменение
+
+```kotlin
+val seekBar = findViewById<SeekBar>(R.id.seekBar)
+
+// реакция на изменение
+seekBar.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener{
+    override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
+        // progress - новое значение
+    }
+    override fun onStartTrackingTouch(seekBar: SeekBar?) {    }
+    override fun onStopTrackingTouch(seekBar: SeekBar?) {     }
+})
+```</script></section><section  data-markdown><script type="text/template">
 ### Тосты
 ![](assets/layout/toast.png)
 * Иногда хочется показать пользователю сообщение, но не на текущем экране, а поверх.
@@ -278,14 +327,50 @@ toast.show();
 ```
 * У тостов можно настраивать место [появления, вид](https://developer.alexanderklimov.ru/android/toast.php).</script></section><section  data-markdown><script type="text/template">
 ### Задачи
-* Написать кликер с + и -. Сделать так, чтобы он не заходил в отрицательные числа.
+* Написать кликер с <button>+</button> и <button>-</button>. Сделать так, чтобы он не заходил в отрицательные числа.
 
 ![](assets/layout/clicker.png)
+  
+        // 1. Счетчик не должен уходить
+        // в минус
 
-</script></section><section  data-markdown><script type="text/template">
+        // 2. при нажатии на [-] если значение 0 показывать Toast
+        // "в минус уходить нельзя"
+
+        // 3. Сделать текстовое числовое поле, где лежит, на сколько
+        // прибавлять или убавлять основное значение</script></section><section  data-markdown><script type="text/template">
+### Задачи
+* Сделать калькулятор:
+
+<br/>
+<input type="number" value="2">
+<select>
+  <option>+</option>
+  <option>-</option>
+  <option>*</option>
+  <option>/</option>
+</select>
+<input type="number" value="2">
+= 4
+
+     // калькулятор обновляется автоматически
+
+* Калькулятор систем счисления:
+
+<input type="number" value="15"> в 10-чной системе.
+
+<input type="number" value="1111"> в 
+<select>
+  <option>2</option>
+  <option>8</option>
+  <option>16</option>
+  <option>36</option>
+</select>
+системе.</script></section><section  data-markdown><script type="text/template">
 ### Полезные ссылки
 * https://developer.alexanderklimov.ru/android/layout/constraintlayout.php
-* https://developer.alexanderklimov.ru/android/views/recyclerview-kot.php</script></section></div>
+* https://developer.alexanderklimov.ru/android/views/recyclerview-kot.php
+* https://developer.alexanderklimov.ru/android/views/</script></section></div>
     </div>
 
     <script src="./dist/reveal.js"></script>
