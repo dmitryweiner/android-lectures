@@ -4,7 +4,7 @@
 
 [все лекции](https://github.com/dmitryweiner/android-lectures/blob/main/README.md)
 
-[видео]()
+[видео](https://youtu.be/t4NZ9OQ3epo)
 ---
 
 ### Иерархия компонентов
