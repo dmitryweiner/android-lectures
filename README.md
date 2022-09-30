@@ -6,8 +6,11 @@
 * [Android Studio. Основы работы. Компиляция в APK](https://dmitryweiner.github.io/android-lectures/Android-studio.html).
 * [Анатомия приложения](https://dmitryweiner.github.io/android-lectures/Application-structure.html).
 * [Разметка. Работа с компонентами](https://dmitryweiner.github.io/android-lectures/Layout-forms.html).
+* Recycler View: бесконечный список.
 * Activity.
   * Жизненный цикл Activity.
+  * Сохранение состояния в bundle.
+* Интенты.
   * Навигация между Activity c помощью Intent.
   * Открытие системных элементов: выбор файла (пример).
   * Открытие диалогов.
@@ -21,6 +24,7 @@
 * Сохранение данных.
   * SQLite.
   * Room.
+* Потоки.
 * Построение архитектуры MVVM.
 
 ### Полезные ссылки
