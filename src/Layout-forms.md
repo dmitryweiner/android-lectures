@@ -404,6 +404,14 @@ toast.show();
 системе.
 ---
 
+* Список чисел с фильтрацией:
+  <br/><input><button>+</button><br/>
+  <label><input name="filter" type="radio" value="Все" checked="">Все</label><label><input name="filter" type="radio" value="Сделанные">Четные</label><label><input name="filter" type="radio" value="Не сделанные">Нечетные</label>
+> 1, 13, 6, 52, 4, 14
+>
+При нажатии на [+] в список добавляется очередное число из поля ввода. При изменении состояния фильтра список обновляется.
+---
+
 ### Полезные ссылки
 * https://developer.alexanderklimov.ru/android/layout/constraintlayout.php
 * https://developer.alexanderklimov.ru/android/views/recyclerview-kot.php
