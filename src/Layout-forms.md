@@ -2,7 +2,7 @@
 
 ![Andoroid layout](assets/layout/constraint.png)
 
-[все лекции](https://github.com/dmitryweiner/android-lectures/blob/main/README.md)
+[все лекции](https://github.com/dmitryweiner/android-lectures/blob/master/README.md)
 
 [видео](https://youtu.be/t4NZ9OQ3epo)
 ---
