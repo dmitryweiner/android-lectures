@@ -234,7 +234,7 @@ switch.setOnCheckedChangeListener {
 ---
  
 ### Радио-кнопки
-![](assets/layout/radio.png)
+<label><input name="filter" type="radio" value="Все" checked="">Все</label><label><input name="filter" type="radio" value="Сделанные">Четные</label><label><input name="filter" type="radio" value="Не сделанные">Нечетные</label>
 
 ```xml
 <RadioGroup
@@ -346,15 +346,11 @@ seekBar.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener{
 
 ### Тосты
 ![](assets/layout/toast.png)
-* Иногда хочется показать пользователю сообщение, но не на текущем экране, а поверх.
-* Для этого используются тосты:
-
+* Используется, чтобы показать пользователю сообщение поверх текущего экрана.
+* Как вызывать:
 ```kotlin
-val toast = Toast.makeText(
-   applicationContext, 
-   "Ура, я тост!",
-   Toast.LENGTH_SHORT); 
-toast.show(); 
+val toast = Toast.makeText(applicationContext, "Ура, я тост!", Toast.LENGTH_SHORT)
+toast.show()
 ```
 * У тостов можно настраивать место [появления, вид](https://developer.alexanderklimov.ru/android/toast.php).
 ---
@@ -414,5 +410,4 @@ toast.show();
 
 ### Полезные ссылки
 * https://developer.alexanderklimov.ru/android/layout/constraintlayout.php
-* https://developer.alexanderklimov.ru/android/views/recyclerview-kot.php
 * https://developer.alexanderklimov.ru/android/views/

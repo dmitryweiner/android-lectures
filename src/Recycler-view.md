@@ -317,7 +317,25 @@ class MainActivity : AppCompatActivity() {
 ---
 
 ### Задачи
+* Список чисел:
+<br/><input><button>+</button><br/>
+<ul style="width: 200px; height: 150px; overflow-y: scroll"><li>1</li><li>3</li><li>15</li><li>22</li><li>14</li><li>47</li><li>2</li></ul>
+При нажатии на [+] в список добавляется очередное число из поля ввода.
+---
 
+### Задачи
+* Список чисел с удалением:
+<br/><input><button>+</button><br/>
+<ul style="width: 200px; height: 150px; overflow-y: scroll"><li>1</li><li>3</li><li>15</li><li>22</li><li>14</li><li>47</li><li>2</li></ul>
+При клике на число оно удаляется из списка. 
+---
+
+### Задачи
+* Список чисел c фильтрацией:
+<br/><input><button>+</button><br/>
+<label><input name="filter" type="radio" value="Все" checked="">Все</label><label><input name="filter" type="radio" value="Сделанные">Четные</label><label><input name="filter" type="radio" value="Не сделанные">Нечетные</label>
+<ul style="width: 200px; height: 150px; overflow-y: scroll"><li>1</li><li>3</li><li>15</li><li>22</li><li>14</li><li>47</li><li>2</li></ul>
+При изменении состояния фильтра список обновляется. 
 ---
 
 ### Полезные ссылки
