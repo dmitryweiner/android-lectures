@@ -301,8 +301,18 @@ spinner.adapter = adapter
 spinner.selectedItemPosition
 
 // реакция на выбор
-spinner.setOnItemClickListener {
-   adapterView, view, i, l -> /* i - номер выбранного пункта */
+spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+    override fun onNothingSelected(parent: AdapterView<*>?) {
+      // ничего не выбрали
+    }
+    override fun onItemSelected(
+        parent: AdapterView<*>?,
+        view: View?,
+        position: Int,
+        id: Long
+    ) {
+        // выбранная позиция position
+    }
 }
 ```
 * [Как настроить его вид и задавать данные для списка](https://developer.alexanderklimov.ru/android/views/spinner.php).
