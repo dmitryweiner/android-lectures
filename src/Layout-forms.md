@@ -171,8 +171,10 @@ class MainActivity : AppCompatActivity() {
 ```kotlin
 val editText = findViewById<EditText>(R.id.editText)
 button.setOnClickListener {
+
    // прочитать введённый текст
    val text = editText.text.toString()
+   
    // записать строку
    editText.setText(text.reversed())
 }
@@ -197,10 +199,21 @@ button.setOnClickListener {
 * [Подробнее](https://developer.android.com/reference/android/text/TextWatcher).
 
 ```kotlin
+val editText = findViewById<EditText>(R.id.editText)
+editText.doAfterTextChanged {
+  // в it.toString() лежит введённая строка
+}
+```
+---
+
+### Подписка на изменения EditText: старый способ
+* Если предыдущий способ не работает, следует использовать `TextWatcher`:
+
+```kotlin
 editText.addTextChangedListener(object : TextWatcher {
  // после того, как текст редактировали
  override fun afterTextChanged(s: Editable) {   
-  s.toString() // новая строка!
+  // тут введённая строка s.toString()
  }
  // перед тем, как текст редактировали
  override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {
@@ -315,7 +328,7 @@ spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
     }
 }
 ```
-* [Как настроить его вид и задавать данные для списка](https://developer.alexanderklimov.ru/android/views/spinner.php).
+* [Как настроить его вид и заполнить список](https://developer.alexanderklimov.ru/android/views/spinner.php).
 ---
 
 ### Ползунок

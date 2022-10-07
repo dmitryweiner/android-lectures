@@ -64,8 +64,8 @@ class Person(val firstName: String, val lastName: String) {
     }
 }
 
-val p = Person("Peter", "Griffin");
-print(p.getFullName());
+val p = Person("Peter", "Griffin")
+print(p.getFullName())
 ```
 ---
 
