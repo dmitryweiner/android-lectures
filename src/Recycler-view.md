@@ -30,7 +30,7 @@
 ---
 
 ### Создаём разметку для элемента списка
-* `res/layout/list_item.xml`:
+* Создать файл `res/layout/list_item.xml`:
 
 ```xml
 <?xml version="1.0" encoding="utf-8"?>
