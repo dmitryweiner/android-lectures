@@ -96,20 +96,57 @@ outState.putString(
 
 ```kotlin
 сохранённое значение = savedState.getString("ключ")
-```</script></section><section  data-markdown><script type="text/template">### Переход на другие активити
+```</script></section><section  data-markdown><script type="text/template">
+### Тип сохраняемого значения
+* Сохранять можно не только строки, но и другие разнообразные типы:
+  * putBoolean - getBoolean
+  * putInt - getInt
+  * putIntArray - getIntArray
+  * и т.д.</script></section><section  data-markdown><script type="text/template">### Переход на другую активити
+* Для начала надо создать другую активити.
+* [Подробнее](https://www.fandroid.info/urok-5-kotlin-dobavlenie-vtorogo-ekrana-v-android-prilozhenie/).
+
+![](assets/activity/img.png)
+</script></section><section  data-markdown><script type="text/template">Имя можно выбрать исходя из назначения активити:
+
+![](assets/activity/img_1.png)</script></section><section  data-markdown><script type="text/template">### Переход на другую активити
 ```kotlin
-val intent = Intent(this, SecondActivity::class)
-startActivity(intent)
+val button = findViewById<Button>(R.id.button)
+button.setOnClickListener {
+    val intent = Intent(this, SecondActivity::class.java)
+    startActivity(intent)
+}
 ```</script></section><section  data-markdown><script type="text/template">### Передача параметров
-</script></section><section  data-markdown><script type="text/template">### Приём параметров в вызванной активити</script></section><section  data-markdown><script type="text/template">### Задачи
+```kotlin
+val intent = Intent(this, SecondActivity::class.java)
+intent.putExtra("key", value)
+startActivity(intent)
+```</script></section><section  data-markdown><script type="text/template">### Приём параметров в вызванной активити
+[Подробнее](https://startandroid.ru/ru/uroki/vse-uroki-spiskom/67-urok-28-extras-peredaem-dannye-s-pomoschju-intent.html)
+
+```kotlin
+class SecondActivity : AppCompatActivity() {
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_second)
+
+        val textView = findViewById<TextView>(R.id.textView2)
+        val intent = getIntent()
+        val value = intent.getStringExtra("key")
+        textView.text = value
+    }
+}
+```</script></section><section  data-markdown><script type="text/template">### Задачи
 * Список чисел с просмотром числа:
 <br/><input><button>+</button><br/>
-<ul style="width: 200px; height: 150px; overflow-y: scroll"><li>1</li><li>3 ➡</li><li>15 ➡</li><li>22 ➡</li><li>14 ➡</li><li>47 ➡</li><li>2 ➡</li></ul>
+<ul style="width: 200px; height: 150px; overflow-y: scroll"><li>1 <button>➡</button></li><li>3 <button>➡</button></li><li>15 <button>➡</button></li><li>22 <button>➡</button></li><li>14 <button>➡</button></li><li>47 <button>➡</button></li><li>2 <button>➡</button></li></ul>
 При нажатии на [+] в список добавляется очередное число из поля ввода.
 При клике на [➡] на элементе списка происходит переход на другую активити, где отображается выбранное число.</script></section><section  data-markdown><script type="text/template">### Полезные ссылки
 * https://developer.alexanderklimov.ru/android/theory/lifecycle.php
 * https://metanit.com/java/android/2.1.php
 * https://www.digitalocean.com/community/tutorials/android-intent-handling-between-activities-using-kotlin
+* https://www.fandroid.info/urok-5-kotlin-dobavlenie-vtorogo-ekrana-v-android-prilozhenie/
+* https://startandroid.ru/ru/uroki/vse-uroki-spiskom/67-urok-28-extras-peredaem-dannye-s-pomoschju-intent.html
 * <iframe width="560" height="315" src="https://www.youtube.com/embed/njmOeFadDEI" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></script></section></div>
     </div>
 
