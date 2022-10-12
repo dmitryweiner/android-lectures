@@ -70,18 +70,23 @@
 ### Логи
 * Во время работы приложение может [писать в логи](https://developer.android.com/reference/android/util/Log)
   с помощью конструкции:
+
 ```kotlin
-private val APP_TAG = "MyActivity";
-Log.d(APP_TAG, "Я написал в логи!")
+companion object {
+    @JvmField val TAG: String = MyClass::class.java.simpleName
+}
+
+Log.d(TAG, "Я написал в логи!")
 ```
-* `.d` уровень логгирования DEBUG, бывают (по степени серьёзности):
+* 
+* `.d` уровень логгирования DEBUG, [бывают](https://developer.android.com/studio/debug/am-logcat#WriteLogs) (по степени серьёзности):
 ```kotlin
-    public static final int VERBOSE = 2;
-    public static final int DEBUG = 3;
-    public static final int INFO = 4;
-    public static final int WARN = 5;
-    public static final int ERROR = 6;
-    public static final int ASSERT = 7;
+Log.v //    VERBOSE;
+Log.d //    DEBUG;
+Log.i //    INFO;
+Log.w //    WARN;
+Log.e //    ERROR;
+Log.a //    ASSERT;
 ```
 * По ним можно фильтровать.</script></section><section  data-markdown><script type="text/template">
 ### Логи

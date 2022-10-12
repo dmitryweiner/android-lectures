@@ -158,4 +158,6 @@ class SecondActivity : AppCompatActivity() {
 * https://www.digitalocean.com/community/tutorials/android-intent-handling-between-activities-using-kotlin
 * https://www.fandroid.info/urok-5-kotlin-dobavlenie-vtorogo-ekrana-v-android-prilozhenie/
 * https://startandroid.ru/ru/uroki/vse-uroki-spiskom/67-urok-28-extras-peredaem-dannye-s-pomoschju-intent.html
+---
+### Полезные ссылки
 * <iframe width="560" height="315" src="https://www.youtube.com/embed/njmOeFadDEI" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>

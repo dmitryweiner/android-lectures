@@ -283,7 +283,11 @@ radioButton.isChecked
 // реакция на события
 val radioGroup = findViewById<RadioGroup>(R.id.radioGroup)
 radioGroup.setOnCheckedChangeListener { 
-  radioGroup, i -> /* i -- номер выбранного пункта */
+  radioGroup, i -> /* i -- id выбранного пункта */
+  when(i) {
+    R.id.radioButton1 -> // делаем что-то
+    R.id.radioButton2 -> // делаем что-то другое
+  }
 }
 ```
 ---
