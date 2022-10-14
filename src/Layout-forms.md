@@ -114,7 +114,10 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         val button = findViewById<Button>(R.id.button)
-        button.setOnClickListener { button.text = "Ура, на меня нажали!" }
+        button.setOnClickListener {
+            // так можно менять текст кнопки 
+            button.text = "Ура, на меня нажали!"
+        }
     }
 }
 ```
@@ -175,7 +178,7 @@ button.setOnClickListener {
    // прочитать введённый текст
    val text = editText.text.toString()
    
-   // записать строку
+   // записать строку  в поле
    editText.setText(text.reversed())
 }
 ```
@@ -213,7 +216,7 @@ editText.doAfterTextChanged {
 editText.addTextChangedListener(object : TextWatcher {
  // после того, как текст редактировали
  override fun afterTextChanged(s: Editable) {   
-  // тут введённая строка s.toString()
+  // в s.toString() введённая строка 
  }
  // перед тем, как текст редактировали
  override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {
@@ -241,7 +244,9 @@ val switch = findViewById<Switch>(R.id.switch)
 switch.isChecked
 // реакция на переключение
 switch.setOnCheckedChangeListener { 
-   compoundButton, b -> editText.setText(if (b) "Включено" else "Выключено")
+   compoundButton, b ->
+     // в b лежит новое состояние чекбокса 
+     editText.setText(if (b) "Включено" else "Выключено")
 }
 ```
 ---
@@ -348,8 +353,8 @@ spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
 ```kotlin
 val seekBar = findViewById<SeekBar>(R.id.seekBar)
 
-// текущее значение
-seekBar.progress
+// можно прочитать текущее значение SeekBar
+val n = seekBar.progress
 ```
 
 [Подробнее](https://developer.alexanderklimov.ru/android/views/seekbar.php)
@@ -363,7 +368,7 @@ val seekBar = findViewById<SeekBar>(R.id.seekBar)
 // реакция на изменение
 seekBar.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener{
     override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
-        // progress - новое значение
+        // в progress новое значение
     }
     override fun onStartTrackingTouch(seekBar: SeekBar?) {    }
     override fun onStopTrackingTouch(seekBar: SeekBar?) {     }
