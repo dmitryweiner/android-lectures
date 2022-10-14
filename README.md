@@ -7,7 +7,7 @@
 * [Анатомия приложения](https://dmitryweiner.github.io/android-lectures/Application-structure.html).
 * [Разметка. Работа с компонентами](https://dmitryweiner.github.io/android-lectures/Layout-forms.html).
 * [Recycler View: бесконечный список](https://dmitryweiner.github.io/android-lectures/Recycler-view.html).
-* Activity.
+* [Activity](https://dmitryweiner.github.io/android-lectures/Activity.html#/).
   * Жизненный цикл Activity.
   * Сохранение состояния в bundle.
 * Интенты.
