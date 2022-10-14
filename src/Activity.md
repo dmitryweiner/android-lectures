@@ -4,7 +4,7 @@
 
 [все лекции](https://github.com/dmitryweiner/android-lectures/blob/master/README.md)
 
-[видео]()
+[видео](https://youtu.be/dwP9QgfWdCE)
 ---
 
 ### Жизненный цикл
@@ -177,9 +177,7 @@ class MainActivity : AppCompatActivity() {
 
     lateinit var state: State
     class State(
-        var text: String,
         var counter: Int,
-        var flag: Boolean
     ): Serializable
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -189,11 +187,7 @@ class MainActivity : AppCompatActivity() {
         state = if (savedInstanceState != null)
             savedInstanceState.getSerializable(STATE_KEY) as State
         else
-            State(
-                text = "",
-                counter = 0,
-                flag = false
-            )
+            State(counter = 0)
 
         val buttonPlus = findViewById<Button>(R.id.buttonPlus)
         buttonPlus.setOnClickListener {
@@ -235,18 +229,38 @@ class MainActivity : AppCompatActivity() {
 ---
 ### Переход на другую активити
 ```kotlin
-val button = findViewById<Button>(R.id.button)
-button.setOnClickListener {
-    val intent = Intent(this, SecondActivity::class.java)
-    startActivity(intent)
+class MainActivity : AppCompatActivity() {
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_main)
+        val button = findViewById<Button>(R.id.button)
+        button.setOnClickListener {
+            val intent = Intent(this, SecondActivity::class.java)
+            startActivity(intent)
+        }
+    }
 }
 ```
 ---
 ### Передача параметров
 ```kotlin
-val intent = Intent(this, SecondActivity::class.java)
-intent.putExtra("key", value)
-startActivity(intent)
+class MainActivity : AppCompatActivity() {
+    companion object {
+        const val EXTRA_KEY = "EXTRA"
+    }
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_main)
+        val button = findViewById<Button>(R.id.button)
+        button.setOnClickListener {
+            val intent = Intent(this, SecondActivity::class.java)
+            intent.putExtra(EXTRA_KEY, "тут какая-то строка")
+            startActivity(intent)
+        }
+    }
+}
+
+
 ```
 ---
 ### Приём параметров в вызванной активити
@@ -258,20 +272,41 @@ class SecondActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_second)
 
-        val textView = findViewById<TextView>(R.id.textView2)
         val intent = getIntent()
-        val value = intent.getStringExtra("key")
-        textView.text = value
+        val s = intent.getStringExtra(MainActivity.EXTRA_KEY)
+        
+        val textView = findViewById<TextView>(R.id.textView)
+        textView.text = s
     }
 }
 ```
 ---
+
+### Приём параметров в зависимости от типа
+* Тип переданных параметров должен совпадать.
+* Передали строку:
+```kotlin
+// MainActivity
+intent.putExtra(EXTRA_KEY, "тут какая-то строка")
+// SecondActivity
+val s = intent.getStringExtra(MainActivity.EXTRA_KEY)
+```
+* Передали число:
+```kotlin
+// MainActivity
+intent.putExtra(EXTRA_KEY, 123)
+// SecondActivity
+val n = intent.getIntExtra(MainActivity.EXTRA_KEY, 0)
+```
+---
+
 ### Задачи
 * Список чисел [RecyclerView](https://dmitryweiner.github.io/android-lectures/Recycler-view.html#/) с возможностью добавления числа:
 <br/><input><button>+</button><br/>
 <ul style="width: 200px; height: 150px; overflow-y: scroll"><li>1 <button>➡</button></li><li>3 <button>➡</button></li><li>15 <button>➡</button></li><li>22 <button>➡</button></li><li>14 <button>➡</button></li><li>47 <button>➡</button></li><li>2 <button>➡</button></li></ul>
 При нажатии на [+] в список добавляется очередное число из поля ввода.
 При клике на [➡] на элементе списка происходит переход на другую активити, где отображается выбранное число.
+При повороте устройства введённые числа сохраняются.
 ---
 
 ### Полезные ссылки
