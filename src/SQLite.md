@@ -20,20 +20,52 @@ SQLite поддерживает только четыре типа данных,
 * BLOB — двоичные данные.
 Также существует особое значение NULL — отсутствие данных.
 ---
+
+### Техническое задание
+* Написать приложение для хранения списка дел в БД.
+* Пользователь может:
+  * просматривать список,
+  * отмечать дела выполненными,
+  * удалять дела,
+  * добавлять новые дела.
+---
+
 ### Создание таблиц
 ```sql
-
+CREATE TABLE todos (
+  id INTEGER PRIMARY KEY,
+  title TEXT NOT NULL, 
+  is_done INTEGER NOT NULL
+)
 ```
 ---
 
 ### Изменение записей
 ```sql
+UPDATE todos
+SET title = 'Покормить кота'
+WHERE id = 3;
+```
+---
+
+### Удаление записей
+```sql
+DELETE FROM todos WHERE id = 123
 ```
 ---
 
 ### Адаптер для доступа к БД
 ```kotlin
-class DBHelper extends SQLiteOpenHelper {
+class DBHelper(context: Context?) :
+    SQLiteOpenHelper(context, DATABASE_NAME, null, DATABASE_VERSION) {
+    override fun onCreate(db: SQLiteDatabase) {
+        // создание БД, если она ещё не создана
+    }
+
+    override fun onUpgrade(db: SQLiteDatabase, oldVersion: Int, newVersion: Int) {
+        // обновление БД
+    }
+
     companion object {
         // версия БД
         const val DATABASE_VERSION = 1
@@ -45,68 +77,6 @@ class DBHelper extends SQLiteOpenHelper {
         const val KEY_ID = "id"
         const val KEY_TITLE = "title"
         const val KEY_IS_DONE = "is_done"
-    }
-    
-    public DBHelper(@Nullable Context context) {
-        super(context, DATABASE_NAME, null, DATABASE_VERSION);
-    }
-    @Override
-    public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        db.execSQL("drop table if exists " + TABLE_NAME);
-        onCreate(db);
-    }
-
-    public ArrayList<Todo> getTodos() {
-        ArrayList<Todo> result = new ArrayList<Todo>();
-        SQLiteDatabase database = this.getWritableDatabase();
-        Cursor cursor = database.query(TABLE_NAME, null, null, null,
-                null, null, null);
-        if (cursor.moveToFirst())
-        {
-            int idIndex = cursor.getColumnIndex(KEY_ID);
-            int titleIndex = cursor.getColumnIndex(KEY_TITLE);
-            int isDoneIndex = cursor.getColumnIndex(KEY_IS_DONE);
-            do {
-                Todo todo = new Todo(
-                        cursor.getString(idIndex),
-                        cursor.getString(titleIndex),
-                        cursor.getInt(isDoneIndex) == 1);
-                result.add(todo);
-            } while (cursor.moveToNext());
-        }
-        cursor.close();
-        return result;
-    }
-
-    public void addTodo(Todo todo) {
-        SQLiteDatabase database = this.getWritableDatabase();
-        ContentValues contentValues = new ContentValues();
-        contentValues.put(DBHelper.KEY_ID, todo.getId());
-        contentValues.put(DBHelper.KEY_TITLE, todo.getTitle());
-        contentValues.put(DBHelper.KEY_IS_DONE, todo.getIsDone() ? 1: 0);
-        database.insert(DBHelper.TABLE_NAME, null, contentValues);
-        this.close();
-    }
-
-    public void updateTodo(Todo todo) {
-        SQLiteDatabase database = this.getWritableDatabase();
-        ContentValues contentValues = new ContentValues();
-        contentValues.put(DBHelper.KEY_TITLE, todo.getTitle());
-        contentValues.put(DBHelper.KEY_IS_DONE, todo.getIsDone() ? 1: 0);
-        database.update(DBHelper.TABLE_NAME, contentValues, DBHelper.KEY_ID + " = ?", new String[] {todo.getId()});
-        this.close();
-    }
-
-    public void removeTodo(Todo todo) {
-        SQLiteDatabase database = this.getWritableDatabase();
-        database.delete(DBHelper.TABLE_NAME, DBHelper.KEY_ID + " = ?", new String[] {todo.getId()});
-        this.close();
-    }
-
-    public void removeAllTodos() {
-        SQLiteDatabase database = this.getWritableDatabase();
-        database.delete(DBHelper.TABLE_NAME, null, null);
-        this.close();
     }
 }
 ```
@@ -132,8 +102,93 @@ class DBHelper extends SQLiteOpenHelper {
 
 ---
 
-### 
+### Адаптер в сборе
+```kotlin
+package com.example.myapplication
 
+import android.content.ContentValues
+import android.content.Context
+import android.database.Cursor
+import android.database.sqlite.SQLiteDatabase
+import android.database.sqlite.SQLiteOpenHelper
+
+data class Todo(val id: Int, val title: String, val isDone: Boolean)
+
+class DBHelper(context: Context?) :
+    SQLiteOpenHelper(context, DATABASE_NAME, null, DATABASE_VERSION) {
+    override fun onCreate(db: SQLiteDatabase) {
+        db.execSQL("CREATE TABLE $TABLE_NAME ($KEY_ID PRIMARY KEY, $KEY_TITLE TEXT NOT NULL, $KEY_IS_DONE INTEGER NOT NULL)")
+    }
+
+    override fun onUpgrade(db: SQLiteDatabase, oldVersion: Int, newVersion: Int) {
+        db.execSQL("DROP TABLE IF EXISTS $TABLE_NAME")
+        onCreate(db)
+    }
+
+    fun getTodos(): List<Todo> {
+        val result = mutableListOf<Todo>()
+        val database = this.writableDatabase
+        val cursor: Cursor = database.query(
+            TABLE_NAME, null, null, null,
+            null, null, null
+        )
+        if (cursor.moveToFirst()) {
+            val idIndex: Int = cursor.getColumnIndex(KEY_ID)
+            val titleIndex: Int = cursor.getColumnIndex(KEY_TITLE)
+            val isDoneIndex: Int = cursor.getColumnIndex(KEY_IS_DONE)
+            do {
+                val todo: Todo = Todo(
+                    cursor.getInt(idIndex),
+                    cursor.getString(titleIndex),
+                    cursor.getInt(isDoneIndex) == 1
+                )
+                result.add(todo)
+            } while (cursor.moveToNext())
+        }
+        cursor.close()
+        return result
+    }
+
+    fun addTodo(title: String, isDone: Boolean = false) {
+        val database = this.writableDatabase
+        val contentValues = ContentValues()
+        contentValues.put(KEY_TITLE, title)
+        contentValues.put(KEY_IS_DONE, if (isDone) 1 else 0)
+        database.insert(TABLE_NAME, null, contentValues)
+        close()
+    }
+
+    fun updateTodo(id: Int, title: String, isDone: Boolean) {
+        val database = this.writableDatabase
+        val contentValues = ContentValues()
+        contentValues.put(KEY_TITLE, title)
+        contentValues.put(KEY_IS_DONE, if (isDone) 1 else 0)
+        database.update(TABLE_NAME, contentValues, "$KEY_ID = ?", arrayOf(id.toString()))
+        close()
+    }
+
+    fun removeTodo(id: Int) {
+        val database = this.writableDatabase
+        database.delete(TABLE_NAME, "$KEY_ID = ?", arrayOf(id.toString()))
+        close()
+    }
+
+    fun removeAllTodos() {
+        val database = this.writableDatabase
+        database.delete(TABLE_NAME, null, null)
+        close()
+    }
+
+    companion object {
+        const val DATABASE_VERSION = 1
+        const val DATABASE_NAME = "tododb"
+        const val TABLE_NAME = "todos"
+        const val KEY_ID = "id"
+        const val KEY_TITLE = "title"
+        const val KEY_IS_DONE = "is_done"
+    }
+}
+```
 ---
 
 ### 
