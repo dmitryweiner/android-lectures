@@ -313,6 +313,10 @@ mostRare(
 ```
 ---
 
+### Задачи
+https://developer.android.com/codelabs/basic-android-kotlin-training-collections
+---
+
 ### Полезные ссылки
 * https://developer.alexanderklimov.ru/android/kotlin/array.php
 * https://metanit.com/kotlin/tutorial/2.3.php

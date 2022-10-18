@@ -321,4 +321,10 @@ class MainActivity : AppCompatActivity() {
 ---
 
 ### Полезные ссылки
+* https://developer.alexanderklimov.ru/android/sqlite/android-sqlite.php
 * https://metanit.com/sql/sqlite/
+* https://developer.android.com/training/data-storage/sqlite
+
+---
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/tQot9NMbtiw" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>

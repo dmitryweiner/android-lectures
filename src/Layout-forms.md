@@ -440,6 +440,10 @@ toast.show()
 При нажатии на [+] в список добавляется очередное число из поля ввода. При изменении состояния фильтра список обновляется.
 ---
 
+### Задачи
+https://developer.android.com/codelabs/basic-android-kotlin-training-xml-layouts
+---
+
 ### Полезные ссылки
 * https://developer.alexanderklimov.ru/android/layout/constraintlayout.php
 * https://developer.alexanderklimov.ru/android/views/

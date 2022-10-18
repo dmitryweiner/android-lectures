@@ -309,6 +309,10 @@ val n = intent.getIntExtra(MainActivity.EXTRA_KEY, 0)
 При повороте устройства введённые числа сохраняются.
 ---
 
+### Задачи
+https://developer.android.com/codelabs/basic-android-kotlin-training-activities-intents
+---
+
 ### Полезные ссылки
 * https://developer.alexanderklimov.ru/android/theory/lifecycle.php
 * https://metanit.com/java/android/2.1.php
