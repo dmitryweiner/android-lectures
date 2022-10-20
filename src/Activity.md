@@ -62,7 +62,7 @@ class MainActivity : AppCompatActivity() {
 ---
 ### Сохранение состояния в bundle
 ```kotlin
-val EDIT_TEXT_KEY = "EDIT_TEXT_KEY"
+val EDIT_TEXT_KEY = "EDIT_TEXT"
 
 override fun onSaveInstanceState(outState: Bundle) {
     val editText = findViewById<EditText>(R.id.editText)
@@ -98,7 +98,7 @@ outState.putString(
 
 ### Восстановление состояния из bundle
 ```kotlin
-val EDIT_TEXT_KEY = "EDIT_TEXT_KEY"
+val EDIT_TEXT_KEY = "EDIT_TEXT"
 
 override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
@@ -111,6 +111,32 @@ override fun onCreate(savedInstanceState: Bundle?) {
 }
 ```
 ---
+
+### Всё в сборе
+```kotlin
+class MainActivity : AppCompatActivity() {
+
+  val EDIT_TEXT_KEY = "EDIT_TEXT"
+  
+  override fun onCreate(savedInstanceState: Bundle?) {
+      super.onCreate(savedInstanceState)
+      setContentView(R.layout.activity_main)
+      
+      if (savedInstanceState != null) {
+          val editText = findViewById<EditText>(R.id.editText)
+          editText.setText(savedInstanceState.getString(EDIT_TEXT_KEY))
+      }
+  }
+  
+  override fun onSaveInstanceState(outState: Bundle) {
+      val editText = findViewById<EditText>(R.id.editText)
+      outState.putString(EDIT_TEXT_KEY, editText.text.toString())
+      super.onSaveInstanceState(outState)
+  }
+}
+```
+---
+
 ### Сохраняем в State
 * Если параметров больше 2, разумнее завести под это отдельный класс и сохранять в него.
 * Создаём Serializable класс внутри Activity:
@@ -126,7 +152,7 @@ class State(
 
 ### Сохранение данных стейта
 ```kotlin
-val STATE_KEY = "STATE_KEY"
+val STATE_KEY = "STATE"
 
 override fun onSaveInstanceState(outState: Bundle) {
     super.onSaveInstanceState(outState)
@@ -144,7 +170,7 @@ override fun onSaveInstanceState(outState: Bundle) {
 
 ### Восстановление данных стейта
 ```kotlin
-val STATE_KEY = "STATE_KEY"
+val STATE_KEY = "STATE"
 
 override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
@@ -173,7 +199,7 @@ fun renderState() {
 ### Всё в сборе
 ```kotlin
 class MainActivity : AppCompatActivity() {
-    val STATE_KEY = "STATE_KEY"
+    val STATE_KEY = "STATE"
 
     lateinit var state: State
     class State(
@@ -259,8 +285,6 @@ class MainActivity : AppCompatActivity() {
         }
     }
 }
-
-
 ```
 ---
 ### Приём параметров в вызванной активити
@@ -297,6 +321,67 @@ val s = intent.getStringExtra(MainActivity.EXTRA_KEY)
 intent.putExtra(EXTRA_KEY, 123)
 // SecondActivity
 val n = intent.getIntExtra(MainActivity.EXTRA_KEY, 0)
+```
+---
+
+### Получение ответа от вызванной Activity
+* Допустим, Activity1 вызывает Activity2 и ожидает от пользователя некоего ответа. Например, если это редактирование, можно либо сохранить результат, либо отменить.
+* Чтобы получить ответ, надо вызвать интент через `startActivityForResult`.
+* Для получения ответа надо реализовать метод `onActivityResult`. 
+* [Подробнее](https://startandroid.ru/ru/uroki/vse-uroki-spiskom/68-urok-29-vyzyvaem-activity-i-poluchaem-rezultat-metod-startactivityforresult.html),
+  [ещё](https://startandroid.ru/ru/uroki/vse-uroki-spiskom/69-urok-30-podrobnee-pro-onactivityresult-zachem-nuzhny-requestcode-i-resultcode.html).
+---
+
+### Вызов через `startActivityForResult`
+
+```kotlin
+val REQUEST_CODE = 1
+
+override fun onCreate(savedInstanceState: Bundle?) {
+    // ...
+    val button = findViewById<Button>(R.id.button)
+    button.setOnClickListener {
+      val intent = new Intent(this, SecondActivity::class.java)
+      startActivityForResult(intent, REQUEST_CODE)
+    }
+}
+
+```
+---
+
+### Отправка результата из Activity2
+```kotlin
+class Activity2 : AppCompatActivity() {
+    companion object {
+        const val RESULT_KEY = "result"
+    }
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_main)
+        val button = findViewById<Button>(R.id.button)
+        button.setOnClickListener {
+            val returnIntent = Intent()
+            returnIntent.putExtra(RESULT_KEY, "тут какой-то результат (строка)")
+            setResult(Activity.RESULT_OK, returnIntent)
+            finish()
+        }
+    }
+}
+```
+---
+
+### Получение результата вызова в Activity1
+
+```kotlin
+override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+    super.onActivityResult(requestCode, resultCode, data)
+
+    if (requestCode == REQUEST_CODE && resultCode == Activity.RESULT_OK) {
+        // получение данных от Activity2
+        val result = data?.getStringExtra(SecondActivity.RESULT_KEY) 
+        // в result лежит строка "тут какой-то результат (строка)"
+    }
+}
 ```
 ---
 
