@@ -93,6 +93,7 @@ class DBHelper(context: Context?) :
 
 ### onCreate
 * В этом методе пишем код, который создаёт таблицы в БД:
+
 ```kotlin
 override fun onCreate(db: SQLiteDatabase) {
     db.execSQL("CREATE TABLE $TABLE_NAME ($KEY_ID INTEGER PRIMARY KEY AUTOINCREMENT, $KEY_TITLE TEXT NOT NULL, $KEY_IS_DONE INTEGER NOT NULL)")
@@ -103,6 +104,7 @@ override fun onCreate(db: SQLiteDatabase) {
 ### onUpgrade
 * Тут пишем код, который выполняется при обновлении БД (изменении DATABASE_VERSION). 
 В данном случае можно просто пересоздать таблицы:
+
 ```kotlin
 override fun onUpgrade(db: SQLiteDatabase, oldVersion: Int, newVersion: Int) {
     db.execSQL("DROP TABLE IF EXISTS $TABLE_NAME")
@@ -273,7 +275,7 @@ class DBHelper(context: Context?) :
 ```
 ---
 
-### Пример использования 
+### Пример использования в Activity
 ```kotlin
 class MainActivity : AppCompatActivity() {
     private val dbHelper = DBHelper(this)
@@ -300,7 +302,7 @@ class MainActivity : AppCompatActivity() {
 ---
 
 ### Где лежит БД
-* Device Explorer: `/data/data/%PACKAGE_NAME%/databases`:
+* Device File Explorer: `/data/data/%PACKAGE_NAME%/databases`:
 
 ![](assets/sqlite/db-location.png)
 ---
