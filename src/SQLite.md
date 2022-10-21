@@ -4,7 +4,7 @@
 
 [все лекции](https://github.com/dmitryweiner/android-lectures/blob/master/README.md)
 
-[видео]()
+[видео](https://youtu.be/taHhb1_6mUk)
 ---
 
 > SQLite — это быстрая и легкая встраиваемая однофайловая СУБД на языке C, которая не имеет сервера и позволяет хранить всю базу локально на одном устройстве. Для работы SQLite не нужны сторонние библиотеки или службы.
@@ -307,6 +307,13 @@ class MainActivity : AppCompatActivity() {
 ![](assets/sqlite/db-location.png)
 ---
 
+### Доступ к БД на телефоне
+
+* App Inspection -> Databases:
+
+![](assets/sqlite/app-inspection.png)
+---
+
 ### Задачи 
 * Список строк [RecyclerView](https://dmitryweiner.github.io/android-lectures/Recycler-view.html#/) с возможностью добавления:
   <br/><input><button>+</button><br/>
@@ -326,6 +333,7 @@ class MainActivity : AppCompatActivity() {
 * https://developer.alexanderklimov.ru/android/sqlite/android-sqlite.php
 * https://metanit.com/sql/sqlite/
 * https://developer.android.com/training/data-storage/sqlite
+* [Репозиторий с уже реализованным сохранением в SQLite](https://github.com/dmitryweiner/kotlin-sqlite-todolist).
 
 ---
 

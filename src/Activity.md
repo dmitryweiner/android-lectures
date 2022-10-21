@@ -296,7 +296,7 @@ class SecondActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_second)
 
-        val intent = getIntent()
+        // val intent = getIntent()
         val s = intent.getStringExtra(MainActivity.EXTRA_KEY)
         
         val textView = findViewById<TextView>(R.id.textView)
@@ -341,7 +341,7 @@ override fun onCreate(savedInstanceState: Bundle?) {
     // ...
     val button = findViewById<Button>(R.id.button)
     button.setOnClickListener {
-      val intent = new Intent(this, SecondActivity::class.java)
+      val intent = Intent(this, SecondActivity::class.java)
       startActivityForResult(intent, REQUEST_CODE)
     }
 }
