@@ -307,16 +307,26 @@ class MainActivity : AppCompatActivity() {
 ![](assets/sqlite/db-location.png)
 ---
 
-### Доступ к БД на телефоне
+### Доступ к БД на устройстве
 
-* App Inspection -> Databases:
+* App Inspection -> Database Inspector:
 
 ![](assets/sqlite/app-inspection.png)
 ---
 
+### Минусы описанного подхода
+* Выполнение запросов в том же потоке, что и 
+  * Во время тяжёлых запросов интерфейс замирает.
+* Отсутствует модель данных и DAO.
+  * Тяжело добавить/изменить поля.
+  * Тяжело переписать под другую БД.
+* Вывод: надо использовать библиотеку Room.
+---
+
 ### Задачи 
-* Список строк [RecyclerView](https://dmitryweiner.github.io/android-lectures/Recycler-view.html#/) с возможностью добавления:
-  <br/><input><button>+</button><br/>
+* Список строк [RecyclerView](https://dmitryweiner.github.io/android-lectures/Recycler-view.html#/) 
+с возможностью добавления и удаления:
+<br/><input><button>+</button><br/>
 <ul style="width: 200px; height: 150px; overflow-y: scroll">
 <li>олух <button>🚮</button></li>
 <li>пузырь <button>🚮</button></li>
@@ -326,7 +336,7 @@ class MainActivity : AppCompatActivity() {
 При нажатии на [+] в список добавляется очередная строка из поля ввода.
 При клике на [🚮] на элементе списка происходит удаление элемента.
 При повороте устройства данные сохраняются.
-Данные лежат в БД SQLite.
+Данные должны лежать в БД SQLite.
 ---
 
 ### Полезные ссылки
@@ -334,7 +344,6 @@ class MainActivity : AppCompatActivity() {
 * https://metanit.com/sql/sqlite/
 * https://developer.android.com/training/data-storage/sqlite
 * [Репозиторий с уже реализованным сохранением в SQLite](https://github.com/dmitryweiner/kotlin-sqlite-todolist).
-
 ---
 
 <iframe width="560" height="315" src="https://www.youtube.com/embed/tQot9NMbtiw" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
