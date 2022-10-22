@@ -7,12 +7,12 @@
 * [Анатомия приложения](https://dmitryweiner.github.io/android-lectures/Application-structure.html).
 * [Разметка. Работа с компонентами](https://dmitryweiner.github.io/android-lectures/Layout-forms.html).
 * [Recycler View: бесконечный список](https://dmitryweiner.github.io/android-lectures/Recycler-view.html).
-* [Activity](https://dmitryweiner.github.io/android-lectures/Activity.html#/).
+* [Activity](https://dmitryweiner.github.io/android-lectures/Activity.html#/):
   * Жизненный цикл Activity.
   * Сохранение состояния в bundle.
   * Интенты. Навигация между Activity c помощью Intent.
-* Сохранение данных.
-  * SQLite.
+* Сохранение данных:
+  * [SQLite](https://dmitryweiner.github.io/android-lectures/SQLite.html#/).
   * Room.
 * Запрос разрешений.
   * Разрешения в Manifest.xml.
