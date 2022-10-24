@@ -232,7 +232,7 @@ class MainActivity : AppCompatActivity() {
 }
 ```</script></section><section  data-markdown><script type="text/template">
 ### Переход на другую активити
-* Для начала надо создать другую активити.
+* Для начала надо создать другую активити (Empty Activity).
 * [Подробнее](https://www.fandroid.info/urok-5-kotlin-dobavlenie-vtorogo-ekrana-v-android-prilozhenie/).
 
 ![](assets/activity/img.png)
@@ -302,7 +302,7 @@ intent.putExtra(EXTRA_KEY, 123)
 val n = intent.getIntExtra(MainActivity.EXTRA_KEY, 0)
 ```</script></section><section  data-markdown><script type="text/template">
 ### Получение ответа от вызванной Activity
-* Допустим, Activity1 вызывает Activity2 и ожидает от пользователя некоего ответа. Например, если это редактирование, можно либо сохранить результат, либо отменить.
+* Допустим, MainActivity вызывает SecondActivity и ожидает от пользователя некоего ответа. Например, если это редактирование, можно либо сохранить результат, либо отменить.
 * Чтобы получить ответ, надо вызвать интент через `startActivityForResult`.
 * Для получения ответа надо реализовать метод `onActivityResult`. 
 * [Подробнее](https://startandroid.ru/ru/uroki/vse-uroki-spiskom/68-urok-29-vyzyvaem-activity-i-poluchaem-rezultat-metod-startactivityforresult.html),
@@ -310,21 +310,22 @@ val n = intent.getIntExtra(MainActivity.EXTRA_KEY, 0)
 ### Вызов через `startActivityForResult`
 
 ```kotlin
-val REQUEST_CODE = 1
-
-override fun onCreate(savedInstanceState: Bundle?) {
-    // ...
-    val button = findViewById<Button>(R.id.button)
-    button.setOnClickListener {
-      val intent = Intent(this, SecondActivity::class.java)
-      startActivityForResult(intent, REQUEST_CODE)
+class MainActivity : AppCompatActivity() {
+    val REQUEST_CODE = 1
+    
+    override fun onCreate(savedInstanceState: Bundle?) {
+        // ...
+        val button = findViewById<Button>(R.id.button)
+        button.setOnClickListener {
+          val intent = Intent(this, SecondActivity::class.java)
+          startActivityForResult(intent, REQUEST_CODE)
+        }
     }
 }
-
 ```</script></section><section  data-markdown><script type="text/template">
-### Отправка результата из Activity2
+### Отправка результата из SecondActivity
 ```kotlin
-class Activity2 : AppCompatActivity() {
+class SecondActivity : AppCompatActivity() {
     companion object {
         const val RESULT_KEY = "result"
     }
@@ -341,7 +342,7 @@ class Activity2 : AppCompatActivity() {
     }
 }
 ```</script></section><section  data-markdown><script type="text/template">
-### Получение результата вызова в Activity1
+### Получение результата вызова в MainActivity
 
 ```kotlin
 override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {

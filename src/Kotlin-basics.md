@@ -295,13 +295,16 @@ fun double(x: Int): Int {
 }
 val result = double(2)
 ```
-* Параметры по умолчанию:
+* Параметры по умолчанию (должны идти последними):
 ```kotlin
 fun read(
     b: ByteArray,
     off: Int = 0,
     len: Int = b.size,
 ) { /*...*/ } 
+read(b, 10, 5)
+read(b, 10) // len = b.size
+read(b) // остальные аргументы дефолтные
 ```
 ---
 
@@ -328,18 +331,17 @@ val sum = { x: Int, y: Int -> x + y }
 * [Подробнее](https://kotlinlang.org/docs/lambdas.html).
 ---
 
-### Короткая запись лямбды
-* Если лямбда содержит один аргумент и его тип можно вывести:
+### Служебное слово `it`
+* Если лямбда содержит __только один__ аргумент:
 ```kotlin
-var s = "Hello world!"
-print(s.filter({ ch: Char -> ch != 'l' }))
-// Heo word!
+val square: (n: Int) -> Int = { n: Int -> n * n }
+square(3) // 9
 ```
 * Его можно заменить служебным словом `it`, опустив стрелку `->`:
 ```kotlin
-var s = "Hello world!"
-print(s.filter({ it != 'l' }))
+val square: (n: Int) -> Int = { it * it }
 ```
+* [Подробнее](https://kotlinlang.ru/docs/lambdas.html).
 ---
 
 ### Передача лямбды в аргументе
@@ -347,7 +349,11 @@ print(s.filter({ it != 'l' }))
 вне скобок функции:
 
 ```kotlin
-fun max(a: Int, b: Int, compare: (Int, Int) -> Boolean): Boolean {
+fun max(
+    a: Int,
+    b: Int,
+    compare: (Int, Int) -> Boolean
+): Boolean {
   return compare(a, b)
 }
 
@@ -364,7 +370,10 @@ run { println("...") }
 ints.filter { it > 0 }
 
 // или даже так:
-strings.filter { it.length == 5 }.sortedBy { it }.map { it.uppercase() }
+strings
+    .filter { it.length == 5 }
+    .sortedBy { it }
+    .map { it.uppercase() }
 ```
 ---
 
