@@ -1,0 +1,1 @@
+http://developer.alexanderklimov.ru/android/library/retrofit.php
