@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="./dist/reset.css" />
     <link rel="stylesheet" href="./dist/reveal.css" />
     <link rel="stylesheet" href="./dist/theme/serif.css" id="theme" />
-    <link rel="stylesheet" href="./css/highlight/base16/zenburn.css" />
+    <link rel="stylesheet" href="./css/highlight/androidstudio.css" />
 
 
   </head>
@@ -54,13 +54,18 @@ CREATE TABLE todos (
 Выборка записей
 ```sql
 SELECT * FROM todos;
-```</script></section><section  data-markdown><script type="text/template">Изменение записей
+```</script></section><section  data-markdown><script type="text/template">Добавление записи
+```sql
+INSERT INTO todos (title, is_done)
+VALUES ('Покормить кота', 0)
+```
+Изменение записи
 ```sql
 UPDATE todos
 SET title = 'Покормить кота'
 WHERE id = 3;
 ```
-Удаление записей
+Удаление записи
 ```sql
 DELETE FROM todos
 WHERE id = 1;
@@ -97,7 +102,12 @@ class DBHelper(context: Context?) :
 
 ```kotlin
 override fun onCreate(db: SQLiteDatabase) {
-    db.execSQL("CREATE TABLE $TABLE_NAME ($KEY_ID INTEGER PRIMARY KEY AUTOINCREMENT, $KEY_TITLE TEXT NOT NULL, $KEY_IS_DONE INTEGER NOT NULL)")
+    db.execSQL("""
+        CREATE TABLE $TABLE_NAME (
+            $KEY_ID INTEGER PRIMARY KEY AUTOINCREMENT,
+            $KEY_TITLE TEXT NOT NULL,
+            $KEY_IS_DONE INTEGER NOT NULL
+        )""")
 }
 ```</script></section><section  data-markdown><script type="text/template">
 ### onUpgrade

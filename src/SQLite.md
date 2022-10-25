@@ -49,13 +49,18 @@ CREATE TABLE todos (
 SELECT * FROM todos;
 ```
 ---
-Изменение записей
+Добавление записи
+```sql
+INSERT INTO todos (title, is_done)
+VALUES ('Покормить кота', 0)
+```
+Изменение записи
 ```sql
 UPDATE todos
 SET title = 'Покормить кота'
 WHERE id = 3;
 ```
-Удаление записей
+Удаление записи
 ```sql
 DELETE FROM todos
 WHERE id = 1;
@@ -96,7 +101,12 @@ class DBHelper(context: Context?) :
 
 ```kotlin
 override fun onCreate(db: SQLiteDatabase) {
-    db.execSQL("CREATE TABLE $TABLE_NAME ($KEY_ID INTEGER PRIMARY KEY AUTOINCREMENT, $KEY_TITLE TEXT NOT NULL, $KEY_IS_DONE INTEGER NOT NULL)")
+    db.execSQL("""
+        CREATE TABLE $TABLE_NAME (
+            $KEY_ID INTEGER PRIMARY KEY AUTOINCREMENT,
+            $KEY_TITLE TEXT NOT NULL,
+            $KEY_IS_DONE INTEGER NOT NULL
+        )""")
 }
 ```
 ---
