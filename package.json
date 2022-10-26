@@ -7,9 +7,9 @@
     "doc": "docs"
   },
   "scripts": {
-    "build": "reveal-md src --static docs --theme serif",
+    "build": "reveal-md src --static docs --theme serif --highlight-theme androidstudio",
     "serve": "npx http-server docs",
-    "start": "reveal-md src -w --theme serif"
+    "start": "reveal-md src -w --theme serif --highlight-theme androidstudio"
   },
   "dependencies": {
     "reveal-md": "^5"

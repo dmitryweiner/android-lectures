@@ -1,115 +1,147 @@
-### Библиотека Room для доступа к БД SQLite
+# `Room`
+### Библиотека для доступа к БД SQLite
 
 [все лекции](https://github.com/dmitryweiner/android-lectures/blob/master/README.md)
 
 [видео]()
 ---
 
+### Диаграмма компонентов
 ![](assets/room/components.png)
 ---
 
+* Entity - класс для доступа к строке таблицы.
+* [Data Access Object](https://ru.wikipedia.org/wiki/Data_Access_Object) - класс для доступа к коллекциям (множеству строк).
+* Database - сервисный класс для хранения подключения к БД, создания таблиц.
+---
+
 ### Установка
-* project build.gradle: 
+* settings.gradle (project): 
 ```
-allprojects {
+pluginManagement {
     repositories {
         jcenter()
-        google() // <---
+        google() // <--- добавить, если нет
     }
-    ...
+    // ...
 }
 ```
-* app build.gradle: 
+---
+
+### Установка
+* build.gradle (module): 
 ```
+plugins {
+    // ...
+    id 'kotlin-kapt' // <- добавить
+}
+// ... 
 dependencies {
-    implementation "android.arch.persistence.room:runtime:1.0.0"
-    annotationProcessor "android.arch.persistence.room:compiler:1.0.0"
-    ...
+    // ...
+    implementation "androidx.room:room-ktx:2.4.3"
+    kapt "androidx.room:room-compiler:2.4.3"
 }
 ```
- 
+* gradle.properties:
+```
+android.useAndroidX=true // скорее всего есть
+android.enableJetifier=true
+```
 ---
 
-### Entity
+### Перепишем проект
+* Перепишем проект, написанный в предыдущей [лекции по SQLite](https://dmitryweiner.github.io/android-lectures/SQLite.html).
+* Создадим классы, относящиеся к БД:
+  * `TodoEntity.kt` - для доступа к одиночной строке таблицы `todos`.
+  * `TodoDao.kt` - для наборов строк.
+  * `TodoDatabase.kt` - для коннекта к базе.
+---
+
+### TodoEntity.kt
 ```kotlin
-@Entity
-public class Employee {
- 
-   @PrimaryKey
-   public long id;
- 
-   public String name;
- 
-   public int salary;
+@Entity(tableName = "todos")
+class TodoEntity {
+   @PrimaryKey(autoGenerate = true)
+   var id: Long? = null
+   var title: String = ""
+   var isDone = false
 }
 ```
 ---
 
-### DAO
+### TodoDao.kt
 ```kotlin
 @Dao
-public interface EmployeeDao {
- 
-   @Query("SELECT * FROM employee")
-   List<Employee> getAll();
- 
-   @Query("SELECT * FROM employee WHERE id = :id")
-   Employee getById(long id);
- 
+interface TodoDao {
+   @get:Query("SELECT * FROM todos")
+   val all: List<TodoEntity>
+
+   @Query("SELECT * FROM todos WHERE id = :id")
+   fun getById(id: Long): TodoEntity
+
    @Insert
-   void insert(Employee employee);
- 
+   fun insert(todo: TodoEntity): Long
+
    @Update
-   void update(Employee employee);
- 
+   fun update(todo: TodoEntity)
+
    @Delete
-   void delete(Employee employee);
- 
+   fun delete(todo: TodoEntity)
 }
 ```
 ---
 
-### Database
+### TodoDatabase.kt
 ```
-@Database(entities = {Employee.class}, version = 1)
-public abstract class AppDatabase extends RoomDatabase {
-   public abstract EmployeeDao employeeDao();
+@Database(entities = [TodoEntity::class], version = 1)
+abstract class TodoDatabase : RoomDatabase() {
+    abstract fun todoDao(): TodoDao
 }
 ```
 ---
 
 ### Подключение к БД в Activity
 ```kotlin
-AppDatabase db =  Room.databaseBuilder(getApplicationContext(),
-       AppDatabase.class, "database")
-       .allowMainThreadQueries() // выполняемся в основном потоке
-       .build();
-       
-EmployeeDao employeeDao = db.employeeDao();
+class MainActivity : AppCompatActivity() {
+
+    lateinit var db: TodoDatabase
+    lateinit var todoDao: TodoDao
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_main)
+
+        db = Room.databaseBuilder(
+            applicationContext,
+            TodoDatabase::class.java, "todo"
+        )// выполняемся в основном потоке
+            .allowMainThreadQueries() 
+            .build()
+        todoDao = db.todoDao()
+    }
+}
 ```
 ---
 
 ### Использование Room
 ```kotlin
 // INSERT
-Employee employee = new Employee();
-employee.id = 1;
-employee.name = "John Smith";
-employee.salary = 10000;
-employeeDao.insert(employee);
+val todoEntity = TodoEntity();
+todoEntity.title = "Покормить кота";
+todoDao.insert(todoEntity);
 
 // SELECT *
-List<Employee> employees = employeeDao.getAll();
+val todoEntities = todoDao.all;
 
 // SELECT * WHERE id = 1
-Employee employee = employeeDao.getById(1);
+val todoEntity = todoDao.getById(1);
 
 // UPDATE
-employee.salary = 20000;
-employeeDao.update(employee);
+todoEntity.isDone = true;
+todoDao.update(todoEntity);
 
 // DELETE
-employeeDao.delete(employee);
+todoDao.delete(todoEntity);
 ```
 ---
 
@@ -117,7 +149,7 @@ employeeDao.delete(employee);
 ```kotlin
 AppDatabase db =  Room.databaseBuilder(getApplicationContext(),
        AppDatabase.class, "database")
-       .allowMainThreadQueries() // <-- !!!
+       .allowMainThreadQueries() // <-- UI поток!!!
        .build();
 ```
 * Запросы выполняются синхронно в основном (UI) потоке.
@@ -125,11 +157,11 @@ AppDatabase db =  Room.databaseBuilder(getApplicationContext(),
 ---
 
 ### Постоянный объект Database
-* Будем хранить ссылку на Database в самом классе:
+Будем хранить ссылку на Database в самом классе:
 
 ```kotlin
 @Database(
-    entities = [Note::class],
+    entities = [Note ::class],
     version = 1,
     exportSchema = true
 )
