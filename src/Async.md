@@ -50,6 +50,7 @@ dependencies {
 ---
 
 ### Полезные ссылки
+* https://kotlinlang.org/docs/coroutines-guide.html
 * https://developer.android.com/kotlin/coroutines
 * https://metanit.com/kotlin/tutorial/8.1.php
 
