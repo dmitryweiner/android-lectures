@@ -126,22 +126,22 @@ class MainActivity : AppCompatActivity() {
 ### Использование Room
 ```kotlin
 // INSERT
-val todoEntity = TodoEntity();
-todoEntity.title = "Покормить кота";
-todoDao.insert(todoEntity);
+val todoEntity = TodoEntity()
+todoEntity.title = "Покормить кота"
+todoDao.insert(todoEntity)
 
 // SELECT *
-val todoEntities = todoDao.all;
+val todoEntities = todoDao.all
 
 // SELECT * WHERE id = 1
-val todoEntity = todoDao.getById(1);
+val todoEntity = todoDao.getById(1)
 
 // UPDATE
-todoEntity.isDone = true;
-todoDao.update(todoEntity);
+todoEntity.isDone = true
+todoDao.update(todoEntity)
 
 // DELETE
-todoDao.delete(todoEntity);
+todoDao.delete(todoEntity)
 ```
 ---
 
@@ -161,7 +161,7 @@ AppDatabase db =  Room.databaseBuilder(getApplicationContext(),
 
 ```kotlin
 @Database(
-    entities = [Todo::class],
+    entities = [TodoEntity::class],
     version = 1,
     exportSchema = true
 )
@@ -174,7 +174,7 @@ abstract class TodoDatabase : RoomDatabase() {
         @Volatile
         private var INSTANCE: TodoDatabase? = null
 
-        fun getDatabase(context: Context): NoteDatabase {
+        fun getDatabase(context: Context): TodoDatabase {
             // if the INSTANCE is not null, then return it,
             // if it is, then create the database
             if (INSTANCE == null) {
