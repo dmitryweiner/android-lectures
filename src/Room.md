@@ -113,7 +113,7 @@ class MainActivity : AppCompatActivity() {
 
         db = Room.databaseBuilder(
             applicationContext,
-            TodoDatabase::class.java, "todo"
+            TodoDatabase::class.java, "tododb"
         )// выполняемся в основном потоке
             .allowMainThreadQueries() 
             .build()
@@ -161,18 +161,18 @@ AppDatabase db =  Room.databaseBuilder(getApplicationContext(),
 
 ```kotlin
 @Database(
-    entities = [Note ::class],
+    entities = [Todo::class],
     version = 1,
     exportSchema = true
 )
-abstract class NoteDatabase : RoomDatabase() {
+abstract class TodoDatabase : RoomDatabase() {
 
-    abstract fun noteDao(): NoteDao
+    abstract fun todoDao(): TodoDao
 
     companion object {
 
         @Volatile
-        private var INSTANCE: NoteDatabase? = null
+        private var INSTANCE: TodoDatabase? = null
 
         fun getDatabase(context: Context): NoteDatabase {
             // if the INSTANCE is not null, then return it,
@@ -187,12 +187,13 @@ abstract class NoteDatabase : RoomDatabase() {
             return INSTANCE!!
         }
 
-        private fun buildDatabase(context: Context): NoteDatabase {
+        private fun buildDatabase(context: Context): TodoDatabase {
             return Room.databaseBuilder(
                 context.applicationContext,
-                NoteDatabase::class.java,
-                "notes_database"
+                TodoDatabase::class.java,
+                "tododb"
             )
+                .allowMainThreadQueries()
                 .build()
         }
     }
@@ -200,42 +201,71 @@ abstract class NoteDatabase : RoomDatabase() {
 ```
 ---
 
-### Поток выполнения теперь свой собственный!
+### Использование постоянного объекта DAO
 ```kotlin
-return Room.databaseBuilder(
-    context.applicationContext,
-    NoteDatabase::class.java,
-    "notes_database"
-) // нет allowMainThreadQueries
-    .build()
+class MainActivity : AppCompatActivity() {
+
+    // получение постоянного инстанса 
+    private val todoDatabase by lazy { 
+        TodoDatabase.getDatabase(this).todoDao()
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_notes)
+        
+        // получение всех записей
+        todoDatabase.all
+    }
+}
 ```
 ---
 
 ### Асинхронный доступ к БД
-Используются [корутины](https://metanit.com/kotlin/tutorial/8.1.php#:~:text=%D0%92%20%D1%8F%D0%B7%D1%8B%D0%BA%D0%B5%20Kotlin%20%D0%BF%D0%BE%D0%B4%D0%B4%D0%B5%D1%80%D0%B6%D0%BA%D0%B0%20%D0%B0%D1%81%D0%B8%D0%BD%D1%85%D1%80%D0%BE%D0%BD%D0%BD%D0%BE%D1%81%D1%82%D0%B8,coroutines.). 
-
+* Для асинхронности надо установить [корутины](https://metanit.com/kotlin/tutorial/8.1.php#:~:text=%D0%92%20%D1%8F%D0%B7%D1%8B%D0%BA%D0%B5%20Kotlin%20%D0%BF%D0%BE%D0%B4%D0%B4%D0%B5%D1%80%D0%B6%D0%BA%D0%B0%20%D0%B0%D1%81%D0%B8%D0%BD%D1%85%D1%80%D0%BE%D0%BD%D0%BD%D0%BE%D1%81%D1%82%D0%B8,coroutines.).
+* `TodoDatabase.buildDatabase()`:
+```kotlin
+private fun buildDatabase(context: Context): TodoDatabase {
+    return Room.databaseBuilder(
+        context.applicationContext,
+        TodoDatabase::class.java,
+        "tododb"
+    )
+        // нет allowMainThreadQueries
+        .build()
+}
+```
+* Пример асинхронного добавления записи: 
 ```kotlin
 lifecycleScope.launch {
-    noteDatabase.updateNote(editedNote)
+    todoDatabase.updateTodo(editedTodo)
 }
 ```
 ---
 
 ### Подписка на изменения
 ```kotlin
-override fun onCreate(savedInstanceState: Bundle?) {
-    super.onCreate(savedInstanceState)
-    setContentView(R.layout.activity_notes)
-    
-    // ...
+class MainActivity : AppCompatActivity() {
 
-    observeNotes()
-}
-private fun observeNotes() {
-    lifecycleScope.launch {
-        noteDatabase.getNotes().collect { notesList ->
-            if (notesList.isNotEmpty()) {
-                adapter.submitList(notesList)
+    lateinit var adapter: RecyclerViewAdapter
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_notes)
+        
+        // ... инициализация adapter и RecyclerView
+    
+        observeNotes()
+    }
+    
+    private fun observeNotes() {
+        lifecycleScope.launch {
+            todoDatabase.all.collect {
+                if (it.isNotEmpty()) {
+                    // сохранение свежего набора в лист
+                    list.clear()
+                    list.addAll(it)
+                }
             }
         }
     }
@@ -244,12 +274,15 @@ private fun observeNotes() {
 ---
 
 ### Миграции в Room
+* [Подробнее](https://developer.android.com/training/data-storage/room/migrating-db-versions),
+  [rus](https://startandroid.ru/ru/courses/architecture-components/27-course/architecture-components/540-urok-12-migracija-versij-bazy-dannyh.html).
 * Автоматические:
+
 ```kotlin
 // BEFORE
 
 @Database(
-    entities = [Note::class],
+    entities = [Todo::class],
     version = 1,
     exportSchema = true
 )
@@ -257,7 +290,7 @@ private fun observeNotes() {
 // AFTER
 
 @Database(
-    entities = [Note::class],
+    entities = [Todo::class],
     autoMigrations = [
         AutoMigration (from = 1, to = 2)
     ],
@@ -265,15 +298,19 @@ private fun observeNotes() {
     exportSchema = true
 )
 ```
+---
+
+### Миграции в Room
 * Ручные:
+
 ```kotlin
 @Database(
-    entities = [Note::class],
+    entities = [Todo::class],
     version = 2,
     exportSchema = false
 )
-@TypeConverters(NoteConverters::class)
-abstract class NoteDatabase : RoomDatabase() {
+@TypeConverters(TodoConverters::class)
+abstract class TodoDatabase : RoomDatabase() {
 
     // ...
 
@@ -284,7 +321,7 @@ abstract class NoteDatabase : RoomDatabase() {
         private val MIGRATION_1_2: Migration = object : Migration(1, 2) {
             override fun migrate(database: SupportSQLiteDatabase) {
                 // The following query will add a new column called lastUpdate to the notes database
-                database.execSQL("ALTER TABLE notes ADD COLUMN lastUpdate INTEGER NOT NULL DEFAULT 0")
+                database.execSQL("ALTER TABLE todos ADD COLUMN lastUpdate INTEGER NOT NULL DEFAULT 0")
             }
         }
 
@@ -292,7 +329,7 @@ abstract class NoteDatabase : RoomDatabase() {
             return Room.databaseBuilder(
                 context.applicationContext,
                 NoteDatabase::class.java,
-                "notes_database"
+                "tododb"
             )
                 .addMigrations(MIGRATION_1_2)
                 .build()
@@ -302,13 +339,18 @@ abstract class NoteDatabase : RoomDatabase() {
 ```
 ---
 
+### Более правильная архитектура приложения
+* Добавлен репозиторий и MVVM.
+
 ![](assets/room/components-mvvm.png)
 ---
 
 ### Полезные ссылки
+Проекты с использованием Room:
+* https://github.com/johncodeos-blog/RoomExample
+* https://github.com/irontec/android-room-example/
+
+Что почитать:
 * https://developer.android.com/codelabs/android-room-with-a-view-kotlin#0
 * https://startandroid.ru/ru/courses/architecture-components/27-course/architecture-components/529-urok-5-room-osnovy.html
 * https://johncodeos.com/how-to-use-room-in-android-using-kotlin/
-#### Проекты с использованием Room
-* https://github.com/johncodeos-blog/RoomExample
-* https://github.com/irontec/android-room-example/
