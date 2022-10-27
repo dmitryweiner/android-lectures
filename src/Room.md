@@ -15,7 +15,7 @@
 * Database - сервисный класс для хранения подключения к БД, создания таблиц.
 ---
 
-### Установка
+### Установка в Gradle Scripts
 * settings.gradle (project): 
 ```
 pluginManagement {
@@ -28,7 +28,7 @@ pluginManagement {
 ```
 ---
 
-### Установка
+### Установка в Gradle Scripts
 * build.gradle (module): 
 ```
 plugins {
