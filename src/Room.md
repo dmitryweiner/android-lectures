@@ -282,7 +282,7 @@ class MainActivity : AppCompatActivity() {
 // BEFORE
 
 @Database(
-    entities = [Todo::class],
+    entities = [TodoEntity::class],
     version = 1,
     exportSchema = true
 )
@@ -290,7 +290,7 @@ class MainActivity : AppCompatActivity() {
 // AFTER
 
 @Database(
-    entities = [Todo::class],
+    entities = [TodoEntity::class],
     autoMigrations = [
         AutoMigration (from = 1, to = 2)
     ],
@@ -305,7 +305,7 @@ class MainActivity : AppCompatActivity() {
 
 ```kotlin
 @Database(
-    entities = [Todo::class],
+    entities = [TodoEntity::class],
     version = 2,
     exportSchema = false
 )
