@@ -11,7 +11,7 @@
   * Жизненный цикл Activity.
   * Сохранение состояния в bundle.
   * Интенты. Навигация между Activity c помощью Intent.
-* Сохранение данных:
+* Работа с базой данных:
   * [SQLite](https://dmitryweiner.github.io/android-lectures/SQLite.html#/).
   * [Room](https://dmitryweiner.github.io/android-lectures/Room.html#/).
 * Асинхронное программирование:
