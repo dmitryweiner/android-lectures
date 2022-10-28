@@ -26,7 +26,7 @@
 * Entity - класс для доступа к строке таблицы.
 * [Data Access Object](https://ru.wikipedia.org/wiki/Data_Access_Object) - класс для доступа к коллекциям (множеству строк).
 * Database - сервисный класс для хранения подключения к БД, создания таблиц.</script></section><section  data-markdown><script type="text/template">
-### Установка
+### Установка в Gradle Scripts
 * settings.gradle (project): 
 ```
 pluginManagement {
@@ -37,7 +37,7 @@ pluginManagement {
     // ...
 }
 ```</script></section><section  data-markdown><script type="text/template">
-### Установка
+### Установка в Gradle Scripts
 * build.gradle (module): 
 ```
 plugins {
@@ -123,22 +123,22 @@ class MainActivity : AppCompatActivity() {
 ### Использование Room
 ```kotlin
 // INSERT
-val todoEntity = TodoEntity();
-todoEntity.title = "Покормить кота";
-todoDao.insert(todoEntity);
+val todoEntity = TodoEntity()
+todoEntity.title = "Покормить кота"
+todoDao.insert(todoEntity)
 
 // SELECT *
-val todoEntities = todoDao.all;
+val todoEntities = todoDao.all
 
 // SELECT * WHERE id = 1
-val todoEntity = todoDao.getById(1);
+val todoEntity = todoDao.getById(1)
 
 // UPDATE
-todoEntity.isDone = true;
-todoDao.update(todoEntity);
+todoEntity.isDone = true
+todoDao.update(todoEntity)
 
 // DELETE
-todoDao.delete(todoEntity);
+todoDao.delete(todoEntity)
 ```</script></section><section  data-markdown><script type="text/template">
 ### Минусы
 ```kotlin
@@ -154,7 +154,7 @@ AppDatabase db =  Room.databaseBuilder(getApplicationContext(),
 
 ```kotlin
 @Database(
-    entities = [Todo::class],
+    entities = [TodoEntity::class],
     version = 1,
     exportSchema = true
 )
@@ -167,7 +167,7 @@ abstract class TodoDatabase : RoomDatabase() {
         @Volatile
         private var INSTANCE: TodoDatabase? = null
 
-        fun getDatabase(context: Context): NoteDatabase {
+        fun getDatabase(context: Context): TodoDatabase {
             // if the INSTANCE is not null, then return it,
             // if it is, then create the database
             if (INSTANCE == null) {
@@ -267,7 +267,7 @@ class MainActivity : AppCompatActivity() {
 // BEFORE
 
 @Database(
-    entities = [Todo::class],
+    entities = [TodoEntity::class],
     version = 1,
     exportSchema = true
 )
@@ -275,7 +275,7 @@ class MainActivity : AppCompatActivity() {
 // AFTER
 
 @Database(
-    entities = [Todo::class],
+    entities = [TodoEntity::class],
     autoMigrations = [
         AutoMigration (from = 1, to = 2)
     ],
@@ -288,7 +288,7 @@ class MainActivity : AppCompatActivity() {
 
 ```kotlin
 @Database(
-    entities = [Todo::class],
+    entities = [TodoEntity::class],
     version = 2,
     exportSchema = false
 )
@@ -320,17 +320,19 @@ abstract class TodoDatabase : RoomDatabase() {
     }
 }
 ```</script></section><section  data-markdown><script type="text/template">
-### Более правильная архитектура приложения
-* Добавлен репозиторий и MVVM.
+### Что дальше?
+* Добавить репозиторий и MVVM.
 
-![](assets/room/components-mvvm.png)</script></section><section  data-markdown><script type="text/template">
+![](assets/room/components-mvvm.png)
+
+* Использовать [ORM](https://ru.wikipedia.org/wiki/ORM) [ktorm](https://github.com/kotlin-orm/ktorm).</script></section><section  data-markdown><script type="text/template">
 ### Полезные ссылки
 Проекты с использованием Room:
-* https://github.com/johncodeos-blog/RoomExample
-* https://github.com/irontec/android-room-example/
+* [RoomExample](https://github.com/johncodeos-blog/RoomExample)
+* [android-room-example](https://github.com/irontec/android-room-example)
 
 Что почитать:
-* https://developer.android.com/codelabs/android-room-with-a-view-kotlin#0
+* [Официальная документация](https://developer.android.com/codelabs/android-room-with-a-view-kotlin)
 * https://startandroid.ru/ru/courses/architecture-components/27-course/architecture-components/529-urok-5-room-osnovy.html
 * https://johncodeos.com/how-to-use-room-in-android-using-kotlin/
 </script></section></div>

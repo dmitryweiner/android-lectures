@@ -1,4 +1,14 @@
-AndroidManifest.xml
+## Сетевые запросы
+
+![multithreading](assets/async/multithread.jpg)
+
+[все лекции](https://github.com/dmitryweiner/android-lectures/blob/master/README.md)
+
+[видео]()
+---
+
+### Подготовка приложения
+* Добавить права в AndroidManifest.xml:
 ```
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
@@ -6,11 +16,21 @@ AndroidManifest.xml
     package="com.example.myapplication">
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-    
     <!-- ... -->
 </manifest>
 ```
+* Если нужно обращаться к не HTTPS серверам, надо добавить в `<application>` `usesCleartextTraffic`:
+```xml
+<application
+        android:usesCleartextTraffic="true"
+>
+   <!-- ... -->
+</application> 
+```
+---
 
+### Запрос с помощью потоков
+```kotlin
 thread {
         val json = try {
             URL(url).readText()
@@ -18,22 +38,38 @@ thread {
             return@thread
         }
         runOnUiThread { displayOrWhatever(json) }
+}
+```
+    
+---
+
+### Запрос с помощью корутин
+
+```kotlin
+suspend fun getUserById(id: Int): User? {
+    return withContext(Dispatchers.IO) {
+        try {
+            val client = HttpClient(CIO)
+            val response: HttpResponse = client.get("https://jsonplaceholder.typicode.com/users/$id")
+            client.close()
+            val str = response.readText()
+            val itemType = object : TypeToken<User>() {}.type
+            Gson().fromJson<User>(str, itemType)
+        } catch (e: Exception) {
+            null
+        }
     }
-    
-    
-```kotlin    
-button3.setOnClickListener {
+}
+
+button.setOnClickListener {
     lifecycleScope.launch {
-        val jsonStr = CoroutineScope(Dispatchers.IO).async {
-            val jsonStr = URL("https://jsonplaceholder.typicode.com/posts/1").readText()
-            return@async jsonStr
+        val user = CoroutineScope(Dispatchers.IO).async {
+            getUserById(1)
         }.await()
-        textView.text = jsonStr
+        textView.text = user?.name
     }
 }
 ```
-    If you need to test with plain http don't forget to add to your manifest: android:usesCleartextTraffic="true"
-
+---
 https://gist.github.com/dmitryweiner/1d004458752abce118e5b0ce2891e9da
-
 https://gist.github.com/dmitryweiner/b27b2741ae58a047f587fedeba0c6755

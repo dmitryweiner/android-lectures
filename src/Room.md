@@ -339,18 +339,20 @@ abstract class TodoDatabase : RoomDatabase() {
 ```
 ---
 
-### Более правильная архитектура приложения
-* Добавлен репозиторий и MVVM.
+### Что дальше?
+* Добавить репозиторий и MVVM.
 
 ![](assets/room/components-mvvm.png)
+
+* Использовать [ORM](https://ru.wikipedia.org/wiki/ORM) [ktorm](https://github.com/kotlin-orm/ktorm).
 ---
 
 ### Полезные ссылки
 Проекты с использованием Room:
-* https://github.com/johncodeos-blog/RoomExample
-* https://github.com/irontec/android-room-example/
+* [RoomExample](https://github.com/johncodeos-blog/RoomExample)
+* [android-room-example](https://github.com/irontec/android-room-example)
 
 Что почитать:
-* https://developer.android.com/codelabs/android-room-with-a-view-kotlin#0
+* [Официальная документация](https://developer.android.com/codelabs/android-room-with-a-view-kotlin)
 * https://startandroid.ru/ru/courses/architecture-components/27-course/architecture-components/529-urok-5-room-osnovy.html
 * https://johncodeos.com/how-to-use-room-in-android-using-kotlin/
