@@ -3,7 +3,7 @@
 
 [все лекции](https://github.com/dmitryweiner/android-lectures/blob/master/README.md)
 
-[видео]()
+[видео](https://youtu.be/4NYDU9eKkpE)
 ---
 
 ### Диаграмма компонентов
@@ -157,7 +157,8 @@ AppDatabase db =  Room.databaseBuilder(getApplicationContext(),
 ---
 
 ### Постоянный объект Database
-Будем хранить ссылку на Database в самом классе:
+* Для продолжения надо поставить [библиотеку для использования корутин](https://dmitryweiner.github.io/android-lectures/Async.html#/).
+* Будем хранить ссылку на Database в самом классе:
 
 ```kotlin
 @Database(
@@ -222,7 +223,6 @@ class MainActivity : AppCompatActivity() {
 ---
 
 ### Асинхронный доступ к БД
-* Для асинхронности надо установить [корутины](https://metanit.com/kotlin/tutorial/8.1.php#:~:text=%D0%92%20%D1%8F%D0%B7%D1%8B%D0%BA%D0%B5%20Kotlin%20%D0%BF%D0%BE%D0%B4%D0%B4%D0%B5%D1%80%D0%B6%D0%BA%D0%B0%20%D0%B0%D1%81%D0%B8%D0%BD%D1%85%D1%80%D0%BE%D0%BD%D0%BD%D0%BE%D1%81%D1%82%D0%B8,coroutines.).
 * `TodoDatabase.buildDatabase()`:
 ```kotlin
 private fun buildDatabase(context: Context): TodoDatabase {

@@ -1,6 +1,6 @@
 ## Сетевые запросы
 
-![multithreading](assets/async/multithread.jpg)
+![network requests](assets/network/api.jpg)
 
 [все лекции](https://github.com/dmitryweiner/android-lectures/blob/master/README.md)
 
