@@ -260,6 +260,17 @@ suspend fun getPrime(n: Int): Int {
     } while (primeCounter < n)
     return currentPrime
 }
+
+// в onClick:
+            lifecycleScope.launch(Dispatchers.Default) {
+                repeat(10_000) {
+                    val prime = getPrime(it).toString()
+                    withContext(Dispatchers.Main) {
+                        textView.text = prime.toString()
+                    }
+                    delay(10)
+                }
+            }
 ```
 ---
 
