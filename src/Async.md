@@ -140,26 +140,75 @@ dependencies {
 ![](assets/async/structure.png)
 ---
 
-### Dispatcher
+### Scope, context, dispatcher
+* Корутина выполняется в определённой области видимости (scope), определяющей:
+    * Контекст - хранит диспетчер и другие настройки корутины.
+    * Диспетчер - определяет, какой поток используется для выполнения.
+    * И другие параметры.
+* [Подробнее](https://kotlinlang.ru/docs/coroutine-context-and-dispatchers.html).
+---
+
+![coroutine scope](assets/async/coroutines-context.png)
+---
+
+### Готовые области видимости
+* `GlobalScope` - корутины выполняются всё время жизни программы, требуют повышенного внимания. **Не использовать.**
+* `MainScope` - выполняется в главном UI-потоке приложения.
+* `CoroutineScope(_тут указан диспетчер_)` - выполняется в указанном потоке.
+* `LifecycleScope` - выполняется во время жизни Activity. Наш выбор!👍
+---
+
+В процессе запуска корутин можно задавать диспетчер, отличающийся от диспетчера, лежащего в контексте корутины:
+![coroutine scope](assets/async/coroutines-context2.png)
+---
+
+### Виды диспетчеров
 
 ![](assets/async/dispatcher.png)
 ---
 
-### Работа с корутинами
-* Запуск:
-
+### Варианты запуска корутин
+* Запуск и пошли дальше:
 ```kotlin
 launch {
-  // тут асинхронный код
+    // тут асинхронный код
+}
+```
+* Запуск с переопределением диспетчера:
+```kotlin
+launch(Dispatchers.IO) {
+    // тут операции ввода-вывода
 }
 ```
 ---
 
+### Варианты запуска корутин
+* Запуск и ожидание результата (вызывающий поток стоит):
+```kotlin
+withContext(Dispatchers.Main) {
+    // тут асинхронный код
+}
+```
+* Запуск с получением результата. Вызывающий поток выполняется параллельно, пока не вызовет `await`.
+```kotlin
+val job = async {
+    val response = fetchData() // пошли в интернет
+    response
+}
+val result = job.await() // дождались результата
+```
+---
+
 ### Suspend функции
+Функция, отмеченная suspend, может быть запущена только в контексте корутины:
 
 ```kotlin
-suspend fun doDelay() {
-  delay(1000)
+suspend fun doDelay(n: Int) {
+  delay(n * 1000)
+}
+
+launch {
+    doDelay(5) // ждём 5 секунд
 }
 ```
 ---
@@ -187,6 +236,33 @@ buttonStop.setOnClickListener {
 ```
 ---
 
+### Функция считает N-ое простое число
+```kotlin
+fun isPrime(n: Int): Boolean {
+    for(i in 2 until n) {
+        if (n % i == 0) {
+            return false
+        }
+    }
+    return true
+}
+
+suspend fun getPrime(n: Int): Int {
+    var currentNumber = 1
+    var currentPrime = currentNumber
+    var primeCounter = 0
+    do {
+        if (isPrime(currentNumber)) {
+            currentPrime = currentNumber
+            primeCounter++
+        }
+        currentNumber++
+    } while (primeCounter < n)
+    return currentPrime
+}
+```
+---
+
 ### Задачи
 * Сделать обратный таймер с кнопками "старт" и "стоп". При нажатии на "старт" идёт от 10 до 0 и останавливается.
 При нажатии на "стоп" просто останавливается, можно возобновить подсчёт с помощью "старт".
@@ -199,6 +275,9 @@ buttonStop.setOnClickListener {
 * https://developer.android.com/topic/libraries/architecture/coroutines
 * https://itzone.com.vn/en/article/kotlin-coroutines-in-android/
 
+---
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/_IjPVHRZbDU" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 ---
 
 <iframe width="560" height="315" src="https://www.youtube.com/embed/b4mBmi1QNF0" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
