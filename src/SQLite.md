@@ -81,10 +81,10 @@ class DBHelper() : SQLiteOpenHelper() {
 * У него будут методы:
     * `onCreate` - метод вызывается системой при создании базы. 
     * `onUpgrade` - при установке новой версии приложения.
-    * `getTodos` - мы вызываем для получения всех записей.
-    * `addTodo` - для добавления записи.
-    * `updateTodo` - для обновления записи.
-    * `removeTodo` - для удаления записи.
+    * `getAll` - мы вызываем для получения всех записей.
+    * `add` - для добавления записи.
+    * `update` - для обновления записи.
+    * `remove` - для удаления записи.
 ---
 ### Костяк адаптера для доступа к БД
 ```kotlin
@@ -154,7 +154,7 @@ data class Todo(
 ---
 ### Получение всех записей
 ```kotlin
-fun getTodos(): List<Todo> {
+fun getAll(): List<Todo> {
     val result = mutableListOf<Todo>()
     val database = this.writableDatabase
     val cursor: Cursor = database.query(
@@ -182,7 +182,7 @@ fun getTodos(): List<Todo> {
 
 ### Добавление записи
 ```kotlin
-fun addTodo(title: String, isDone: Boolean = false) {
+fun add(title: String, isDone: Boolean = false) {
     val database = this.writableDatabase
     val contentValues = ContentValues()
     contentValues.put(KEY_TITLE, title)
@@ -195,7 +195,7 @@ fun addTodo(title: String, isDone: Boolean = false) {
 
 ### Обновление записи
 ```kotlin
-fun updateTodo(id: Int, title: String, isDone: Boolean) {
+fun update(id: Int, title: String, isDone: Boolean) {
     val database = this.writableDatabase
     val contentValues = ContentValues()
     contentValues.put(KEY_TITLE, title)
@@ -208,7 +208,7 @@ fun updateTodo(id: Int, title: String, isDone: Boolean) {
 
 ### Удаление записи
 ```kotlin
-fun removeTodo(id: Int) {
+fun remove(id: Int) {
     val database = this.writableDatabase
     database.delete(TABLE_NAME, "$KEY_ID = ?", arrayOf(id.toString()))
     close()
@@ -254,7 +254,7 @@ class DBHelper(context: Context?) :
         onCreate(db)
     }
 
-    fun getTodos(): List<Todo> {
+    fun getAll(): List<Todo> {
         val result = mutableListOf<Todo>()
         val database = this.writableDatabase
         val cursor: Cursor = database.query(
@@ -278,7 +278,7 @@ class DBHelper(context: Context?) :
         return result
     }
 
-    fun addTodo(title: String, isDone: Boolean = false) {
+    fun add(title: String, isDone: Boolean = false) {
         val database = this.writableDatabase
         val contentValues = ContentValues()
         contentValues.put(KEY_TITLE, title)
@@ -287,7 +287,7 @@ class DBHelper(context: Context?) :
         close()
     }
 
-    fun updateTodo(id: Int, title: String, isDone: Boolean) {
+    fun update(id: Int, title: String, isDone: Boolean) {
         val database = this.writableDatabase
         val contentValues = ContentValues()
         contentValues.put(KEY_TITLE, title)
@@ -296,13 +296,13 @@ class DBHelper(context: Context?) :
         close()
     }
 
-    fun removeTodo(id: Int) {
+    fun remove(id: Int) {
         val database = this.writableDatabase
         database.delete(TABLE_NAME, "$KEY_ID = ?", arrayOf(id.toString()))
         close()
     }
 
-    fun removeAllTodos() {
+    fun removeAll() {
         val database = this.writableDatabase
         database.delete(TABLE_NAME, null, null)
         close()
@@ -324,8 +324,8 @@ class MainActivity : AppCompatActivity() {
         val editText = findViewById<EditText>(R.id.editTextTextPersonName)
 
         button.setOnClickListener {
-            dbHelper.addTodo(editText.text.toString())
-            val list = dbHelper.getTodos()
+            dbHelper.add(editText.text.toString())
+            val list = dbHelper.getAll()
             val s = StringBuilder()
             for (todo in list) {
                 s.append("${todo.id} ${todo.title}\n")
@@ -365,13 +365,13 @@ class MainActivity : AppCompatActivity() {
 с возможностью добавления и удаления:
 <br/><input><button>+</button><br/>
 <ul style="width: 200px; height: 150px; overflow-y: scroll">
-<li>олух <button>🚮</button></li>
-<li>пузырь <button>🚮</button></li>
-<li>остаток <button>🚮</button></li>
-<li>уловка <button>🚮</button></li>
+<li>олух <button>❌</button></li>
+<li>пузырь <button>❌</button></li>
+<li>остаток <button>❌</button></li>
+<li>уловка <button>❌</button></li>
 </ul>
 При нажатии на [+] в список добавляется очередная строка из поля ввода.
-При клике на [🚮] на элементе списка происходит удаление элемента.
+При клике на [❌] на элементе списка происходит удаление элемента.
 При повороте устройства данные сохраняются.
 Данные должны лежать в БД SQLite.
 ---

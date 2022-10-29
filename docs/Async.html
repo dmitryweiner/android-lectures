@@ -237,6 +237,17 @@ suspend fun getPrime(n: Int): Int {
     } while (primeCounter < n)
     return currentPrime
 }
+
+// в onClick:
+            lifecycleScope.launch(Dispatchers.Default) {
+                repeat(10_000) {
+                    val prime = getPrime(it).toString()
+                    withContext(Dispatchers.Main) {
+                        textView.text = prime.toString()
+                    }
+                    delay(10)
+                }
+            }
 ```</script></section><section  data-markdown><script type="text/template">
 ### Задачи
 * Сделать обратный таймер с кнопками "старт" и "стоп". При нажатии на "старт" идёт от 10 до 0 и останавливается.
