@@ -42,46 +42,103 @@
    <!-- ... -->
 </application> 
 ```</script></section><section  data-markdown><script type="text/template">
-### Запрос с помощью потоков
+### Варианты
+* Делать запрос с помощью `HttpURLConnection`.
+* Использовать библиотеку [Ktor](https://ktor.io/).</script></section><section  data-markdown><script type="text/template">
+### Функция для получения данных по URL'у
 ```kotlin
-thread {
-        val json = try {
-            URL(url).readText()
-        } catch (e: Exception) {
-            return@thread
+fun getContent(url: String?, timeout: Int = 10000): String? {
+    var c: HttpURLConnection? = null
+    try {
+        val u = URL(url)
+        c = u.openConnection() as HttpURLConnection
+        c.setRequestMethod("GET")
+        c.setRequestProperty("Content-length", "0")
+        c.setUseCaches(false)
+        c.setAllowUserInteraction(false)
+        c.setConnectTimeout(timeout)
+        c.setReadTimeout(timeout)
+        c.connect()
+        val status: Int = c.getResponseCode()
+        when (status) {
+            200, 201 -> {
+                val br = BufferedReader(InputStreamReader(c.getInputStream()))
+                val sb = StringBuilder()
+                var line: String
+                while (br.readLine().also { line = it } != null) {
+                    sb.append(line + "\n")
+                }
+                br.close()
+                return sb.toString()
+            }
         }
-        runOnUiThread { displayOrWhatever(json) }
+    } catch (ex: MalformedURLException) {
+        Logger.getLogger(javaClass.name).log(Level.SEVERE, null, ex)
+    } catch (ex: IOException) {
+        Logger.getLogger(javaClass.name).log(Level.SEVERE, null, ex)
+    } finally {
+        if (c != null) {
+            try {
+                c.disconnect()
+            } catch (ex: Exception) {
+                Logger.getLogger(javaClass.name).log(Level.SEVERE, null, ex)
+            }
+        }
+    }
+    return null
+}
+```</script></section><section  data-markdown><script type="text/template">
+### Парсим JSON
+```kotlin
+fun getUserById(id: String): User? {
+    val response = getContent(
+        "https://jsonplaceholder.typicode.com/users/$id",
+        1000
+    )
+    var jsonObject: JSONObject? = null
+    try {
+        jsonObject = JSONObject(response)
+        val user = User(
+            jsonObject.getString("id"),
+            jsonObject.getString("name")
+        )
+        return user
+    } catch (e: JSONException) {
+        e.printStackTrace()
+    }
+    return null
 }
 ```
-    </script></section><section  data-markdown><script type="text/template">
-### Запрос с помощью корутин
-
+* Альтернатива JSONObject: использовать библиотеку [Gson](https://github.com/google/gson/blob/master/UserGuide.md).</script></section><section  data-markdown><script type="text/template">
+### Запрос с помощью потоков
 ```kotlin
-suspend fun getUserById(id: Int): User? {
-    return withContext(Dispatchers.IO) {
-        try {
-            val client = HttpClient(CIO)
-            val response: HttpResponse = client.get("https://jsonplaceholder.typicode.com/users/$id")
-            client.close()
-            val str = response.readText()
-            val itemType = object : TypeToken<User>() {}.type
-            Gson().fromJson<User>(str, itemType)
-        } catch (e: Exception) {
-            null
+button.setOnClickListener {
+    thread {
+        var user: User
+        user = getUserById("1")
+        runOnUiThread { // выполнение в UI-треде
+            // выводим имя пользователя, например
+            textView.text = user.name
         }
     }
 }
-
+```</script></section><section  data-markdown><script type="text/template">
+### Запрос с помощью корутин
+```kotlin
 button.setOnClickListener {
-    lifecycleScope.launch {
-        val user = CoroutineScope(Dispatchers.IO).async {
-            getUserById(1)
-        }.await()
-        textView.text = user?.name
+    // Dispatchers.IO для операций ввода-вывода
+    lifecycleScope.launch(Dispatchers.IO) {
+        val user = getUserById("1")
+        // для обращения к UI меняем поток
+        withContext(Dispatchers.Main) {
+            textView.text = user?.name
+        }
     }
 }
-```</script></section><section  data-markdown><script type="text/template">https://gist.github.com/dmitryweiner/1d004458752abce118e5b0ce2891e9da
-https://gist.github.com/dmitryweiner/b27b2741ae58a047f587fedeba0c6755
+```</script></section><section  data-markdown><script type="text/template">
+### Слишком многословно?
+* Приведённое решение страдает многословностью.
+* Для удобной работы с API следует пользоваться библиотекой `Retrofit`.
 </script></section></div>
     </div>
 
