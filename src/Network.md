@@ -19,7 +19,7 @@
     <!-- ... -->
 </manifest>
 ```
-* Если нужно обращаться к не HTTPS серверам, надо добавить в `<application>` `usesCleartextTraffic`:
+* Если нужно обращаться к __не HTTPS__ серверам, надо добавить в `<application>` `usesCleartextTraffic`:
 ```xml
 <application
         android:usesCleartextTraffic="true"
@@ -30,8 +30,8 @@
 ---
 
 ### Варианты
-* Делать запрос с помощью `HttpURLConnection`.
-* Использовать библиотеку [Ktor](https://ktor.io/).
+* Делать запрос с помощью `HttpURLConnection` из пакета `java.net` (ставить не надо).
+* Использовать библиотеку [Ktor](https://ktor.io/) (надо ставить).
 ---
 
 ### Функция для получения данных по URL'у
@@ -51,14 +51,12 @@ fun getContent(url: String?, timeout: Int = 10000): String? {
         val status: Int = c.getResponseCode()
         when (status) {
             200, 201 -> {
-                val br = BufferedReader(InputStreamReader(c.getInputStream()))
-                val sb = StringBuilder()
-                var line: String
-                while (br.readLine().also { line = it } != null) {
-                    sb.append(line + "\n")
+                val streamReader = InputStreamReader(c.inputStream)
+                var text = ""
+                streamReader.use {
+                    text = it.readText()
                 }
-                br.close()
-                return sb.toString()
+                return text
             }
         }
     } catch (ex: MalformedURLException) {
@@ -81,6 +79,8 @@ fun getContent(url: String?, timeout: Int = 10000): String? {
 
 ### Парсим JSON
 ```kotlin
+data class User(val id: String, val name: String)
+
 fun getUserById(id: String): User? {
     val response = getContent(
         "https://jsonplaceholder.typicode.com/users/$id",
@@ -107,8 +107,7 @@ fun getUserById(id: String): User? {
 ```kotlin
 button.setOnClickListener {
     thread {
-        var user: User
-        user = getUserById("1")
+        val user = getUserById("1")
         runOnUiThread { // выполнение в UI-треде
             // выводим имя пользователя, например
             textView.text = user.name
@@ -136,3 +135,17 @@ button.setOnClickListener {
 ### Слишком многословно?
 * Приведённое решение страдает многословностью.
 * Для удобной работы с API следует пользоваться библиотекой `Retrofit`.
+
+---
+
+### Задачи
+* Написать приложение, отображающее форму:
+  <br/><label>
+  ID:
+  <input>
+  </label>
+  <button>Получить данные!</button><br/>
+* При нажатии кнопки приложение обращается по адресу https://jsonplaceholder.typicode.com/posts/:id.
+* После этого приложение обращается по адресу https://jsonplaceholder.typicode.com/users/:userId,  
+  где `userId` получен из предыдущих данных.
+* Показать экране: из post - поля `title` и `body`, из user - поля `name`, `email`.

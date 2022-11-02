@@ -22,17 +22,18 @@
 [все лекции](https://github.com/dmitryweiner/android-lectures/blob/master/README.md)
 
 [видео]()</script></section><section  data-markdown><script type="text/template">
+![thread vs process](assets/async/diagram-threads.webp)</script></section><section  data-markdown><script type="text/template">
 ### Потоки
 * Создание:
 ```kotlin
 thread {
-  // тут код, выполняющийся в другом потоке
+    // тут код, выполняющийся в другом потоке
 }
 ```
 * Запуск:
 ```kotlin
 val myThread = thread(start = false) {
-  // ..
+    // ..
 }
 myThread.start()
 ```
@@ -75,6 +76,7 @@ class MainActivity : AppCompatActivity() {
 * Для этого используется конструкция `runOnUiThread`:
 ```kotlin
 runOnUiThread {
+    // обращение к UI
     textView.text = i.toString()
 }
 ```</script></section><section  data-markdown><script type="text/template">
@@ -192,7 +194,62 @@ launch {
     doDelay(5) // ждём 5 секунд
 }
 ```</script></section><section  data-markdown><script type="text/template">
-### Таймер с остановом на корутинах
+### Отмена выполнения корутины
+* .cancelAndJoin() - снаружи корутины:
+```kotlin
+val job = launch {
+    repeat(1000) { i ->
+        println("job: I'm sleeping $i ...")
+        delay(500L)
+    }
+}
+delay(1300L) // delay a bit
+println("main: I'm tired of waiting!")
+job.cancelAndJoin() // cancels the job
+```
+* [Подробнее](https://kotlinlang.ru/docs/cancellation-and-timeouts.html).</script></section><section  data-markdown><script type="text/template">
+### Отмена выполнения корутины
+* Проверка `isActive` в самой корутине:
+```kotlin
+val startTime = System.currentTimeMillis()
+val job = launch(Dispatchers.Default) {
+    var nextPrintTime = startTime
+    var i = 0
+    while (isActive) { // cancellable computation loop
+        // print a message twice a second
+        if (System.currentTimeMillis() >= nextPrintTime) {
+            println("job: I'm sleeping ${i++} ...")
+            nextPrintTime += 500L
+        }
+    }
+}
+delay(1300L) // delay a bit
+println("main: I'm tired of waiting!")
+job.cancelAndJoin() // cancels the job and waits for its completion
+println("main: Now I can quit.")
+```
+* [Подробнее](https://kotlinlang.ru/docs/cancellation-and-timeouts.html).</script></section><section  data-markdown><script type="text/template">
+### Отмена по таймауту
+```kotlin
+withTimeout(1300L) {
+    repeat(1000) { i ->
+        println("I'm sleeping $i ...")
+        delay(500L)
+    }
+}
+```</script></section><section  data-markdown><script type="text/template">
+### Родительские права
+* Родительская корутина не завершится, пока не закончатся вложенные корутины.
+* Если во вложенной корутине происходит исключение, отменяется и родительская.
+* Если родительская корутина завершается принудительно, аварийно завершаются и все вложенные.
+* Кроме случая, когда в контекст передан другой Job (или корутина запущена в другом контексте:
+```kotlin
+withContext(Job()) {
+    // корутина будет выполнятся дальше несмотря на прекращение родительской
+}
+```</script></section><section  data-markdown><script type="text/template">
+
+### Пример: таймер с остановом на корутинах
 
 ```kotlin
 val textView = findViewById<TextView>(R.id.textView)
@@ -209,6 +266,7 @@ buttonStart.setOnClickListener {
         }
     }
 }
+
 buttonStop.setOnClickListener {
     isRunning = false
 }
