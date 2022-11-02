@@ -171,13 +171,15 @@ fun getAll(): List<Todo> {
 ```</script></section><section  data-markdown><script type="text/template">
 ### Добавление записи
 ```kotlin
-fun add(title: String, isDone: Boolean = false) {
+fun add(title: String, isDone: Boolean = false): Long {
     val database = this.writableDatabase
     val contentValues = ContentValues()
     contentValues.put(KEY_TITLE, title)
     contentValues.put(KEY_IS_DONE, if (isDone) 1 else 0)
-    database.insert(TABLE_NAME, null, contentValues)
+    // свежедобавленный ID
+    val id = database.insert(TABLE_NAME, null, contentValues)
     close()
+    return id
 }
 ```</script></section><section  data-markdown><script type="text/template">
 ### Обновление записи
@@ -209,7 +211,7 @@ import android.database.Cursor
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
 
-data class Todo(val id: Int, val title: String, val isDone: Boolean)
+data class Todo(val id: Long, val title: String, val isDone: Boolean)
 
 class DBHelper(context: Context?) :
     SQLiteOpenHelper(context, DATABASE_NAME, null, DATABASE_VERSION) {
@@ -250,7 +252,7 @@ class DBHelper(context: Context?) :
             val isDoneIndex: Int = cursor.getColumnIndex(KEY_IS_DONE)
             do {
                 val todo = Todo(
-                    cursor.getInt(idIndex),
+                    cursor.getLong(idIndex),
                     cursor.getString(titleIndex),
                     cursor.getInt(isDoneIndex) == 1
                 )
@@ -261,16 +263,17 @@ class DBHelper(context: Context?) :
         return result
     }
 
-    fun add(title: String, isDone: Boolean = false) {
+    fun add(title: String, isDone: Boolean = false): Long {
         val database = this.writableDatabase
         val contentValues = ContentValues()
         contentValues.put(KEY_TITLE, title)
         contentValues.put(KEY_IS_DONE, if (isDone) 1 else 0)
-        database.insert(TABLE_NAME, null, contentValues)
+        val id = database.insert(TABLE_NAME, null, contentValues)
         close()
+        return id
     }
 
-    fun update(id: Int, title: String, isDone: Boolean) {
+    fun update(id: Long, title: String, isDone: Boolean) {
         val database = this.writableDatabase
         val contentValues = ContentValues()
         contentValues.put(KEY_TITLE, title)
@@ -279,7 +282,7 @@ class DBHelper(context: Context?) :
         close()
     }
 
-    fun remove(id: Int) {
+    fun remove(id: Long) {
         val database = this.writableDatabase
         database.delete(TABLE_NAME, "$KEY_ID = ?", arrayOf(id.toString()))
         close()
@@ -294,27 +297,14 @@ class DBHelper(context: Context?) :
 ```</script></section><section  data-markdown><script type="text/template">
 ### Пример использования в Activity
 ```kotlin
-class MainActivity : AppCompatActivity() {
-    private val dbHelper = DBHelper(this)
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+// добавление записи
+val id = dbHelper.add("Покормить кота") // в id свежесгенерированное ID из базы
 
-        val button = findViewById<Button>(R.id.button)
-        val textView = findViewById<TextView>(R.id.textView)
-        val editText = findViewById<EditText>(R.id.editTextTextPersonName)
+// получение всех записей
+val list = dbHelper.getAll()
 
-        button.setOnClickListener {
-            dbHelper.add(editText.text.toString())
-            val list = dbHelper.getAll()
-            val s = StringBuilder()
-            for (todo in list) {
-                s.append("${todo.id} ${todo.title}\n")
-            }
-            textView.text = s.toString()
-        }
-    }
-}
+// удаление элемента
+dbHelper.remove(id)
 ```</script></section><section  data-markdown><script type="text/template">
 ### Где лежит БД
 * Device File Explorer: `/data/data/%PACKAGE_NAME%/databases`:
