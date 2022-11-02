@@ -36,37 +36,6 @@ SQLite поддерживает только четыре типа данных,
   * добавлять новые дела.
 ---
 
-Создание таблицы
-```sql
-CREATE TABLE todos (
-  id INTEGER PRIMARY KEY AUTOINCREMENT,
-  title TEXT NOT NULL, 
-  is_done INTEGER NOT NULL
-);
-```
-Выборка записей
-```sql
-SELECT * FROM todos;
-```
----
-Добавление записи
-```sql
-INSERT INTO todos (title, is_done)
-VALUES ('Покормить кота', 0)
-```
-Изменение записи
-```sql
-UPDATE todos
-SET title = 'Покормить кота'
-WHERE id = 3;
-```
-Удаление записи
-```sql
-DELETE FROM todos
-WHERE id = 1;
-```
----
-
 ### Создадим адаптер для доступа к БД
 * Создать класс `DBHelper`, наследник `SQLiteOpenHelper`.
 
