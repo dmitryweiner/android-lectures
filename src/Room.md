@@ -16,19 +16,6 @@
 ---
 
 ### Установка в Gradle Scripts
-* settings.gradle (project): 
-```
-pluginManagement {
-    repositories {
-        jcenter()
-        google() // <--- добавить, если нет
-    }
-    // ...
-}
-```
----
-
-### Установка в Gradle Scripts
 * build.gradle (module): 
 ```
 plugins {

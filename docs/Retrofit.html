@@ -15,7 +15,37 @@
   </head>
   <body>
     <div class="reveal">
-      <div class="slides"><section  data-markdown><script type="text/template">
+      <div class="slides"><section  data-markdown><script type="text/template"># `Retrofit`
+### Библиотека для обращения в API
+
+[все лекции](https://github.com/dmitryweiner/android-lectures/blob/master/README.md)
+
+[видео]()</script></section><section  data-markdown><script type="text/template">
+### Установка в Gradle Scripts
+* build.gradle (module): 
+```
+dependencies {
+    // ...
+    implementation 'com.squareup.retrofit2:retrofit:2.5.0'
+    implementation 'com.squareup.retrofit2:converter-gson:2.3.0'
+}
+```</script></section><section  data-markdown><script type="text/template">
+### Инициализация
+```kotlin
+Retrofit retrofit = Retrofit.Builder()  
+    .baseUrl("https://your.api/url/");
+    .addConverterFactory(GsonConverterFactory.create())
+    .build();
+service = retrofit.create(APIService.class);
+```</script></section><section  data-markdown><script type="text/template">
+### APIService
+```kotlin
+public interface APIService {
+    @GET("http://api.sample.com/users/user/list")
+    Call<Users> getUsers();
+}
+```</script></section><section  data-markdown><script type="text/template">
+
 Retrofit
 public class RetrofitClient {
     static ApiService getService(){
@@ -46,10 +76,13 @@ RetrofitClient.getService().fetchData(jsonObject).enqueue(new Callback<ResponseC
 Moshi - JSON
 
 Chuck - inspector
-
-http://developer.alexanderklimov.ru/android/library/retrofit.php
-https://medium.com/swlh/simplest-post-request-on-android-kotlin-using-retrofit-e0a9db81f11a
-https://johncodeos.com/how-to-make-post-get-put-and-delete-requests-with-retrofit-using-kotlin/</script></section></div>
+</script></section><section  data-markdown><script type="text/template">### Полезные ссылки
+* https://square.github.io/retrofit/
+* http://developer.alexanderklimov.ru/android/library/retrofit.php
+* https://habr.com/ru/post/520544/
+* https://medium.com/swlh/simplest-post-request-on-android-kotlin-using-retrofit-e0a9db81f11a
+* https://johncodeos.com/how-to-make-post-get-put-and-delete-requests-with-retrofit-using-kotlin/
+</script></section></div>
     </div>
 
     <script src="./dist/reveal.js"></script>
