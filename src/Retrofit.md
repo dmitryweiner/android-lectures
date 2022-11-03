@@ -19,8 +19,9 @@ dependencies {
 
 ### Инициализация
 ```kotlin
-Retrofit retrofit = Retrofit.Builder()  
-    .baseUrl("https://your.api/url/");
+Retrofit retrofit = Retrofit.Builder()
+    // Base URL (для примера)
+    .baseUrl("https://jsonplaceholder.typicode.com/") 
     .addConverterFactory(GsonConverterFactory.create())
     .build();
 service = retrofit.create(APIService.class);
@@ -30,8 +31,8 @@ service = retrofit.create(APIService.class);
 ### APIService
 ```kotlin
 public interface APIService {
-    @GET("http://api.sample.com/users/user/list")
-    Call<Users> getUsers();
+    @GET("posts")
+    Call<List<Post>> getPosts();
 }
 ```
 ---

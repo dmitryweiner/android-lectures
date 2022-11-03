@@ -7,6 +7,20 @@
 [видео]()
 ---
 
+### Стек TCP/IP
+![HTTP layers](assets/network/layers.svg)
+---
+
+### HTTP запрос
+[Подробнее](https://developer.mozilla.org/ru/docs/Web/HTTP/Overview)
+
+![http_request](assets/network/http_request.png)
+---
+
+### HTTP ответ
+![http_response](assets/network/http_response.png)
+---
+
 ### Подготовка приложения
 * Добавить права в AndroidManifest.xml:
 ```
