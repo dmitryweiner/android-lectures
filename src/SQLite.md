@@ -326,14 +326,14 @@ dbHelper.remove(id)
 ### Задачи 
 * Список строк [RecyclerView](https://dmitryweiner.github.io/android-lectures/Recycler-view.html#/) 
 с возможностью добавления и удаления:
-<br/><input><button>+</button><br/>
+<br/><input><button>➕</button><br/>
 <ul style="width: 200px; height: 150px; overflow-y: scroll">
 <li>олух <button>❌</button></li>
 <li>пузырь <button>❌</button></li>
 <li>остаток <button>❌</button></li>
 <li>уловка <button>❌</button></li>
 </ul>
-При нажатии на [+] в список добавляется очередная строка из поля ввода.
+При нажатии на [➕] в список добавляется очередная строка из поля ввода.
 При клике на [❌] на элементе списка происходит удаление элемента.
 При повороте устройства данные сохраняются.
 Данные должны лежать в БД SQLite.
