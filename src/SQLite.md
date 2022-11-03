@@ -285,11 +285,15 @@ class DBHelper(context: Context?) :
 
 ### Пример использования в Activity
 ```kotlin
-// добавление записи
+// создать экземпляр класса DBHelper
+val dbHelper = DBHelper(this)
+
+// добавление записи в таблицу
 val id = dbHelper.add("Покормить кота") // в id свежесгенерированное ID из базы
 
 // получение всех записей
-val list = dbHelper.getAll()
+val list = mutableListOf<Todo>() // список, который потом привязывается к RecyclerAdapter
+list.addAll(dbHelper.getAll())
 
 // удаление элемента
 dbHelper.remove(id)
