@@ -229,5 +229,5 @@ button.setOnClickListener {
 ---
 
 ### Полезные ссылки
-* [Приложение с обращением к API]()
+* [Приложение с обращением к API](https://github.com/dmitryweiner/kotlin-api/tree/main/kotlin-api-http)
 
