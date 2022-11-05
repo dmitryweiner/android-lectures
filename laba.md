@@ -23,7 +23,7 @@
       * "назад" - пользователь
         попадает на главный экран.
       * "удалить" - удаляет контакт после [диалога подтверждения](http://developer.alexanderklimov.ru/android/dialogfragment_alertdialog.php).
-    <img height="624" src="https://user-images.githubusercontent.com/6175334/200098474-55092764-f3e6-4e23-a0fa-caa421c1ca1e.png" style="border: 3px solid black;">
+    <img height="624" src="https://user-images.githubusercontent.com/6175334/200098474-55092764-f3e6-4e23-a0fa-caa421c1ca1e.png" border="3" style="border: 3px solid black;">
 * Экран редактирования/создания контакта. Отредактированные данные можно сохранить либо отменить изменения.
   После этого пользователь попадает на главный экран (список обновляется).
   * При создании контакта открывается та же форма, только поля ввода пустые. 
