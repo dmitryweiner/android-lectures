@@ -284,18 +284,22 @@ class DBHelper(context: Context?) :
 ---
 
 ### Пример использования в Activity
+* Для начала надо создать экземпляр класса DBHelper:
 ```kotlin
-// создать экземпляр класса DBHelper
 val dbHelper = DBHelper(this)
-
-// добавление записи в таблицу
+```
+* Добавление записи в таблицу:
+```kotlin
 val id = dbHelper.add("Покормить кота") // в id свежесгенерированное ID из базы
-
-// получение всех записей
-val list = mutableListOf<Todo>() // список, который потом привязывается к RecyclerAdapter
+```
+* Получение всех записей:
+```kotlin
+// список, который потом привязывается к RecyclerAdapter
+val list = mutableListOf<Todo>() 
 list.addAll(dbHelper.getAll())
-
-// удаление элемента
+```
+* Удаление записи в базе по ID:
+```kotlin
 dbHelper.remove(id)
 ```
 ---

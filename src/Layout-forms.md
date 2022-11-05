@@ -376,17 +376,6 @@ seekBar.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener{
 ```
 ---
 
-### Тосты
-![](assets/layout/toast.png)
-* Используется, чтобы показать пользователю сообщение поверх текущего экрана.
-* Как вызывать:
-```kotlin
-val toast = Toast.makeText(applicationContext, "Ура, я тост!", Toast.LENGTH_SHORT)
-toast.show()
-```
-* У тостов можно настраивать место [появления, вид](https://developer.alexanderklimov.ru/android/toast.php).
----
-
 ### Задачи
 * Написать кликер с <button>+</button> и <button>-</button>. Сделать так, чтобы он не заходил в отрицательные числа.
 
