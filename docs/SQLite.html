@@ -275,8 +275,10 @@ val dbHelper = DBHelper(this)
 ```
 * Добавление записи в таблицу:
 ```kotlin
-val id = dbHelper.add("Покормить кота") // в id свежесгенерированное ID из базы
-```
+val id = dbHelper.add("Покормить кота") 
+// в id теперь лежит свежесгенерированный ID из базы
+```</script></section><section  data-markdown><script type="text/template">
+### Пример использования в Activity
 * Получение всех записей:
 ```kotlin
 // список, который потом привязывается к RecyclerAdapter
