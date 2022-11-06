@@ -5,9 +5,10 @@
   * [Массивы и коллекции](https://dmitryweiner.github.io/android-lectures/Kotlin-collections.html).
 * [Android Studio. Основы работы. Компиляция в APK](https://dmitryweiner.github.io/android-lectures/Android-studio.html).
 * [Анатомия приложения](https://dmitryweiner.github.io/android-lectures/Application-structure.html).
-* [Разметка. Работа с компонентами](https://dmitryweiner.github.io/android-lectures/Layout-forms.html).
-* [Диалоги](https://dmitryweiner.github.io/android-lectures/Dialogs.html).
-* [RecyclerView: бесконечный список](https://dmitryweiner.github.io/android-lectures/Recycler-view.html).
+* Пользовательский интерфейс:
+  * [Разметка. Работа с компонентами](https://dmitryweiner.github.io/android-lectures/Layout-forms.html).
+  * [RecyclerView: бесконечный список](https://dmitryweiner.github.io/android-lectures/Recycler-view.html).
+  * [Диалоги](https://dmitryweiner.github.io/android-lectures/Dialogs.html).
 * [Activity](https://dmitryweiner.github.io/android-lectures/Activity.html#/):
   * Жизненный цикл Activity.
   * Сохранение состояния в bundle.
