@@ -19,7 +19,7 @@
   * Корутины.
 * Сетевые запросы.
   * [С помощью HttpURLConnection](https://dmitryweiner.github.io/android-lectures/Network.html#/).
-  * [Использование Retrofit](https://dmitryweiner.github.io/android-lectures/Retrofit.html#/).
+  * [C помощью Retrofit](https://dmitryweiner.github.io/android-lectures/Retrofit.html#/).
 * Запрос разрешений.
   * Разрешения в Manifest.xml.
   * Запрос разрешений в коде.
