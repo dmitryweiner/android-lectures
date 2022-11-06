@@ -29,7 +29,8 @@
 
 ![http_request](assets/network/http_request.png)</script></section><section  data-markdown><script type="text/template">
 ### HTTP ответ
-![http_response](assets/network/http_response.png)</script></section><section  data-markdown><script type="text/template">### Задача
+![http_response](assets/network/http_response.png)</script></section><section  data-markdown><script type="text/template">
+### Задача
 * Написать приложение, отображающее форму:
   <br/><label>
   ID:
@@ -47,7 +48,8 @@
     "title": "eum et est occaecati",
     "body": "ullam et saepe reiciendis voluptatem adipisci\nsit amet autem assumenda provident rerum culpa\nquis hic commodi nesciunt rem tenetur doloremque ipsam iure\nquis sunt voluptatem rerum illo velit"
 }
-```  </script></section><section  data-markdown><script type="text/template">### Подготовка приложения
+```  </script></section><section  data-markdown><script type="text/template">
+### Подготовка приложения
 * Добавить разрешение на доступ в интернет `android.permission.INTERNET` в AndroidManifest.xml:
 ```
 <?xml version="1.0" encoding="utf-8"?>
@@ -111,17 +113,20 @@ fun getContent(url: String, timeout: Int = 10000): String? {
     return null
 }
 ```</script></section><section  data-markdown><script type="text/template">
-### Парсим JSON
+### Класс для хранения ответа от сервера
+* Создадим класс, соответствующий приходящему от сервера JSON'у
 ```kotlin
 // соответствует структуре JSON 
 // https://jsonplaceholder.typicode.com/posts/1
 data class Post(
     val id: Int,
-    val userId: Int
+    val userId: Int,
     val title: String,
     val body: String,
 )
-
+```</script></section><section  data-markdown><script type="text/template">
+### Парсим JSON
+```kotlin
 fun getPostById(id: Int): Post? {
     val response = getContent(
         "https://jsonplaceholder.typicode.com/posts/$id",

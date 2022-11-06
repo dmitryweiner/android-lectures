@@ -20,6 +20,7 @@
 ### HTTP ответ
 ![http_response](assets/network/http_response.png)
 ---
+
 ### Задача
 * Написать приложение, отображающее форму:
   <br/><label>
@@ -40,6 +41,7 @@
 }
 ```  
 ---
+
 ### Подготовка приложения
 * Добавить разрешение на доступ в интернет `android.permission.INTERNET` в AndroidManifest.xml:
 ```
@@ -112,17 +114,22 @@ fun getContent(url: String, timeout: Int = 10000): String? {
 ```
 ---
 
-### Парсим JSON
+### Класс для хранения ответа от сервера
+* Создадим класс, соответствующий приходящему от сервера JSON'у
 ```kotlin
 // соответствует структуре JSON 
 // https://jsonplaceholder.typicode.com/posts/1
 data class Post(
     val id: Int,
-    val userId: Int
+    val userId: Int,
     val title: String,
     val body: String,
 )
+```
+---
 
+### Парсим JSON
+```kotlin
 fun getPostById(id: Int): Post? {
     val response = getContent(
         "https://jsonplaceholder.typicode.com/posts/$id",

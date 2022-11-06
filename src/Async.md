@@ -279,9 +279,7 @@ withContext(Job()) {
 ```
 ---
 
-
 ### Пример: таймер с остановом на корутинах
-
 ```kotlin
 val textView = findViewById<TextView>(R.id.textView)
 val buttonStart = findViewById<Button>(R.id.buttonStart)
@@ -302,7 +300,7 @@ buttonStop.setOnClickListener {
     isRunning = false
 }
 ```
----
+----
 
 ### Функция считает N-ое простое число
 ```kotlin
@@ -337,6 +335,23 @@ lifecycleScope.launch(Dispatchers.Default) {
             textView.text = prime.toString()
         }
         delay(10)
+    }
+}
+```
+---
+
+### Обработка ошибок
+```kotlin
+val coroutineExceptionHandler = CoroutineExceptionHandler{_, throwable ->
+    // распечатка исключения
+    throwable.printStackTrace()
+}
+
+lifecycleScope.launch(Dispatchers.IO + coroutineExceptionHandler) {
+    // вызов метода, выбрасывающего исключения
+    val posts = apiService.getPosts()
+    withContext(Dispatchers.Main) {
+        textView.text = posts.joinToString(" ")
     }
 }
 ```

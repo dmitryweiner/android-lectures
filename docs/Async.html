@@ -247,10 +247,8 @@ withTimeout(1300L) {
 withContext(Job()) {
     // корутина будет выполнятся дальше несмотря на прекращение родительской
 }
-```</script></section><section  data-markdown><script type="text/template">
-
+```</script></section><section ><section data-markdown><script type="text/template">
 ### Пример: таймер с остановом на корутинах
-
 ```kotlin
 val textView = findViewById<TextView>(R.id.textView)
 val buttonStart = findViewById<Button>(R.id.buttonStart)
@@ -270,7 +268,7 @@ buttonStart.setOnClickListener {
 buttonStop.setOnClickListener {
     isRunning = false
 }
-```</script></section><section  data-markdown><script type="text/template">
+```</script></section><section data-markdown><script type="text/template">
 ### Функция считает N-ое простое число
 ```kotlin
 fun isPrime(n: Int): Boolean {
@@ -304,6 +302,21 @@ lifecycleScope.launch(Dispatchers.Default) {
             textView.text = prime.toString()
         }
         delay(10)
+    }
+}
+```</script></section></section><section  data-markdown><script type="text/template">
+### Обработка ошибок
+```kotlin
+val coroutineExceptionHandler = CoroutineExceptionHandler{_, throwable ->
+    // распечатка исключения
+    throwable.printStackTrace()
+}
+
+lifecycleScope.launch(Dispatchers.IO + coroutineExceptionHandler) {
+    // вызов метода, выбрасывающего исключения
+    val posts = apiService.getPosts()
+    withContext(Dispatchers.Main) {
+        textView.text = posts.joinToString(" ")
     }
 }
 ```</script></section><section  data-markdown><script type="text/template">

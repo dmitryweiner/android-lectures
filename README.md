@@ -18,7 +18,7 @@
   * Потоки.
   * Корутины.
 * Сетевые запросы.
-  * [Без фреймворков](https://dmitryweiner.github.io/android-lectures/Async.html#/).
+  * [Без фреймворков](https://dmitryweiner.github.io/android-lectures/Network.html#/).
   * [Использование Retrofit](https://dmitryweiner.github.io/android-lectures/Retrofit.html#/).
 * Запрос разрешений.
   * Разрешения в Manifest.xml.
