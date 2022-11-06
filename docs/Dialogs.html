@@ -15,7 +15,9 @@
   </head>
   <body>
     <div class="reveal">
-      <div class="slides"><section  data-markdown><script type="text/template">### Тосты, диалоги, всплывающие меню
+      <div class="slides"><section  data-markdown><script type="text/template">### 🍞 Тосты
+### 💬 Диалоги
+### ☰ Всплывающие меню
 
 [все лекции](https://github.com/dmitryweiner/android-lectures/blob/master/README.md)</script></section><section  data-markdown><script type="text/template">
 ### Тосты
@@ -33,6 +35,7 @@ toast.show()
 ### Тосты
 * У тостов можно настраивать место [появления, вид](https://developer.alexanderklimov.ru/android/toast.php):
 * Расположение:
+
 ```kotlin
 // по центру 
 toast.setGravity(Gravity.CENTER, 0, 0);
@@ -79,6 +82,7 @@ dialogYesOrNo(
 ![](assets/dialog/popupmenu.png)
 
 [Подробнее](http://developer.alexanderklimov.ru/android/popupmenu.php)</script></section><section  data-markdown><script type="text/template">
+Разметка:
 ```xml
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
@@ -94,8 +98,8 @@ dialogYesOrNo(
         android:title="H3" />
 
 </menu>
-```
-
+```</script></section><section  data-markdown><script type="text/template">
+Вызов меню:
 ```kotlin
 private fun showPopup(view: View) {
     val popup = PopupMenu(this, view)
@@ -120,7 +124,8 @@ private fun showPopup(view: View) {
 
     popup.show()
 }
-```</script></section><section  data-markdown><script type="text/template"></script></section></div>
+```
+</script></section></div>
     </div>
 
     <script src="./dist/reveal.js"></script>

@@ -1,4 +1,6 @@
-### Тосты, диалоги, всплывающие меню
+### 🍞 Тосты
+### 💬 Диалоги
+### ☰ Всплывающие меню
 
 [все лекции](https://github.com/dmitryweiner/android-lectures/blob/master/README.md)
 ---
@@ -20,6 +22,7 @@ toast.show()
 ### Тосты
 * У тостов можно настраивать место [появления, вид](https://developer.alexanderklimov.ru/android/toast.php):
 * Расположение:
+
 ```kotlin
 // по центру 
 toast.setGravity(Gravity.CENTER, 0, 0);
@@ -74,6 +77,7 @@ dialogYesOrNo(
 [Подробнее](http://developer.alexanderklimov.ru/android/popupmenu.php)
 ---
 
+Разметка:
 ```xml
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
@@ -90,7 +94,9 @@ dialogYesOrNo(
 
 </menu>
 ```
+---
 
+Вызов меню:
 ```kotlin
 private fun showPopup(view: View) {
     val popup = PopupMenu(this, view)
@@ -116,4 +122,3 @@ private fun showPopup(view: View) {
     popup.show()
 }
 ```
----
