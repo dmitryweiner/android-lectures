@@ -44,9 +44,10 @@ dependencies {
 val retrofit = Retrofit.Builder() 
     // Base URL (для примера)
     .baseUrl("https://jsonplaceholder.typicode.com/")
+    // Подключаем конвертер JSON'ов
     .addConverterFactory(GsonConverterFactory.create())
     .build()
-val service = retrofit.create(APIService::class.java)
+val service = retrofit.create(APIServiceInterface::class.java)
 ```
 ---
 
@@ -55,9 +56,13 @@ val service = retrofit.create(APIService::class.java)
 
 ```kotlin
 interface APIServiceInterface {
+
+    // соответствует запросу 
+    // https://jsonplaceholder.typicode.com/posts
     @GET("posts")
     suspend fun getPosts(): List<Post>
         
+    // https://jsonplaceholder.typicode.com/posts/1
     @GET("posts/{id}")
     suspend fun getPostById(@Path("id") id: Int): Post?
 }
@@ -213,11 +218,11 @@ try {
 ---
 
 ### Полезные ссылки
+* [Репозиторий, где это уже сделано](https://github.com/dmitryweiner/kotlin-api/tree/main/kotlin-api-retrofit),
+  [коммит](https://github.com/dmitryweiner/kotlin-api/commit/2be88c7a96beab8a0392d9a48830ca5510e86930).
 * https://square.github.io/retrofit/
 * http://developer.alexanderklimov.ru/android/library/retrofit.php
 * https://habr.com/ru/post/520544/
 * https://habr.com/ru/post/314028/
 * https://medium.com/swlh/simplest-post-request-on-android-kotlin-using-retrofit-e0a9db81f11a
 * https://johncodeos.com/how-to-make-post-get-put-and-delete-requests-with-retrofit-using-kotlin/
-* [Репозиторий, где это уже сделано](https://github.com/dmitryweiner/kotlin-api/tree/main/kotlin-api-retrofit),
-[коммит](https://github.com/dmitryweiner/kotlin-api/commit/2be88c7a96beab8a0392d9a48830ca5510e86930).
