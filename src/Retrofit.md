@@ -105,6 +105,22 @@ class APIService {
 }
 ```
 ---
+### Как пользоваться APIService?
+* Для начала надо создать экземпляр класса:
+```kotlin
+val apiService = APIService.getService()
+```
+* Запросы:
+```kotlin
+// получение поста с ID = 1
+// https://jsonplaceholder.typicode.com/posts/1
+val post = apiService.getPostById(1)
+
+// получение всех постов
+// https://jsonplaceholder.typicode.com/posts
+val posts = apiService.getPosts()
+```
+---
 
 ### Использование в Activity
 ```kotlin

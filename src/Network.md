@@ -172,6 +172,18 @@ class APIService {
 ```
 ---
 
+### Как пользоваться APIService?
+* Для начала надо создать экземпляр класса:
+```kotlin
+val apiService = APIService()
+```
+* Запросы:
+```kotlin
+// получение поста с ID = 1
+val post = apiService.getPostById(1)
+```
+---
+
 ### Запрос с помощью потоков
 ```kotlin
 class MainActivity : AppCompatActivity() {
