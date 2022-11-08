@@ -9,10 +9,12 @@
   * [Разметка. Работа с компонентами](https://dmitryweiner.github.io/android-lectures/Layout-forms.html).
   * [RecyclerView: бесконечный список](https://dmitryweiner.github.io/android-lectures/Recycler-view.html).
   * [Диалоги](https://dmitryweiner.github.io/android-lectures/Dialogs.html).
+  * Фрагменты.
 * [Activity](https://dmitryweiner.github.io/android-lectures/Activity.html#/):
   * Жизненный цикл Activity.
   * Сохранение состояния в bundle.
   * Интенты. Навигация между Activity c помощью Intent.
+  * Передача данных между Activity.
 * Работа с базой данных:
   * [SQLite](https://dmitryweiner.github.io/android-lectures/SQLite.html#/).
   * [Room](https://dmitryweiner.github.io/android-lectures/Room.html#/).
@@ -26,7 +28,14 @@
   * Разрешения в Manifest.xml.
   * Запрос разрешений в коде.
   * Запись файлов на SD.
-* Построение архитектуры MVVM.
+* Построение архитектуры MVVM:
+  * LiveData, observer.
+  * ViewModel.
+  * Repository.
+
+## [Лабораторная работа](laba.md)
+
+## [Задачи к зачету](questions.md)
 
 ### Полезные ссылки
 * Язык Java:
@@ -52,9 +61,3 @@
   * [Очень хороший канал на Youtube](https://www.youtube.com/channel/UCofyDdGnCssPNwABNkxLFKg)
   * [Биржа заказов](https://workspace.ru/tasks/mobile-programming/)
   * [20 Open Source проектов](https://apptractor.ru/info/articles/20-open-source-proektov-dlya-android-kotoryie-mogut-nauchit-vas-novomu.html)
-
-## [Лабораторная работа](laba.md)
-
-## [Задачи к зачету](questions.md)
-
-
