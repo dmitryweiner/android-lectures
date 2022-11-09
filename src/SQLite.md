@@ -351,7 +351,7 @@ dbHelper.remove(id)
 * https://developer.alexanderklimov.ru/android/sqlite/android-sqlite.php
 * https://metanit.com/sql/sqlite/
 * https://developer.android.com/training/data-storage/sqlite
-* [Репозиторий с уже реализованным сохранением в SQLite](https://github.com/dmitryweiner/kotlin-sqlite-todolist).
+* [Репозиторий с уже реализованным сохранением в SQLite](https://github.com/dmitryweiner/kotlin-sqlite-todolist/tree/master/WithSQLite).
 ---
 
 <iframe width="560" height="315" src="https://www.youtube.com/embed/tQot9NMbtiw" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
