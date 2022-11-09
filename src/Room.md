@@ -101,7 +101,8 @@ class MainActivity : AppCompatActivity() {
         db = Room.databaseBuilder(
             applicationContext,
             TodoDatabase::class.java, "tododb"
-        )// выполняемся в основном потоке
+        )
+            // выполняет в основном UI потоке
             .allowMainThreadQueries() 
             .build()
         todoDao = db.todoDao()
@@ -110,24 +111,36 @@ class MainActivity : AppCompatActivity() {
 ```
 ---
 
-### Использование Room
+### Использование в Activity
+* Добавлени записи:
+
 ```kotlin
-// INSERT
 val todoEntity = TodoEntity()
 todoEntity.title = "Покормить кота"
 todoDao.insert(todoEntity)
+```
+* Чтение всех записей:
 
-// SELECT *
+```kotlin
 val todoEntities = todoDao.all
+```
+* Чтение записи по ID:
 
-// SELECT * WHERE id = 1
+```kotlin
 val todoEntity = todoDao.getById(1)
+```
+---
 
-// UPDATE
+### Использование в Activity
+* Обновление записи:
+
+```kotlin
 todoEntity.isDone = true
 todoDao.update(todoEntity)
+```
+* Удаление записи:
 
-// DELETE
+```kotlin
 todoDao.delete(todoEntity)
 ```
 ---
@@ -145,8 +158,11 @@ AppDatabase db =  Room.databaseBuilder(getApplicationContext(),
 
 ### Постоянный объект Database
 * Для продолжения надо поставить [библиотеку для использования корутин](https://dmitryweiner.github.io/android-lectures/Async.html#/).
-* Будем хранить ссылку на Database в самом классе:
+* Будем хранить ссылку на Database в самом классе (см. следующий слайд):
 
+---
+
+### Постоянный объект Database
 ```kotlin
 @Database(
     entities = [TodoEntity::class],
@@ -203,7 +219,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_notes)
         
         // получение всех записей
-        todoDatabase.all
+        val list = todoDatabase.all
     }
 }
 ```
@@ -218,7 +234,7 @@ private fun buildDatabase(context: Context): TodoDatabase {
         TodoDatabase::class.java,
         "tododb"
     )
-        // нет allowMainThreadQueries
+        // .allowMainThreadQueries() <-- удалено!
         .build()
 }
 ```
@@ -338,8 +354,9 @@ abstract class TodoDatabase : RoomDatabase() {
 Проекты с использованием Room:
 * [RoomExample](https://github.com/johncodeos-blog/RoomExample)
 * [android-room-example](https://github.com/irontec/android-room-example)
+* [kotlin-sqlite-todolist](https://github.com/dmitryweiner/kotlin-sqlite-todolist/tree/master/WithRoom)
 
 Что почитать:
 * [Официальная документация](https://developer.android.com/codelabs/android-room-with-a-view-kotlin)
-* https://startandroid.ru/ru/courses/architecture-components/27-course/architecture-components/529-urok-5-room-osnovy.html
+* [startandroid.ru](https://startandroid.ru/ru/courses/architecture-components/27-course/architecture-components/529-urok-5-room-osnovy.html)
 * https://johncodeos.com/how-to-use-room-in-android-using-kotlin/
