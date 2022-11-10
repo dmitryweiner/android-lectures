@@ -122,3 +122,31 @@ private fun showPopup(view: View) {
     popup.show()
 }
 ```
+
+---
+
+### Календарь
+![](assets/dialog/calendermode.jpg)
+
+[Подробнее](https://developer.alexanderklimov.ru/android/views/datepicker.php),
+[ещё](https://www.geeksforgeeks.org/datepicker-in-kotlin/).
+---
+
+### Календарь
+Вызов и подписка на изменения:
+
+```kotlin
+val textView = findViewById<View>(R.id.textView) as TextView
+val c = Calendar.getInstance()
+val year = c.get(Calendar.YEAR)
+val month = c.get(Calendar.MONTH)
+val day = c.get(Calendar.DAY_OF_MONTH)
+
+val dpd = DatePickerDialog(this, DatePickerDialog.OnDateSetListener { view, year, month, day ->
+	// Display Selected date in textbox
+	textView.text = "You Selected: $day/$month/$year"
+}, year, month, day)
+
+dpd.show()
+```
+---
