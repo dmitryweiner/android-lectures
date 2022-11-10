@@ -115,7 +115,7 @@ override fun onUpgrade(db: SQLiteDatabase, oldVersion: Int, newVersion: Int) {
 ### Создадим класс, соответствующий элементу таблицы todos
 ```kotlin
 data class Todo(
-  val id: Int,
+  val id: Long,
   val title: String,
   val isDone: Boolean
 )
@@ -136,7 +136,7 @@ fun getAll(): List<Todo> {
         val isDoneIndex: Int = cursor.getColumnIndex(KEY_IS_DONE)
         do {
             val todo = Todo(
-                cursor.getInt(idIndex),
+                cursor.getLong(idIndex),
                 cursor.getString(titleIndex),
                 cursor.getInt(isDoneIndex) == 1
             )
@@ -166,7 +166,7 @@ fun add(title: String, isDone: Boolean = false): Long {
 
 ### Обновление записи
 ```kotlin
-fun update(id: Int, title: String, isDone: Boolean) {
+fun update(id: Long, title: String, isDone: Boolean) {
     val database = this.writableDatabase
     val contentValues = ContentValues()
     contentValues.put(KEY_TITLE, title)
@@ -179,7 +179,7 @@ fun update(id: Int, title: String, isDone: Boolean) {
 
 ### Удаление записи
 ```kotlin
-fun remove(id: Int) {
+fun remove(id: Long) {
     val database = this.writableDatabase
     database.delete(TABLE_NAME, "$KEY_ID = ?", arrayOf(id.toString()))
     close()
