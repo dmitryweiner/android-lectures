@@ -4,7 +4,7 @@
 
 [все лекции](https://github.com/dmitryweiner/android-lectures/blob/master/README.md)
 
-[видео]()
+[видео](https://youtu.be/Izb8gYACnGw)
 ---
 
 ![thread vs process](assets/async/diagram-threads.webp)
@@ -132,8 +132,10 @@ buttonStop.setOnClickListener {
 ```
 dependencies {
     // ...
-    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines:1.3.9'
-    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.1'
+    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.4'
+    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.4'
+    
+    // для доступа к lifecycleScope
     implementation 'androidx.lifecycle:lifecycle-runtime-ktx:2.5.1'
 }
 ```
