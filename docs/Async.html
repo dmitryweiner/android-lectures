@@ -24,7 +24,8 @@
 [видео](https://youtu.be/Izb8gYACnGw)</script></section><section  data-markdown><script type="text/template">
 ![thread vs process](assets/async/diagram-threads.webp)</script></section><section  data-markdown><script type="text/template">
 ### Потоки
-* Создание:
+* Создание (поток запускается сразу же):
+
 ```kotlin
 import kotlin.concurrent.thread
 //
@@ -33,15 +34,28 @@ thread {
 }
 ```
 * Отложенный запуск:
+
 ```kotlin
 val myThread = thread(start = false) {
     // ..
 }
 myThread.start()
-```
+```</script></section><section  data-markdown><script type="text/template">
+### Потоки
 * Остановка:
 ```kotlin
-thread?.interrupt() // поток должен слушать InterruptedException
+thread?.interrupt()
+```
+* Поток при этом должен обрабатывать InterruptedException:
+```kotlin
+val thread = thread {
+    try {
+        Thread.sleep(1000)
+    } catch (e: InterruptedException) {
+        // We've been interrupted: no more messages.
+        return@thread
+    }
+}
 ```</script></section><section  data-markdown><script type="text/template">
 ### Общение между потоками через Handler
 [Подробнее](https://developer.alexanderklimov.ru/android/theory/handler.php)
@@ -159,15 +173,15 @@ dependencies {
 
 ![](assets/async/dispatcher.png)</script></section><section  data-markdown><script type="text/template">
 ### Варианты запуска корутин
-* Запуск и пошли дальше:
+* Запуск в главном потоке:
 ```kotlin
-launch {
+lifecycleScope.launch {
     // тут асинхронный код
 }
 ```
-* Запуск с переопределением диспетчера:
+* Запуск с указанием диспетчера (и потока, соответственно):
 ```kotlin
-launch(Dispatchers.IO) {
+lifecycleScope.launch(Dispatchers.IO) {
     // тут операции ввода-вывода
 }
 ```</script></section><section  data-markdown><script type="text/template">
@@ -194,14 +208,14 @@ suspend fun doDelay(n: Int) {
   delay(n * 1000)
 }
 
-launch {
+lifecycleScope.launch {
     doDelay(5) // ждём 5 секунд
 }
 ```</script></section><section  data-markdown><script type="text/template">
 ### Отмена выполнения корутины
-* .cancelAndJoin() - снаружи корутины:
+* Отмена вне контекста корутины:
 ```kotlin
-val job = launch {
+val job = lifecycleScope.launch {
     repeat(1000) { i ->
         println("job: I'm sleeping $i ...")
         delay(500L)
@@ -209,14 +223,28 @@ val job = launch {
 }
 delay(1300L) // delay a bit
 println("main: I'm tired of waiting!")
-job.cancelAndJoin() // cancels the job
+job.cancel() // cancels the job
+```</script></section><section  data-markdown><script type="text/template">
+### Отмена выполнения корутины
+* Отмена с ожиданием, когда корутина и правда остановится:
+```kotlin
+val job = lifecycleScope.launch {
+    repeat(1000) { i ->
+        println("job: I'm sleeping $i ...")
+        delay(500L)
+    }
+}
+lifecycleScope.launch {
+    job.cancelAndJoin() // cancels the job
+    // тут код, который выполнится только после остановки
+}
 ```
 * [Подробнее](https://kotlinlang.ru/docs/cancellation-and-timeouts.html).</script></section><section  data-markdown><script type="text/template">
 ### Отмена выполнения корутины
 * Проверка `isActive` в самой корутине:
 ```kotlin
 val startTime = System.currentTimeMillis()
-val job = launch(Dispatchers.Default) {
+val job = lifecycleScope.launch(Dispatchers.Default) {
     var nextPrintTime = startTime
     var i = 0
     while (isActive) { // cancellable computation loop
@@ -227,9 +255,8 @@ val job = launch(Dispatchers.Default) {
         }
     }
 }
-delay(1300L) // delay a bit
 println("main: I'm tired of waiting!")
-job.cancelAndJoin() // cancels the job and waits for its completion
+job.cancel() // cancels the job and waits for its completion
 println("main: Now I can quit.")
 ```
 * [Подробнее](https://kotlinlang.ru/docs/cancellation-and-timeouts.html).</script></section><section  data-markdown><script type="text/template">
@@ -326,7 +353,10 @@ lifecycleScope.launch(Dispatchers.IO + coroutineExceptionHandler) {
 ```</script></section><section  data-markdown><script type="text/template">
 ### Задачи
 * Сделать обратный таймер с кнопками "старт" и "стоп". При нажатии на "старт" идёт от 10 до 0 и останавливается.
-При нажатии на "стоп" просто останавливается, можно возобновить подсчёт с помощью "старт".</script></section><section  data-markdown><script type="text/template">
+При нажатии на "стоп" просто останавливается, можно возобновить подсчёт с помощью "старт".
+* Приложение выводит список простых чисел. Каждую секунду в список добавляется очередное простое число:
+
+> 2, 3, 5, 7, 11, ...</script></section><section  data-markdown><script type="text/template">
 ### Полезные ссылки
 * https://metanit.com/kotlin/tutorial/8.1.php
 * https://kotlinlang.org/docs/coroutines-guide.html
