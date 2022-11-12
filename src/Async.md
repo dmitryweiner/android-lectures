@@ -13,11 +13,13 @@
 ### Потоки
 * Создание:
 ```kotlin
+import kotlin.concurrent.thread
+//
 thread {
     // тут код, выполняющийся в другом потоке
 }
 ```
-* Запуск:
+* Отложенный запуск:
 ```kotlin
 val myThread = thread(start = false) {
     // ..
