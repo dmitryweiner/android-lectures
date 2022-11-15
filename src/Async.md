@@ -11,22 +11,40 @@
 ---
 
 ### Потоки
-* Создание:
+* Создание (поток запускается сразу же):
+
 ```kotlin
+import kotlin.concurrent.thread
+//
 thread {
     // тут код, выполняющийся в другом потоке
 }
 ```
-* Запуск:
+* Отложенный запуск:
+
 ```kotlin
 val myThread = thread(start = false) {
     // ..
 }
 myThread.start()
 ```
+---
+
+### Потоки
 * Остановка:
 ```kotlin
-thread?.interrupt() // поток должен слушать InterruptedException
+thread?.interrupt()
+```
+* Поток при этом должен обрабатывать InterruptedException:
+```kotlin
+val thread = thread {
+    try {
+        Thread.sleep(1000)
+    } catch (e: InterruptedException) {
+        // We've been interrupted: no more messages.
+        return@thread
+    }
+}
 ```
 ---
 
@@ -174,15 +192,15 @@ dependencies {
 ---
 
 ### Варианты запуска корутин
-* Запуск и пошли дальше:
+* Запуск в главном потоке:
 ```kotlin
-launch {
+lifecycleScope.launch {
     // тут асинхронный код
 }
 ```
-* Запуск с переопределением диспетчера:
+* Запуск с указанием диспетчера (и потока, соответственно):
 ```kotlin
-launch(Dispatchers.IO) {
+lifecycleScope.launch(Dispatchers.IO) {
     // тут операции ввода-вывода
 }
 ```
@@ -213,16 +231,16 @@ suspend fun doDelay(n: Int) {
   delay(n * 1000)
 }
 
-launch {
+lifecycleScope.launch {
     doDelay(5) // ждём 5 секунд
 }
 ```
 ---
 
 ### Отмена выполнения корутины
-* .cancelAndJoin() - снаружи корутины:
+* Отмена вне контекста корутины:
 ```kotlin
-val job = launch {
+val job = lifecycleScope.launch {
     repeat(1000) { i ->
         println("job: I'm sleeping $i ...")
         delay(500L)
@@ -230,7 +248,23 @@ val job = launch {
 }
 delay(1300L) // delay a bit
 println("main: I'm tired of waiting!")
-job.cancelAndJoin() // cancels the job
+job.cancel() // cancels the job
+```
+---
+
+### Отмена выполнения корутины
+* Отмена с ожиданием, когда корутина и правда остановится:
+```kotlin
+val job = lifecycleScope.launch {
+    repeat(1000) { i ->
+        println("job: I'm sleeping $i ...")
+        delay(500L)
+    }
+}
+lifecycleScope.launch {
+    job.cancelAndJoin() // cancels the job
+    // тут код, который выполнится только после остановки
+}
 ```
 * [Подробнее](https://kotlinlang.ru/docs/cancellation-and-timeouts.html).
 ---
@@ -239,7 +273,7 @@ job.cancelAndJoin() // cancels the job
 * Проверка `isActive` в самой корутине:
 ```kotlin
 val startTime = System.currentTimeMillis()
-val job = launch(Dispatchers.Default) {
+val job = lifecycleScope.launch(Dispatchers.Default) {
     var nextPrintTime = startTime
     var i = 0
     while (isActive) { // cancellable computation loop
@@ -250,9 +284,8 @@ val job = launch(Dispatchers.Default) {
         }
     }
 }
-delay(1300L) // delay a bit
 println("main: I'm tired of waiting!")
-job.cancelAndJoin() // cancels the job and waits for its completion
+job.cancel() // cancels the job and waits for its completion
 println("main: Now I can quit.")
 ```
 * [Подробнее](https://kotlinlang.ru/docs/cancellation-and-timeouts.html).
@@ -362,6 +395,9 @@ lifecycleScope.launch(Dispatchers.IO + coroutineExceptionHandler) {
 ### Задачи
 * Сделать обратный таймер с кнопками "старт" и "стоп". При нажатии на "старт" идёт от 10 до 0 и останавливается.
 При нажатии на "стоп" просто останавливается, можно возобновить подсчёт с помощью "старт".
+* Приложение выводит список простых чисел. Каждую секунду в список добавляется очередное простое число:
+
+> 2, 3, 5, 7, 11, ...
 ---
 
 ### Полезные ссылки
