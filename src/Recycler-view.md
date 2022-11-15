@@ -316,6 +316,24 @@ class MainActivity : AppCompatActivity() {
 ![list-add-remove](assets/recycler/list-add-remove.gif)
 ---
 
+### Варианты Layout Manager
+* LinearLayoutManger – обычный список (горизонтальный или вертикальный).
+* GridLayoutManager – таблица с колонками и столбцами.
+* FlexboxLayoutManager - список с переносом на следующую строку.
+---
+
+### GridLayoutManager
+[Подробнее](https://stackoverflow.com/questions/40587168/simple-android-grid-example-using-recyclerview-with-gridlayoutmanager-like-the)
+
+![GridLayoutManager](assets/recycler/grid.png)
+---
+
+### FlexboxLayoutManager
+[Подробнее](https://github.com/google/flexbox-layout)
+
+![](assets/recycler/flexbox-layoutmanager.gif)
+---
+
 ### Задачи
 * Список чисел:
 <br/><input><button>+</button><br/>
