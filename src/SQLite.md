@@ -113,6 +113,7 @@ override fun onUpgrade(db: SQLiteDatabase, oldVersion: Int, newVersion: Int) {
 ---
 
 ### Создадим класс, соответствующий элементу таблицы todos
+В отдельном файле, конечно 😏
 ```kotlin
 data class Todo(
   val id: Long,
@@ -121,6 +122,7 @@ data class Todo(
 )
 ```
 ---
+
 ### Получение всех записей
 ```kotlin
 fun getAll(): List<Todo> {
@@ -142,6 +144,31 @@ fun getAll(): List<Todo> {
             )
             result.add(todo)
         } while (cursor.moveToNext())
+    }
+    cursor.close()
+    return result
+}
+```
+---
+
+### Получение записи по ID
+```kotlin
+fun getById(id: Long): Todo? {
+    var result: Todo? = null
+    val database = this.writableDatabase
+    val cursor: Cursor = database.query(
+        TABLE_NAME, null, "$KEY_ID = ?", arrayOf(id.toString()),
+        null, null, null
+    )
+    if (cursor.moveToFirst()) {
+        val idIndex: Int = cursor.getColumnIndex(KEY_ID)
+        val titleIndex: Int = cursor.getColumnIndex(KEY_TITLE)
+        val isDoneIndex: Int = cursor.getColumnIndex(KEY_IS_DONE)
+        result = Todo(
+            cursor.getLong(idIndex),
+            cursor.getString(titleIndex),
+            cursor.getInt(isDoneIndex) == 1
+        )
     }
     cursor.close()
     return result
@@ -189,16 +216,6 @@ fun remove(id: Long) {
 
 ### Адаптер в сборе
 ```kotlin
-package com.example.myapplication
-
-import android.content.ContentValues
-import android.content.Context
-import android.database.Cursor
-import android.database.sqlite.SQLiteDatabase
-import android.database.sqlite.SQLiteOpenHelper
-
-data class Todo(val id: Long, val title: String, val isDone: Boolean)
-
 class DBHelper(context: Context?) :
     SQLiteOpenHelper(context, DATABASE_NAME, null, DATABASE_VERSION) {
     
@@ -253,7 +270,7 @@ class DBHelper(context: Context?) :
         var result: Todo? = null
         val database = this.writableDatabase
         val cursor: Cursor = database.query(
-            TABLE_NAME, null, null, null,
+            TABLE_NAME, null, "$KEY_ID = ?", arrayOf(id.toString()),
             null, null, null
         )
         if (cursor.moveToFirst()) {
@@ -322,6 +339,10 @@ val id = dbHelper.add("Покормить кота")
 // список, который потом привязывается к RecyclerAdapter
 val list = mutableListOf<Todo>() 
 list.addAll(dbHelper.getAll())
+```
+* Получение записи по ID:
+```kotlin
+val todo = dbHelper.getById(id)
 ```
 * Удаление записи в базе по ID:
 ```kotlin
