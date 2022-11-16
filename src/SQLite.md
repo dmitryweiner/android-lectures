@@ -248,6 +248,27 @@ class DBHelper(context: Context?) :
         cursor.close()
         return result
     }
+    
+    fun getById(id: Long): Todo? {
+        var result: Todo? = null
+        val database = this.writableDatabase
+        val cursor: Cursor = database.query(
+            TABLE_NAME, null, null, null,
+            null, null, null
+        )
+        if (cursor.moveToFirst()) {
+            val idIndex: Int = cursor.getColumnIndex(KEY_ID)
+            val titleIndex: Int = cursor.getColumnIndex(KEY_TITLE)
+            val isDoneIndex: Int = cursor.getColumnIndex(KEY_IS_DONE)
+            result = Todo(
+                cursor.getLong(idIndex),
+                cursor.getString(titleIndex),
+                cursor.getInt(isDoneIndex) == 1
+            )
+        }
+        cursor.close()
+        return result
+    }
 
     fun add(title: String, isDone: Boolean = false): Long {
         val database = this.writableDatabase
