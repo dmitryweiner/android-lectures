@@ -156,6 +156,25 @@ R.id.button
 
 // чтение содержимого строки
 R.string.app_name
+// или так
+val s = resources.getText(R.string.app_name)
+```</script></section><section  data-markdown><script type="text/template">
+### Доступ к строковым ресурсам
+```xml
+<string name="earth">Earth</string>
+<string name="moon">Moon</string>
+<string-array name="system">
+    <item>@string/earth</item>
+    <item>@string/moon</item>
+</string-array>
+```
+
+```kotlin
+val s = resources.getText(R.string.earth)
+println(s) // Earth
+
+val arr = resources..getStringArray(R.string.system)
+println(arr.joinToString(", ")) // Earth, Moon
 ```</script></section><section  data-markdown><script type="text/template">
 ### Тесты
 * Android Studio умеет запускать (и генерирует некие начальные) тесты:

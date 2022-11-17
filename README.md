@@ -32,6 +32,9 @@
   * LiveData, observer.
   * ViewModel.
   * Repository.
+  * MVVM.
+  * Binging.
+* Локализация.
 
 ## [Лабораторная работа](laba.md)
 
