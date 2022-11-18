@@ -40,7 +40,7 @@ class Person(
     val lastName: String, 
     var isEmployed: Boolean = true) { /*...*/ }
 ```
-* Инициализация свойства:
+* Инициализация поля класса:
 ```kotlin
 class Customer(name: String) {
     val customerKey = name.uppercase()
@@ -53,6 +53,32 @@ class Customer(name: String) {
 ```kotlin
 val invoice = Invoice()
 val customer = Customer("Joe Smith")
+```
+---
+
+### Доступ к полям класса
+```kotlin
+class Customer(name: String) {
+    val customerKey = name.uppercase()
+}
+
+val customer = Customer("John Smith")
+println(customer.customerKey) // JOHN SMITH
+```
+---
+
+### Явный конструктор класса
+```kotlin
+class Customer(name: String) {
+    var customerKey: String? = null
+    
+    init {
+        println("Меня создали!")
+        customerKey = name.uppercase()
+    }
+}
+
+val customer = Customer("John Smith") // "Меня создали!"
 ```
 ---
 
