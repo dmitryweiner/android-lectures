@@ -4,7 +4,7 @@
 
 [все лекции](https://github.com/dmitryweiner/android-lectures/blob/master/README.md)
 
-[видео]()
+[видео](https://youtu.be/fRARoYhXbw8)
 ---
 
 ### Стек TCP/IP
