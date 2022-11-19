@@ -153,9 +153,10 @@ fun callPhone(phoneNumber: String) {
     startActivity(intent);
 }
 
+@RequiresApi(Build.VERSION_CODES.M)
 fun calPhoneWithPermissions(phoneNumber: String) {
     val requestPermissionLauncher =
-        registerForActivityResult(RequestPermission()) { isGranted: Boolean ->
+        registerForActivityResult(ActivityResultContracts.RequestPermission()) { isGranted: Boolean ->
             if (isGranted) {
                 // Разрешение дали 😊
                 // можно делать что собирались
@@ -172,7 +173,7 @@ fun calPhoneWithPermissions(phoneNumber: String) {
                 // Разрешение уже дали 😊
                 // можно делать что собирались
         }
-        shouldShowRequestPermissionRationale(...) -> {
+        shouldShowRequestPermissionRationale(Manifest.permission.REQUESTED_PERMISSION) -> {
                 // Уже спрашивали, но его не дали 😭
                 // Покажем тост с объяснениями, зачем разрешение
         }
@@ -208,9 +209,10 @@ fun callPhone(phoneNumber: String) {
     startActivity(intent);
 }
 
+@RequiresApi(Build.VERSION_CODES.M)
 fun calPhoneWithPermissions(phoneNumber: String) {
     val requestPermissionLauncher =
-        registerForActivityResult(RequestPermission()) { isGranted: Boolean ->
+        registerForActivityResult(ActivityResultContracts.RequestPermission()) { isGranted: Boolean ->
             if (isGranted) {
                 // Разрешение дали 😊
                 // можно делать что собирались
@@ -233,7 +235,7 @@ fun calPhoneWithPermissions(phoneNumber: String) {
                 // можно делать что собирались
                 callPhone(phoneNumber)
         }
-        shouldShowRequestPermissionRationale(...) -> {
+        shouldShowRequestPermissionRationale(Manifest.permission.CALL_PHONE) -> {
                 // Уже спрашивали, но его не дали 😭
                 // Покажем тост с объяснениями, зачем разрешение
                 Toast.makeText(
@@ -302,6 +304,109 @@ recorder.startRecording();
 while (isRecording) {
     // gets the voice output from microphone to byte format
     recorder.read(sData, 0, BufferElements2Rec);
+}
+```
+----
+
+```kotlin
+package com.example.myapplication
+
+import android.Manifest
+import android.annotation.SuppressLint
+import android.content.pm.PackageManager
+import android.media.AudioFormat
+import android.media.AudioRecord
+import android.media.MediaRecorder
+import android.os.Build
+import android.os.Bundle
+import android.widget.Toast
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.annotation.RequiresApi
+import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
+import kotlin.concurrent.thread
+
+
+class MainActivity : AppCompatActivity() {
+    @RequiresApi(Build.VERSION_CODES.M)
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_main)
+
+        recordAudioWithPermissions()
+    }
+
+    @RequiresApi(Build.VERSION_CODES.M)
+    fun recordAudioWithPermissions() {
+        val requestPermissionLauncher =
+            registerForActivityResult(ActivityResultContracts.RequestPermission()) { isGranted: Boolean ->
+                if (isGranted) {
+                    // Разрешение дали 😊
+                    // можно делать что собирались
+                    recordAudio()
+                } else {
+                    // Разрешение не дали 😭
+                    // Покажем тост с объяснениями, зачем разрешение
+                    Toast.makeText(
+                        applicationContext,
+                        "Приложению нужно разрешение для записи звука",
+                        Toast.LENGTH_SHORT).show()
+                }
+            }
+        when {
+            ContextCompat.checkSelfPermission(
+                this,
+                Manifest.permission.RECORD_AUDIO
+            ) == PackageManager.PERMISSION_GRANTED -> {
+                // Разрешение уже дали 😊
+                // можно делать что собирались
+                recordAudio()
+            }
+            shouldShowRequestPermissionRationale(Manifest.permission.RECORD_AUDIO) -> {
+            // Уже спрашивали, но его не дали 😭
+            // Покажем тост с объяснениями, зачем разрешение
+            Toast.makeText(
+                applicationContext,
+                "Приложению нужно разрешение для записи звука",
+                Toast.LENGTH_SHORT).show()
+        }
+            else -> {
+                // Показываем диалог запроса разрешения 🤔
+                requestPermissionLauncher.launch(
+                    Manifest.permission.RECORD_AUDIO)
+            }
+        }
+    }
+
+    @SuppressLint("MissingPermission")
+    fun recordAudio() {
+        val RECORDER_SAMPLERATE = 8000
+        val RECORDER_CHANNELS: Int = AudioFormat.CHANNEL_IN_MONO
+        val RECORDER_AUDIO_ENCODING: Int = AudioFormat.ENCODING_PCM_16BIT
+        val bufferSize = AudioRecord.getMinBufferSize(
+            RECORDER_SAMPLERATE,
+            RECORDER_CHANNELS, RECORDER_AUDIO_ENCODING
+        )
+        val BufferElements2Rec = 1024 // want to play 2048 (2K) since 2 bytes we use only 1024
+
+        val BytesPerElement = 2 // 2 bytes in 16bit format
+
+        val sData = ShortArray(BufferElements2Rec)
+
+        val recorder = AudioRecord(
+            MediaRecorder.AudioSource.MIC,
+            RECORDER_SAMPLERATE, RECORDER_CHANNELS,
+            RECORDER_AUDIO_ENCODING, BufferElements2Rec * BytesPerElement
+        )
+        thread {
+            recorder.startRecording()
+            while (true) {
+                // gets the voice output from microphone to byte format
+                recorder.read(sData, 0, BufferElements2Rec)
+                println(sData.max())
+            }
+        }
+    }
 }
 ```
 ---
