@@ -129,6 +129,9 @@ ACTIVITY_RECOGNITION
     * Если разрешили, делаем, что собирались.
 ---
 
+![permissions request](assets/permissions/permissions-request.png)
+--
+
 ### Создадим лончер, запускающий диалог запроса разрешений:
 
 ```kotlin
@@ -312,8 +315,7 @@ recorder.startRecording()
 while (true) {
     // gets the voice output from microphone to byte format
     recorder.read(sData, 0, BufferElements2Rec)
-}
-       
+}    
 ```
 ----
 
