@@ -130,7 +130,7 @@ ACTIVITY_RECOGNITION
 ---
 
 ![permissions request](assets/permissions/permissions-request.png)
---
+---
 
 ### Создадим лончер, запускающий диалог запроса разрешений:
 
