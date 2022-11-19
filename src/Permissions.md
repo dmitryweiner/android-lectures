@@ -289,22 +289,31 @@ requestPermissionLauncher.launch(
 
 ### Запись звука
 ```kotlin
-final int RECORDER_SAMPLERATE = 8000;
-final int RECORDER_CHANNELS = AudioFormat.CHANNEL_IN_MONO;
-final int RECORDER_AUDIO_ENCODING = AudioFormat.ENCODING_PCM_16BIT;
-int bufferSize = AudioRecord.getMinBufferSize(RECORDER_SAMPLERATE,
-                RECORDER_CHANNELS, RECORDER_AUDIO_ENCODING); 
-int BufferElements2Rec = 1024; // want to play 2048 (2K) since 2 bytes we use only 1024
-int BytesPerElement = 2; // 2 bytes in 16bit format
-short sData[] = new short[BufferElements2Rec];
-recorder = new AudioRecord(MediaRecorder.AudioSource.MIC,
-        RECORDER_SAMPLERATE, RECORDER_CHANNELS,
-        RECORDER_AUDIO_ENCODING, BufferElements2Rec * BytesPerElement);
-recorder.startRecording();
-while (isRecording) {
+val RECORDER_SAMPLERATE = 8000
+val RECORDER_CHANNELS: Int = AudioFormat.CHANNEL_IN_MONO
+val RECORDER_AUDIO_ENCODING: Int = AudioFormat.ENCODING_PCM_16BIT
+val bufferSize = AudioRecord.getMinBufferSize(
+    RECORDER_SAMPLERATE,
+    RECORDER_CHANNELS, RECORDER_AUDIO_ENCODING
+)
+val BufferElements2Rec = 1024 // want to play 2048 (2K) since 2 bytes we use only 1024
+
+val BytesPerElement = 2 // 2 bytes in 16bit format
+
+val sData = ShortArray(BufferElements2Rec)
+
+val recorder = AudioRecord(
+    MediaRecorder.AudioSource.MIC,
+    RECORDER_SAMPLERATE, RECORDER_CHANNELS,
+    RECORDER_AUDIO_ENCODING, BufferElements2Rec * BytesPerElement
+)
+
+recorder.startRecording()
+while (true) {
     // gets the voice output from microphone to byte format
-    recorder.read(sData, 0, BufferElements2Rec);
+    recorder.read(sData, 0, BufferElements2Rec)
 }
+       
 ```
 ----
 
