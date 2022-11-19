@@ -324,6 +324,23 @@ val n = intent.getIntExtra(MainActivity.EXTRA_KEY, 0)
 ```
 ---
 
+### Закрытие вызванной активити
+```kotlin
+class SecondActivity : AppCompatActivity() {
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_second)
+
+        val buttonClose = findViewById<Button>(R.id.buttonClose)
+        buttonClose.setOnClickListener {
+            // закрытие по кнопке
+            finish()
+        }
+    }
+}
+```
+---
+
 ### Получение ответа от вызванной Activity
 * Допустим, MainActivity вызывает SecondActivity и ожидает от пользователя некоего ответа. Например, если это редактирование, можно либо сохранить результат, либо отменить.
 * Чтобы получить ответ, надо вызвать интент через `startActivityForResult`.
