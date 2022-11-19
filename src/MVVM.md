@@ -1,3 +1,19 @@
+---
+
+### Исправление ошибки с binding
+```
+> Task :app:checkDebugDuplicateClasses FAILED
+Duplicate class androidx.lifecycle.ViewModelLazy found in modules lifecycle-viewmodel-2.5.1-runtime (androidx.lifecycle:lifecycle-viewmodel:2.5.1) and lifecycle-viewmodel-ktx-2.2.0-runtime (androidx.lifecycle:lifecycle-viewmodel-ktx:2.2.0)
+```
+
+
+```
+    implementation "androidx.lifecycle:lifecycle-viewmodel:2.5.1"
+    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:2.5.1"
+```
+---
+
+
 http://www.fandroid.info/lektsiya-8-po-arhitekture-android-data-binding-mvvm/
 https://www.howtodoandroid.com/mvvm-retrofit-recyclerview-kotlin/
 https://proandroiddev.com/clean-architecture-on-android-using-feature-modules-mvvm-view-slices-and-kotlin-e9ed18e64d83
