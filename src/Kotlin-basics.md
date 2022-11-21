@@ -394,7 +394,52 @@ map.mapValues { (key, value) -> "$value!" }
 ---
 
 ### Стилистика кода
-https://kotlinlang.ru/docs/coding-conventions.html
+* Каждый класс или интерфейс достоин быть в отдельном файле.
+* Имена классов и интерфейсов с **Б**ольшой **Б**уквы, имена переменных с *м*аленькой. Имена в [`camelCase`](https://ru.wikipedia.org/wiki/CamelCase).
+
+```kotlin
+// ❌
+class verified_user(val Name: String)
+val VerifiedUser = verified_user("Вася")
+
+// ✔️
+class VerifiedUser(val name: String)
+val verifiedUser = VerifiedUser("Вася")
+```
+
+[Подробнее](https://kotlinlang.ru/docs/coding-conventions.html)
+---
+
+### Стилистика кода
+* Имена переменным следует выбирать такие, чтоб было понятно, что там лежит.
+* Следует избегать `translita v imenah peremennyh` (не все знают русский).
+
+```kotlin
+// ❌
+var schetchik = 1
+val dddddd = "Вася"
+
+// ✔️
+var counter = 1
+val userName = "Вася"
+```
+---
+
+### Стилистика кода
+* Имя функции или метода должно содержать глагол, чтобы было понятно, что они делают.
+* Имя не должно вводить в заблуждение читателя, надо описывать именно то, что происходит.
+
+```kotlin
+// ❌
+fun sumAndNumber(s: String): String {
+    return s.split("").reversed().joinToString("")
+}
+
+// ✔️
+fun revertString(s: String): String {
+    return s.split("").reversed().joinToString("")
+}
+```
 ---
 
 ### Задачи
