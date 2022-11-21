@@ -299,7 +299,63 @@ import kotlin.random.Random as KRandom
 import java.util.Random as JRandom
 ```</script></section><section  data-markdown><script type="text/template">
 ### Функции области видимости
-https://kotlinlang.ru/docs/scope-functions.html</script></section><section  data-markdown><script type="text/template">
+[Подробнее](https://kotlinlang.ru/docs/scope-functions.html), [хорошие примеры](https://stackoverflow.com/a/61247877).
+
+![](assets/kotlin-objects/context.jpg)</script></section><section  data-markdown><script type="text/template">
+### apply
+```kotlin
+data class User(var name: String, var age: Int)
+
+val user = User("Василий", 19)
+val changedUser = user.apply {
+    // this == user
+    name = "Вкусилий" // аналогично this.name
+    age = 6 // аналогично this.age
+}
+// apply возвращает исходный объект
+
+println(changedUser) // User(name=Вкусилий, age=6)
+```</script></section><section  data-markdown><script type="text/template">
+### run
+```kotlin
+class User(val name: String, val age: Int)
+
+val user = User("Василий", 19)
+val userToPrint = user.run {
+    // this == user
+    // this.name == name
+    // this.age == age
+    // что вернёт лямбда, будет результатом run
+    name + ", " + age + " лет"
+}
+println(userToPrint) // "Василий, 19 лет"
+```</script></section><section  data-markdown><script type="text/template">
+### also
+```kotlin
+data class User(var name: String, var age: Int)
+
+val user = User("Василий", 19)
+val changedUser = user.also {
+    // it == user
+    it.name = "Вкусилий"
+    it.age = 6
+}
+// also возвращает исходный объект
+
+println(changedUser) // User(name=Вкусилий, age=6)
+```</script></section><section  data-markdown><script type="text/template">
+### let
+```kotlin
+class User(val name: String, val age: Int)
+
+val user = User("Василий", 19)
+val userToPrint = user.let {
+    // it == user
+    // что вернёт лямбда, будет результатом let
+    it.name + ", " + it.age + " лет"
+}
+println(userToPrint) // "Василий, 19 лет"
+```</script></section><section  data-markdown><script type="text/template">
 ### Задачи
 * https://play.kotlinlang.org/koans/Classes/Data%20classes/Task.kt
 * Описать класс для хранения комплексных чисел `Complex` и функцию для сложения их `fun sum(c1: Complex, c2: Complex): Complex`.

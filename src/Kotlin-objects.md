@@ -328,7 +328,71 @@ import java.util.Random as JRandom
 ---
 
 ### Функции области видимости
-https://kotlinlang.ru/docs/scope-functions.html
+[Подробнее](https://kotlinlang.ru/docs/scope-functions.html), [хорошие примеры](https://stackoverflow.com/a/61247877).
+
+![](assets/kotlin-objects/context.jpg)
+---
+
+### apply
+```kotlin
+data class User(var name: String, var age: Int)
+
+val user = User("Василий", 19)
+val changedUser = user.apply {
+    // this == user
+    name = "Вкусилий" // аналогично this.name
+    age = 6 // аналогично this.age
+}
+// apply возвращает исходный объект
+
+println(changedUser) // User(name=Вкусилий, age=6)
+```
+---
+
+### run
+```kotlin
+class User(val name: String, val age: Int)
+
+val user = User("Василий", 19)
+val userToPrint = user.run {
+    // this == user
+    // this.name == name
+    // this.age == age
+    // что вернёт лямбда, будет результатом run
+    name + ", " + age + " лет"
+}
+println(userToPrint) // "Василий, 19 лет"
+```
+---
+
+### also
+```kotlin
+data class User(var name: String, var age: Int)
+
+val user = User("Василий", 19)
+val changedUser = user.also {
+    // it == user
+    it.name = "Вкусилий"
+    it.age = 6
+}
+// also возвращает исходный объект
+
+println(changedUser) // User(name=Вкусилий, age=6)
+```
+---
+
+### let
+```kotlin
+class User(val name: String, val age: Int)
+
+val user = User("Василий", 19)
+val userToPrint = user.let {
+    // it == user
+    // что вернёт лямбда, будет результатом let
+    it.name + ", " + it.age + " лет"
+}
+println(userToPrint) // "Василий, 19 лет"
+```
 ---
 
 ### Задачи
