@@ -12,6 +12,89 @@
 
 ### Идея класса ViewModel
 * Activity умирает и возрождается в течение жизненного цикла.
+* Состояние UI нужно хранить в классе, переживающем перезагрузку activity, - ViewModel.
+* Данные должны быть отделены от представления:
+    * Activity отображает данные и обрабатывает действия пользователя, передавая их во ViewModel.
+    * ViewModel хранит данные, изменяет в соответствии с действиями пользователя и извещает activity, когда данные изменились.
+---
+
+### Установка библиотеки для работы с ViewModel
+* build.gradle (module): 
+```
+dependencies {
+    // ...
+    implementation 'androidx.activity:activity-ktx:1.6.1'
+```
+---
+
+### ViewModel
+```kotlin
+data class UiState(
+    var value: Int = 0
+)
+class MainViewModel : ViewModel() {
+
+    private val uiState = UiState()
+
+    // изменение значения
+    fun incrementValue() {
+        uiState.value++
+    }
+    
+    // получение значения
+    fun getValue(): Int {
+        return uiState.value
+    }
+}
+
+// in Activity
+val viewModel: MainViewModel by viewModels()
+// изменение данных
+viewModel.incrementValue()
+
+// получение данных
+viewModel.getValue()
+```
+---
+
+### LiveData
+> LiveData — это контейнер, который следит за жизненным циклом экрана и снабжает его данными, когда это уместно. Например, если активити находится на переднем плане и видна пользователю. Ценность такого подхода заключается в том, что LiveData не будет снабжать ваш экран данными, если он свёрнут или закрыт. Но как только экран появится перед пользователем, обновление данных возобновится.
+---
+
+### LiveData
+* Класс, реализующий шину событий.
+* Activity подписывается на изменение данных и получает всегда свежее значение.
+* Изменение данных делается методами:
+    * setValue - из основного потока.
+    * postValue - из всех остальных потоков
+---
+```kotlin
+data class UiState(
+    var value: Int = 0
+)
+class MainViewModel : ViewModel() {
+
+    private val uiState = MutableStateFlow<UiState>(UiState())
+
+    // изменение значения
+    fun incrementValue() {
+        uiState.value++
+    }
+    
+    // получение значения
+    fun getValue(): Int {
+        return uiState.value
+    }
+}
+
+// in Activity
+val viewModel: MainViewModel by viewModels()
+// изменение данных
+viewModel.incrementValue()
+
+// получение данных
+viewModel.getValue()
+```
 ---
 
 ### Исправление ошибки с binding
