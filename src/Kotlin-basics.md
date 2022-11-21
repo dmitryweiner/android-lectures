@@ -436,7 +436,23 @@ fun sumAndNumber(s: String): String {
 }
 
 // ✔️
-fun revertString(s: String): String {
+fun reverseString(s: String): String {
+    return s.split("").reversed().joinToString("")
+}
+```
+---
+* Форматирование кода важно: плохо отформатированный код тяжело воспринимается и как правило содержит ошибки.
+* Android Studio умеет форматировать код самостоятельно при нажатии комбинации клавиш `Ctrl + Alt + L`:
+
+```kotlin
+// ❌
+fun reverseString( s:String):String
+{
+return s.split("") .reversed( ) .joinToString("")
+}
+
+// ✔️
+fun reverseString(s: String): String {
     return s.split("").reversed().joinToString("")
 }
 ```

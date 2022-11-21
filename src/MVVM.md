@@ -1,9 +1,10 @@
 ### Реализация архитектуры MVVM
 
+![MVVM pattern](assets/mvvm/MVVMPattern.png)
+
 [все лекции](https://github.com/dmitryweiner/android-lectures/blob/master/README.md)
 
 [видео]()
-
 ---
 ### Исправление ошибки с binding
 ```
