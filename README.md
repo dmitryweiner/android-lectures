@@ -24,17 +24,16 @@
 * Сетевые запросы.
   * [С помощью HttpURLConnection](https://dmitryweiner.github.io/android-lectures/Network.html#/).
   * [C помощью Retrofit](https://dmitryweiner.github.io/android-lectures/Retrofit.html#/).
-* Запрос разрешений.
+* [Запрос разрешений](https://dmitryweiner.github.io/android-lectures/Permissions.html#/).
   * Разрешения в Manifest.xml.
-  * Запрос разрешений в коде.
-  * Запись файлов на SD.
+  * Запрос разрешений во время выполнения.
 * Построение архитектуры MVVM:
   * LiveData, observer.
   * ViewModel.
   * Repository.
   * MVVM.
   * Binging.
-* Локализация.
+* Локализация приложения.
 
 ## [Лабораторная работа](laba.md)
 
