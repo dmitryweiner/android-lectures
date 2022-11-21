@@ -327,6 +327,10 @@ import java.util.Random as JRandom
 ```
 ---
 
+### Функции области видимости
+https://kotlinlang.ru/docs/scope-functions.html
+---
+
 ### Задачи
 * https://play.kotlinlang.org/koans/Classes/Data%20classes/Task.kt
 * Описать класс для хранения комплексных чисел `Complex` и функцию для сложения их `fun sum(c1: Complex, c2: Complex): Complex`.

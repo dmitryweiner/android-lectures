@@ -393,6 +393,10 @@ map.mapValues { (key, value) -> "$value!" }
 * [Подробнее](https://kotlinlang.org/docs/destructuring-declarations.html#destructuring-in-lambdas).
 ---
 
+### Стилистика кода
+https://kotlinlang.ru/docs/coding-conventions.html
+---
+
 ### Задачи
 #### Написать функции, выполняющие следующую работу:
 * Вернуть число в обратном порядке 123 -> 321.
