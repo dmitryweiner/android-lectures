@@ -6,6 +6,14 @@
 
 [видео]()
 ---
+
+![MVVM architecture](assets/mvvm/mvvm-architecture.png)
+---
+
+### Идея класса ViewModel
+* Activity умирает и возрождается в течение жизненного цикла.
+---
+
 ### Исправление ошибки с binding
 ```
 > Task :app:checkDebugDuplicateClasses FAILED
