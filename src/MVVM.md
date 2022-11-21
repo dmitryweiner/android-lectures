@@ -18,6 +18,9 @@
     * ViewModel хранит данные, изменяет в соответствии с действиями пользователя и извещает activity, когда данные изменились.
 ---
 
+![](assets/mvvm/viewmodel-lifecycle.png)
+---
+
 ### Установка библиотеки для работы с ViewModel
 * build.gradle (module): 
 ```
@@ -92,8 +95,10 @@ val viewModel: MainViewModel by viewModels()
 // изменение данных
 viewModel.incrementValue()
 
-// получение данных
-viewModel.getValue()
+// подписка на данные
+viewModel.uiTextLiveData.observe(viewLifecycleOwner, Observer { updatedText ->
+    binding.fragmentTextView.text = updatedText
+})
 ```
 ---
 
@@ -114,9 +119,9 @@ dependencies {
 ---
 
 ### Полезные ссылки
-* http://www.fandroid.info/lektsiya-8-po-arhitekture-android-data-binding-mvvm/
-* https://www.howtodoandroid.com/mvvm-retrofit-recyclerview-kotlin/
-* https://proandroiddev.com/clean-architecture-on-android-using-feature-modules-mvvm-view-slices-and-kotlin-e9ed18e64d83
 * https://dev.to/whatminjacodes/simple-example-of-mvvm-architecture-in-kotlin-4j5b
 * https://developer.android.com/topic/libraries/architecture/livedata
+* https://www.howtodoandroid.com/mvvm-retrofit-recyclerview-kotlin/
+* https://proandroiddev.com/clean-architecture-on-android-using-feature-modules-mvvm-view-slices-and-kotlin-e9ed18e64d83
+* http://www.fandroid.info/lektsiya-8-po-arhitekture-android-data-binding-mvvm/
 * https://github.com/velmurugan-murugesan/Android-Example/tree/master/MvvmRetrofitRecyclerviewKotlin
