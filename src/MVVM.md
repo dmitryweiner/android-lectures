@@ -24,6 +24,14 @@
 ### Установка библиотеки для работы с ViewModel
 * build.gradle (module): 
 ```
+android {
+    compileSdk 33 // <--
+
+    defaultConfig {
+        targetSdk 33 // <--
+        // ...
+    }
+}
 dependencies {
     // ...
     implementation 'androidx.activity:activity-ktx:1.6.1'
@@ -32,31 +40,26 @@ dependencies {
 
 ### ViewModel
 ```kotlin
-data class UiState(
-    var value: Int = 0
-)
 class MainViewModel : ViewModel() {
 
-    private val uiState = UiState()
+    private var counter = 0
 
-    // изменение значения
-    fun incrementValue() {
-        uiState.value++
+    fun incrementCounter() {
+        counter++
     }
-    
-    // получение значения
-    fun getValue(): Int {
-        return uiState.value
+
+    fun getCounter(): Int {
+        return counter
     }
 }
 
 // in Activity
 val viewModel: MainViewModel by viewModels()
 // изменение данных
-viewModel.incrementValue()
+viewModel.incrementCounter()
 
 // получение данных
-viewModel.getValue()
+viewModel.getCounter()
 ```
 ---
 
@@ -68,38 +71,60 @@ viewModel.getValue()
 * Класс, реализующий шину событий.
 * Activity подписывается на изменение данных и получает всегда свежее значение.
 * Изменение данных делается методами:
-    * setValue - из основного потока.
-    * postValue - из всех остальных потоков
+    * setValue(newValue) - из основного потока.
+    * postValue(newValue) - из всех остальных потоков
 ---
+
 ```kotlin
-data class UiState(
-    var value: Int = 0
-)
 class MainViewModel : ViewModel() {
 
-    private val uiState = MutableStateFlow<UiState>(UiState())
+    val counter =  MutableLiveData<Int>(
+        0 // начальное значение
+    )
 
-    // изменение значения
-    fun incrementValue() {
-        uiState.value++
-    }
-    
-    // получение значения
-    fun getValue(): Int {
-        return uiState.value
+    fun incrementCounter() {
+        counter.value = counter.value!! + 1
     }
 }
 
 // in Activity
 val viewModel: MainViewModel by viewModels()
+
 // изменение данных
-viewModel.incrementValue()
+viewModel.incrementCounter()
 
 // подписка на данные
-viewModel.uiTextLiveData.observe(viewLifecycleOwner, Observer { updatedText ->
-    binding.fragmentTextView.text = updatedText
+viewModel.counter.observe(this, Observer {
+   // в it лежит новое значение
+   textView.text = it.toString()
 })
 ```
+----
+
+```kotlin
+class MainViewModel : ViewModel() {
+
+    val counter =  MutableLiveData<Int>(
+        0 // начальное значение
+    )
+
+    fun incrementCounter() {
+        counter.postValue(counter.value!! + 1)
+    }
+
+    fun startTimer() {
+        thread {
+            while (true) {
+                incrementCounter()
+                Thread.sleep(500)
+            }
+        }
+    }
+}
+```
+---
+
+### Хранение класса
 ---
 
 ### Исправление ошибки с binding
