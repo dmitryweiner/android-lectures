@@ -107,10 +107,14 @@ class APIService {
 ---
 ### Как пользоваться APIService?
 * Для начала надо создать экземпляр класса:
+
 ```kotlin
 val apiService = APIService.getService()
+// или даже
+val apiService: APIServiceInterface by lazy { APIService.getService() }
 ```
 * Запросы:
+
 ```kotlin
 // получение поста с ID = 1
 // https://jsonplaceholder.typicode.com/posts/1
@@ -125,7 +129,9 @@ val posts = apiService.getPosts()
 ### Использование в Activity
 ```kotlin
 class MainActivity : AppCompatActivity() {
+    
     private val apiService = APIService.getService()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
