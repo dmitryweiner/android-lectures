@@ -3,7 +3,7 @@
 
 [все лекции](https://github.com/dmitryweiner/android-lectures/blob/master/README.md)
 
-[видео]()
+[видео](https://youtu.be/iN5W8DYDyhI)
 ---
 
 ### Retrofit
