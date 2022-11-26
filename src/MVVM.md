@@ -124,28 +124,28 @@ class MainViewModel : ViewModel() {
 ```
 ---
 
-### Хранение состояния в виде класса
-* Если надо хранить несколько свойств интерфейса, удобно сложить их в класс. 
-* Этот класс обычно называют state - состояние (интерфейса).
-
+### Трансформация
 ```kotlin
-data class State(
-    val counter: Int = 0,
-    val isEven: Boolean = true,
-)
-```
-* Тогда во ViewModel можно хранить экземпляр класса:
+class MainViewModel : ViewModel() {
 
-```kotlin
-val state =  MutableLiveData<State>(
-    State() // начальное значение
-)
-```
----
+    private val list = MutableLiveData<MutableList<String>>(mutableListOf<String>())
+    private val filter = MutableLiveData<String>("")
+    val filteredList: LiveData<MutableList<String>> = Transformations.map<MutableList<String>, MutableList<String>>(list) {
+        if (filter.value != null) {
+            return@map it.filter { str -> str.contains(filter.value!!) }.toMutableList()
+        }
+        return@map it
+    }
 
-### Изменение полей состояния
+    fun addElement(s: String) {
+        list.value?.add(s)
+        list.postValue(list.value)
+    }
 
-```kotlin
+    fun setFilter(s: String) {
+        filter.postValue(s)
+    }
+}
 ```
 ---
 
