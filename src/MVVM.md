@@ -201,3 +201,4 @@ dependencies {
 * https://proandroiddev.com/clean-architecture-on-android-using-feature-modules-mvvm-view-slices-and-kotlin-e9ed18e64d83    
 * [Binding](http://www.fandroid.info/lektsiya-8-po-arhitekture-android-data-binding-mvvm/)
 * https://github.com/velmurugan-murugesan/Android-Example/tree/master/MvvmRetrofitRecyclerviewKotlin
+* https://www.kodeco.com/10391019-livedata-tutorial-for-android-deep-dive
