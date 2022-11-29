@@ -118,7 +118,7 @@ ACTIVITY_RECOGNITION
 ```
 ---
 
-#### Алгоритм запроса разрешения `dangerous` во время выполнения
+#### Алгоритм запроса разрешения `dangerous`
 * Проверить, может уже выдали разрешение:
     * Если да, делаем то, что собирались (запись в файл и т.д.).
     * Если нет, запросить разрешение.
@@ -256,6 +256,13 @@ fun calPhoneWithPermissions(phoneNumber: String) {
 ```
 ---
 
+#### Иногда приложение запрашивает разрешения, которые явно не нужны
+
+Так делать не надо.
+
+![](assets/permissions/kowalsky.png)
+---
+
 ### Запрос нескольких разрешений за раз
 ``` kotlin
 val requestPermissionLauncher =
@@ -281,17 +288,17 @@ requestPermissionLauncher.launch(
 ```
 ---
 
-### Интересные разрешения
-* normal:
-    * INTERNET - доступ в интернет.
-    * TRANSMIT_IR - передача данных по ИК-связи.
-* dangerous:
-    * ACCESS_FINE_LOCATION - доступ к GPS.
-    * RECORD_AUDIO - доступ к микрофону.
+![request multiple](assets/permissions/multiple.png)
 ---
 
 ### Запись звука
+
+```xml
+<uses-permission android:name="android.permission.RECORD_AUDIO" />
+```
+
 ```kotlin
+// check permissions first
 val RECORDER_SAMPLERATE = 8000
 val RECORDER_CHANNELS: Int = AudioFormat.CHANNEL_IN_MONO
 val RECORDER_AUDIO_ENCODING: Int = AudioFormat.ENCODING_PCM_16BIT
@@ -420,6 +427,59 @@ class MainActivity : AppCompatActivity() {
     }
 }
 ```
+---
+
+### Захват фото
+
+В манифесте:
+
+```xml
+<uses-permission android:name="android.permission.CAMERA" />
+```
+
+Захват картинки:
+
+```kotlin
+// check permissions first
+val cameraIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
+startActivityForResult(cameraIntent, CAMERA_REQUEST)
+```
+
+Запись:
+
+```kotlin
+protected fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent) {
+    super.onActivityResult(requestCode, resultCode, data)
+    if (requestCode == CAMERA_REQUEST && resultCode == RESULT_OK) {
+        val photo = data.extras!!["data"] as Bitmap?
+        imageView.setImageBitmap(photo)
+    }
+}
+```
+
+---
+### Интересные разрешения
+* normal:
+  * INTERNET - доступ в интернет.
+  * TRANSMIT_IR - передача данных по ИК-связи.
+* dangerous:
+  * ACCESS_FINE_LOCATION - доступ к GPS.
+  * RECORD_AUDIO - доступ к микрофону.
+---
+
+### Необходимое оборудование
+* В манифесте можно описать, какое оборудование используется приложением:
+
+```xml
+<manifest>
+  <uses-feature android:name="android.hardware.bluetooth" android:required="true" />
+  <uses-feature android:name="android.hardware.camera.any" android:required="true" />
+  <!-- ... -->
+</manifest>
+```
+
+* Тогда PlayMarket не будет показывать приложение устройствам, у которых этого оборудования нет.
+* [Полный список оборудования](https://developer.android.com/guide/topics/manifest/uses-feature-element#features-reference).
 ---
 
 ### Полезные ссылки
