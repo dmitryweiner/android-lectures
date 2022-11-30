@@ -60,6 +60,6 @@
   * https://metanit.com/java/android/
   * https://learntodroid.com/
   * https://github.com/skydoves/android-developer-roadmap
-  * [Очень хороший канал на Youtube](https://www.youtube.com/channel/UCofyDdGnCssPNwABNkxLFKg)
+  * [Roman Andrushchenko: очень хороший канал на Youtube](https://www.youtube.com/channel/UCofyDdGnCssPNwABNkxLFKg)
   * [Биржа заказов](https://workspace.ru/tasks/mobile-programming/)
   * [20 Open Source проектов](https://apptractor.ru/info/articles/20-open-source-proektov-dlya-android-kotoryie-mogut-nauchit-vas-novomu.html)

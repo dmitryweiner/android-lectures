@@ -10,6 +10,9 @@
 ![MVVM architecture](assets/mvvm/mvvm-architecture.png)
 ---
 
+![MVVM architecture](assets/mvvm/architecture.png)
+---
+
 ### Идея класса ViewModel
 * Activity умирает и возрождается в течение жизненного цикла.
 * Состояние UI нужно хранить в классе, переживающем перезагрузку activity, - ViewModel.
