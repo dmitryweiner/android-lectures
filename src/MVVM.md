@@ -16,16 +16,17 @@
 ### Идея класса ViewModel
 * Activity умирает и возрождается в течение жизненного цикла.
 * Состояние UI нужно хранить в классе, переживающем перезагрузку activity, - ViewModel.
-* Данные должны быть отделены от представления:
-    * Activity отображает данные и обрабатывает действия пользователя, передавая их во ViewModel.
-    * ViewModel хранит данные, изменяет в соответствии с действиями пользователя и извещает activity, когда данные изменились.
+* Данные должны быть отделены от представления, они лежат в модели.
+* ViewModel - прослойка между источником данных и View (Activity/Fragment).
 ---
 
+### Жизненный цикл
 ![](assets/mvvm/viewmodel-lifecycle.png)
 ---
 
 ### Установка библиотеки для работы с ViewModel
-* build.gradle (module): 
+* build.gradle (module):
+
 ```
 android {
     compileSdk 33 // <--
@@ -38,10 +39,11 @@ android {
 dependencies {
     // ...
     implementation 'androidx.activity:activity-ktx:1.6.1'
+}
 ```
 ---
 
-### ViewModel
+### Простейшая ViewModel
 ```kotlin
 class MainViewModel : ViewModel() {
 
@@ -67,7 +69,11 @@ viewModel.getCounter()
 ---
 
 ### LiveData
-> LiveData — это контейнер, который следит за жизненным циклом экрана и снабжает его данными, когда это уместно. Например, если активити находится на переднем плане и видна пользователю. Ценность такого подхода заключается в том, что LiveData не будет снабжать ваш экран данными, если он свёрнут или закрыт. Но как только экран появится перед пользователем, обновление данных возобновится.
+`LiveData` — это контейнер, который следит за жизненным циклом экрана и снабжает его данными, когда это уместно. 
+
+Например, если активити находится на переднем плане и видна пользователю. Ценность такого подхода заключается в том, что LiveData не будет снабжать ваш экран данными, если он свёрнут или закрыт. 
+
+Но как только экран появится перед пользователем, обновление данных возобновится.
 ---
 
 ### LiveData
@@ -75,7 +81,8 @@ viewModel.getCounter()
 * Activity подписывается на изменение данных и получает всегда свежее значение.
 * Изменение данных делается методами:
     * setValue(newValue) - из основного потока.
-    * postValue(newValue) - из всех остальных потоков
+    * postValue(newValue) - из всех остальных потоков.
+* [Подробнее про LiveData](https://startandroid.ru/ru/courses/architecture-components/27-course/architecture-components/526-urok-3-livedata.html).
 ---
 
 ```kotlin
@@ -89,7 +96,8 @@ class MainViewModel : ViewModel() {
         counter.value = counter.value!! + 1
     }
 }
-
+```
+```kotlin
 // in Activity:
 val viewModel: MainViewModel by viewModels()
 
@@ -102,8 +110,9 @@ viewModel.counter.observe(this, Observer {
    textView.text = it.toString()
 })
 ```
-----
+---
 
+### ViewModel с таймером
 ```kotlin
 class MainViewModel : ViewModel() {
 
@@ -112,6 +121,7 @@ class MainViewModel : ViewModel() {
     )
 
     fun incrementCounter() {
+        // postValue, т.к. из отдельного потока
         counter.postValue(counter.value!! + 1)
     }
 
@@ -127,9 +137,9 @@ class MainViewModel : ViewModel() {
 ```
 ---
 
-### Трансформация
+### Трансформация данных
 * Transformations.map получает на вход два параметра:
-  * LiveData.
+  * LiveData, за которыми следит.
   * Преобразующую функцию.
 * Когда меняется первый, Transformations.map выдаёт новое значение LiveData.
 * Если преобразующая функция выдаёт LiveData, надо использовать Transformations.switchMap.
@@ -143,8 +153,7 @@ class MainViewModel : ViewModel() {
     // тут хранится исходный список
     private val list = MutableLiveData<MutableList<Int>>(mutableListOf<Int>())
     
-    // тут лежат только чётные значения,
-    // обновляются автоматически
+    // тут лежат только чётные значения, обновляются автоматически
     val filteredList: LiveData<MutableList<Int>> = Transformations.map<MutableList<Int>, MutableList<Int>>(list) {
       return@map it.filter { number -> number % 2 == 0 }.toMutableList()
     }
@@ -153,10 +162,10 @@ class MainViewModel : ViewModel() {
         list.value?.add(number)
     }
 }
-
+```
+```kotlin
 // in Activity:
 val viewModel: MainViewModel by viewModels()
-
 viewModel.filteredList.observe(this, Observer {
    textView.text = it.joinToString(", ")
 })
@@ -164,6 +173,8 @@ viewModel.filteredList.observe(this, Observer {
 ---
 
 ### Трансформация из нескольких источников
+[Подробнее про switchMap](https://startandroid.ru/ru/courses/architecture-components/27-course/architecture-components/526-urok-3-livedata.html)
+
 ```kotlin
 class MainViewModel : ViewModel() {
 
@@ -191,40 +202,35 @@ class MainViewModel : ViewModel() {
         filter.value = s
     }
 }
-
-// in Activity:
-val viewModel: MainViewModel by viewModels()
-
-viewModel.filteredList.observe(this, Observer {
-   textView.text = it.joinToString(", ")
-})
 ```
 ---
 
-### Подсоединение ViewModel напрямую к layout
-```
-<data>
-    <variable
-        name="user"
-        type="com.project.model.User" />
-</data>
+### Binding
+* Можно подсоединить ViewModel напрямую к XML-layout, минуя Activity.
+* Для начала нужно подключить binding в build.gradle (module):
 
-...
-
-<TextView
-        android:id="@+id/firstname"
-        android:text="@{user.firstname}"
-        />
 ```
+android {
+    // ...
+    buildFeatures {
+        viewBinding true
+    }
+}
+```
+* Можно также создать проект, выбрав Basic Activity.
+* [Подробнее про binding](https://www.fandroid.info/%D1%83%D1%80%D0%BE%D0%BA-8-android-data-binding-%D0%BE%D1%81%D0%BD%D0%BE%D0%B2%D1%8B/).
 ---
 
 ### Исправление ошибки с binding
+* Если такая ошибка:
+
 ```
 > Task :app:checkDebugDuplicateClasses FAILED
 Duplicate class androidx.lifecycle.ViewModelLazy found in modules lifecycle-viewmodel-2.5.1-runtime (androidx.lifecycle:lifecycle-viewmodel:2.5.1) and lifecycle-viewmodel-ktx-2.2.0-runtime (androidx.lifecycle:lifecycle-viewmodel-ktx:2.2.0)
 ```
 
-* build.gradle (module):
+* Надо добавить зависимости в build.gradle (module):
+
 ```
 dependencies {
     // ...
@@ -234,20 +240,66 @@ dependencies {
 ```
 ---
 
+### Подключение binding в Activity
+[Подробнее](https://www.fandroid.info/viewmodel-%D0%B8-livedata-%D0%B2-data-binding/)
+```kotlin
+class MainActivity : AppCompatActivity() {
+
+    val viewModel: MainViewModel by viewModels()
+    
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        val binding: MainActivityBinding = 
+            DataBindingUtil.setContentView(this, R.layout.main_activity)
+        
+        // указываем владельца жизненного цикла
+        binding.lifecycleOwner = this
+        
+        // указываем viewModel
+        binding.viewmodel = viewModel
+    }
+}
+```
+---
+
+### Подсоединение ViewModel напрямую к layout
+```
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+    <data>
+        <variable name="viewmodel" 
+                  type="com.weiner.myapplication.MainViewModel"/>
+    </data>
+    <... Rest of your layout ...>
+    <TextView
+            android:id="@+id/name"
+            android:text="@{viewmodel.name}"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"/>
+```
+---
+
 ### Идея репозитория
 
+![](assets/mvvm/architecture2.png)
 ---
 
 ### Room и MVVM
-https://www.geeksforgeeks.org/how-to-build-a-simple-note-android-app-using-mvvm-and-room-database/
-https://github.com/umangburman/MVVM-Room-Kotlin-Example
-https://github.com/agustiyann/ToDoList-Room-MVVM
+* [Инструкция](https://www.geeksforgeeks.org/how-to-build-a-simple-note-android-app-using-mvvm-and-room-database/).
+* Репозитории:
+  * https://github.com/umangburman/MVVM-Room-Kotlin-Example
+  * https://github.com/agustiyann/ToDoList-Room-MVVM
 ---
 
 ### Retrofit и MVVM
-https://www.howtodoandroid.com/mvvm-retrofit-recyclerview-kotlin/
-https://github.com/velmurugan-murugesan/Android-Example/tree/master/MvvmRetrofitRecyclerviewKotlin
-https://proandroiddev.com/clean-architecture-on-android-using-feature-modules-mvvm-view-slices-and-kotlin-e9ed18e64d83
+* [Инструкция](https://www.howtodoandroid.com/mvvm-retrofit-recyclerview-kotlin/).
+* [Ещё инструкция](https://proandroiddev.com/clean-architecture-on-android-using-feature-modules-mvvm-view-slices-and-kotlin-e9ed18e64d83).
+* [Инструкция (рус.)](https://medium.com/@nyavorskii/%D0%B7%D0%BD%D0%B0%D0%BA%D0%BE%D0%BC%D1%81%D1%82%D0%B2%D0%BE-%D1%81-android-architecture-components-%D0%B8-mvvm-%D0%BF%D0%B5%D1%80%D0%B5%D0%B2%D0%BE%D0%B4-29654672f4ab).
+* Репозитории:
+  * https://github.com/velmurugan-murugesan/Android-Example/tree/master/MvvmRetrofitRecyclerviewKotlin
+---
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/bCH12ycXPeo" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 ---
 
 ### Полезные ссылки
@@ -258,7 +310,3 @@ https://proandroiddev.com/clean-architecture-on-android-using-feature-modules-mv
 * https://www.howtodoandroid.com/mvvm-retrofit-recyclerview-kotlin/
 * https://proandroiddev.com/clean-architecture-on-android-using-feature-modules-mvvm-view-slices-and-kotlin-e9ed18e64d83    
 * https://github.com/velmurugan-murugesan/Android-Example/tree/master/MvvmRetrofitRecyclerviewKotlin
-
----
-
-<iframe width="560" height="315" src="https://www.youtube.com/embed/bCH12ycXPeo" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
