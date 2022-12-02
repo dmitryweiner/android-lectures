@@ -27,12 +27,13 @@
 * [Запрос разрешений](https://dmitryweiner.github.io/android-lectures/Permissions.html#/).
   * Разрешения в Manifest.xml.
   * Запрос разрешений во время выполнения.
-* Построение архитектуры MVVM:
+* [Построение архитектуры MVVM](https://dmitryweiner.github.io/android-lectures/MVVM.html#/):
   * LiveData, observer.
   * ViewModel.
   * Repository.
   * MVVM.
   * Binging.
+* Фрагменты и навигация.
 * Локализация приложения.
 
 ## [Лабораторная работа](laba.md)
