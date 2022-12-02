@@ -151,31 +151,36 @@ val requestPermissionLauncher =
 ### В Activity:
 
 ```kotlin
-fun callPhone(phoneNumber: String) {
-    val intent = Intent(Intent.ACTION_CALL, Uri.parse(`tel:$phoneNumber`));
-    startActivity(intent);
+fun doDangerousJob() {
+    // обращение к системным функциям
 }
 
-@RequiresApi(Build.VERSION_CODES.M)
-fun calPhoneWithPermissions(phoneNumber: String) {
+fun doDangerousJobWithRequest() {
+    // лончер
     val requestPermissionLauncher =
         registerForActivityResult(ActivityResultContracts.RequestPermission()) { isGranted: Boolean ->
             if (isGranted) {
                 // Разрешение дали 😊
                 // можно делать что собирались
+                doDangerousJob()
             } else {
                 // Разрешение не дали 😭
                 // Покажем тост с объяснениями, зачем разрешение
             }
         }
+    
+    // реализация алгоритма
     when {
+        // проверить, есть ли разрешение
         ContextCompat.checkSelfPermission(
                 this,
                 Manifest.permission.REQUESTED_PERMISSION
                 ) == PackageManager.PERMISSION_GRANTED -> {
                 // Разрешение уже дали 😊
                 // можно делать что собирались
+                doDangerousJob()
         }
+        // проверить, запрашивали ли уже разрешение
         shouldShowRequestPermissionRationale(Manifest.permission.REQUESTED_PERMISSION) -> {
                 // Уже спрашивали, но его не дали 😭
                 // Покажем тост с объяснениями, зачем разрешение
@@ -486,3 +491,6 @@ protected fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent) 
 * https://startandroid.ru/ru/blog/508-android-permissions.html
 * https://developer.android.com/guide/topics/permissions/overview
 * https://source.android.com/docs/core/permissions
+
+---
+![No permissions required](assets/permissions/no-permissions.png)
