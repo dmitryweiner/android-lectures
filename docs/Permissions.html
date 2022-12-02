@@ -301,23 +301,20 @@ val bufferSize = AudioRecord.getMinBufferSize(
     RECORDER_SAMPLERATE,
     RECORDER_CHANNELS, RECORDER_AUDIO_ENCODING
 )
-val BufferElements2Rec = 1024 // want to play 2048 (2K) since 2 bytes we use only 1024
-
-val BytesPerElement = 2 // 2 bytes in 16bit format
-
-val sData = ShortArray(BufferElements2Rec)
+val sData = ShortArray(bufferSize)
 
 val recorder = AudioRecord(
     MediaRecorder.AudioSource.MIC,
     RECORDER_SAMPLERATE, RECORDER_CHANNELS,
-    RECORDER_AUDIO_ENCODING, BufferElements2Rec * BytesPerElement
+    RECORDER_AUDIO_ENCODING, bufferSize
 )
 
 recorder.startRecording()
 while (true) {
     // gets the voice output from microphone to byte format
     recorder.read(sData, 0, BufferElements2Rec)
-}    
+}
+recorder.stop()
 ```</script></section><section data-markdown><script type="text/template">
 ```kotlin
 package com.example.myapplication
@@ -398,16 +395,12 @@ class MainActivity : AppCompatActivity() {
             RECORDER_SAMPLERATE,
             RECORDER_CHANNELS, RECORDER_AUDIO_ENCODING
         )
-        val BufferElements2Rec = 1024 // want to play 2048 (2K) since 2 bytes we use only 1024
-
-        val BytesPerElement = 2 // 2 bytes in 16bit format
-
-        val sData = ShortArray(BufferElements2Rec)
+        val sData = ShortArray(bufferSize)
 
         val recorder = AudioRecord(
             MediaRecorder.AudioSource.MIC,
             RECORDER_SAMPLERATE, RECORDER_CHANNELS,
-            RECORDER_AUDIO_ENCODING, BufferElements2Rec * BytesPerElement
+            RECORDER_AUDIO_ENCODING, bufferSize
         )
         thread {
             recorder.startRecording()
@@ -420,6 +413,10 @@ class MainActivity : AppCompatActivity() {
     }
 }
 ```</script></section></section><section  data-markdown><script type="text/template">
+### Запись звука
+[Демо-репозиторий](https://github.com/dmitryweiner/kotlin-capture-audio)
+
+![](assets/permissions/audio-record.gif)</script></section><section  data-markdown><script type="text/template">
 ### Захват фото
 
 В манифесте:
