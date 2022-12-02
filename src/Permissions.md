@@ -3,6 +3,8 @@
 ![permissions](assets/permissions/request.png)
 
 [все лекции](https://github.com/dmitryweiner/android-lectures/blob/master/README.md)
+
+[видео](https://youtu.be/ERAQDmq9IiE)
 ---
 
 ### Разрешения пользователя
@@ -297,6 +299,7 @@ requestPermissionLauncher.launch(
 ---
 
 ### Запись звука
+[Демо-репозиторий](https://github.com/dmitryweiner/kotlin-capture-audio)
 
 ```xml
 <uses-permission android:name="android.permission.RECORD_AUDIO" />
