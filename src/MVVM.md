@@ -228,6 +228,7 @@ class MainViewModel : ViewModel() {
 android {
     // ...
     buildFeatures {
+        dataBinding true
         viewBinding true
     }
 }
