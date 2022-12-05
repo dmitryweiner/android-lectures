@@ -32,7 +32,7 @@
   * ViewModel.
   * Repository.
   * MVVM.
-  * Binging.
+  * Binding.
 * Фрагменты и навигация.
 * Локализация приложения.
 
