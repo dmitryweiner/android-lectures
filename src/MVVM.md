@@ -68,6 +68,21 @@ viewModel.getCounter()
 ```
 ---
 
+### AndroidLiveModel
+* Наследник класса ViewModel, обладающий информацией о владельце данного конкретного ViewModel.
+* Применяется для случаев, когда нужен текущий контекст, например для создания Room.databaseBuilder:
+
+```kotlin
+class MainViewModel(context: Application) : AndroidViewModel(context) {
+
+    init {
+        // в applicationContext ссылка на текущую Activity
+        context.applicationContext
+    }
+}
+```
+---
+
 ### LiveData
 `LiveData` — это контейнер, который следит за жизненным циклом экрана и снабжает его данными, когда это уместно. 
 
@@ -79,7 +94,7 @@ viewModel.getCounter()
 ### LiveData
 * Класс, реализующий шину событий.
 * Activity подписывается на изменение данных и получает всегда свежее значение.
-* Изменение данных делается методами:
+* Изменение данных делается методами в классе `MutableLiveData`:
     * setValue(newValue) - из основного потока.
     * postValue(newValue) - из всех остальных потоков.
 * [Подробнее про LiveData](https://startandroid.ru/ru/courses/architecture-components/27-course/architecture-components/526-urok-3-livedata.html).
@@ -172,7 +187,7 @@ viewModel.filteredList.observe(this, Observer {
 ```
 ---
 
-### Трансформация из нескольких источников
+### Transformations.switchMap
 [Подробнее про switchMap](https://startandroid.ru/ru/courses/architecture-components/27-course/architecture-components/526-urok-3-livedata.html)
 
 ```kotlin
@@ -287,6 +302,7 @@ class MainActivity : AppCompatActivity() {
 ### Room и MVVM
 * [Инструкция](https://www.geeksforgeeks.org/how-to-build-a-simple-note-android-app-using-mvvm-and-room-database/).
 * Репозитории:
+  * https://github.com/dmitryweiner/kotlin-sqlite-todolist/tree/master/WithRoomAndMVVM
   * https://github.com/umangburman/MVVM-Room-Kotlin-Example
   * https://github.com/agustiyann/ToDoList-Room-MVVM
 ---
