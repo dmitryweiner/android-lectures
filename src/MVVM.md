@@ -266,8 +266,8 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        val binding: MainActivityBinding = 
-            DataBindingUtil.setContentView(this, R.layout.main_activity)
+        val binding: ActivityMainBinding = 
+            DataBindingUtil.setContentView(this, R.layout.activity_main)
         
         // указываем владельца жизненного цикла
         binding.lifecycleOwner = this
