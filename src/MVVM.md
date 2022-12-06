@@ -223,6 +223,7 @@ class MainViewModel : ViewModel() {
 ### Binding
 * Можно подсоединить ViewModel напрямую к XML-layout, минуя Activity.
 * Для начала нужно подключить binding в build.gradle (module):
+* [Подробнее про binding](https://www.fandroid.info/%D1%83%D1%80%D0%BE%D0%BA-8-android-data-binding-%D0%BE%D1%81%D0%BD%D0%BE%D0%B2%D1%8B/).
 
 ```
 android {
@@ -232,22 +233,6 @@ android {
         viewBinding true
     }
 }
-```
-* Можно также создать проект, выбрав Basic Activity.
-* [Подробнее про binding](https://www.fandroid.info/%D1%83%D1%80%D0%BE%D0%BA-8-android-data-binding-%D0%BE%D1%81%D0%BD%D0%BE%D0%B2%D1%8B/).
----
-
-### Исправление ошибки с binding
-* Если такая ошибка:
-
-```
-> Task :app:checkDebugDuplicateClasses FAILED
-Duplicate class androidx.lifecycle.ViewModelLazy found in modules lifecycle-viewmodel-2.5.1-runtime (androidx.lifecycle:lifecycle-viewmodel:2.5.1) and lifecycle-viewmodel-ktx-2.2.0-runtime (androidx.lifecycle:lifecycle-viewmodel-ktx:2.2.0)
-```
-
-* Надо добавить зависимости в build.gradle (module):
-
-```
 dependencies {
     // ...
     implementation "androidx.lifecycle:lifecycle-viewmodel:2.5.1"
@@ -258,9 +243,12 @@ dependencies {
 
 ### Подключение binding в Activity
 [Подробнее](https://www.fandroid.info/viewmodel-%D0%B8-livedata-%D0%B2-data-binding/)
+
+
 ```kotlin
 class MainActivity : AppCompatActivity() {
 
+    // модель определена ниже ⬇️
     val viewModel: MainViewModel by viewModels()
     
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -277,11 +265,25 @@ class MainActivity : AppCompatActivity() {
     }
 }
 ```
+----
+
+### `MainViewModel`
+
+```kotlin
+class MainViewModel : ViewModel() {
+
+    val counter =  MutableLiveData(0)
+
+    fun incrementCounter() { 
+        counter.value = counter.value!! + 1
+    }
+}
+```
 ---
 
 ### Подсоединение ViewModel напрямую к layout
 ```
-<layout xmlns:android="http://schemas.android.com/apk/res/android">
+<layout xmlns:android="https://schemas.android.com/apk/res/android">
     <data>
         <variable name="viewmodel" 
                   type="com.weiner.myapplication.MainViewModel"/>
@@ -289,10 +291,27 @@ class MainActivity : AppCompatActivity() {
     <... Rest of your layout ...>
     <TextView
             android:id="@+id/name"
-            android:text="@{viewmodel.name}"
+            android:text="@{String.valueOf(viewmodel.counter)}"
             android:layout_height="wrap_content"
             android:layout_width="wrap_content"/>
+    <Button
+            android:id="@+id/button"
+            android:onClick="@{() -> viewmodel.incrementCounter()}"/>
+    <... Rest of your layout ...>
+</layout>
 ```
+---
+
+### Синтаксис layout
+* Всё, что в скобках `${...}` будет интерпретировано как Kotlin:
+
+```xml
+<TextView
+android:text="@{String.valueOf(index + 1)}"
+android:visibility="@{age > 13 ? View.GONE : View.VISIBLE}"
+android:transitionName='@{"image_" + id}'/>
+```
+* [Подробнее](https://developer.android.com/topic/libraries/data-binding/expressions).
 ---
 
 ### Идея репозитория
