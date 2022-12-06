@@ -30,9 +30,8 @@
 * [Построение архитектуры MVVM](https://dmitryweiner.github.io/android-lectures/MVVM.html#/):
   * LiveData, observer.
   * ViewModel.
-  * Repository.
-  * MVVM.
   * Binding.
+  * Repository.
 * Фрагменты и навигация.
 * Локализация приложения.
 
