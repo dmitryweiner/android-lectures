@@ -15,7 +15,7 @@
   </head>
   <body>
     <div class="reveal">
-      <div class="slides"><section  data-markdown><script type="text/template">### Реализация архитектуры MVVM
+      <div class="slides"><section  data-markdown><script type="text/template">### Построение архитектуры MVVM
 
 ![MVVM pattern](assets/mvvm/MVVMPattern.png)
 
@@ -31,6 +31,12 @@
 * ViewModel - прослойка между источником данных и View (Activity/Fragment).</script></section><section  data-markdown><script type="text/template">
 ### Жизненный цикл
 ![](assets/mvvm/viewmodel-lifecycle.png)</script></section><section  data-markdown><script type="text/template">
+### Утечки памяти
+* Из-за того, что ViewModel живёт дольше, чем Activity, могут
+  происходить утечки памяти.
+* Чтобы их не было, во ViewModel не должно быть ссылок на вьюшки в Activity.
+* Проще говоря, ViewModel не должна "знать", как и где она будет отображаться.
+* [Подробнее](https://habr.com/ru/post/338590/).</script></section><section  data-markdown><script type="text/template">
 ### Установка библиотеки для работы с ViewModel
 * build.gradle (module):
 

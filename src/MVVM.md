@@ -1,4 +1,4 @@
-### Реализация архитектуры MVVM
+### Построение архитектуры MVVM
 
 ![MVVM pattern](assets/mvvm/MVVMPattern.png)
 
@@ -22,6 +22,14 @@
 
 ### Жизненный цикл
 ![](assets/mvvm/viewmodel-lifecycle.png)
+---
+
+### Утечки памяти
+* Из-за того, что ViewModel живёт дольше, чем Activity, могут
+  происходить утечки памяти.
+* Чтобы их не было, во ViewModel не должно быть ссылок на вьюшки в Activity.
+* Проще говоря, ViewModel не должна "знать", как и где она будет отображаться.
+* [Подробнее](https://habr.com/ru/post/338590/).
 ---
 
 ### Установка библиотеки для работы с ViewModel
@@ -81,14 +89,6 @@ class MainViewModel(context: Application) : AndroidViewModel(context) {
     }
 }
 ```
----
-
-### Утечки памяти
-* Из-за того, что ViewModel живёт дольше, чем Activity, могут
-происходить утечки памяти.
-* Чтобы их не было, во ViewModel не должно быть ссылок на вьюшки в Activity.
-* Проще говоря, ViewModel не должна "знать", как и где она будет отображаться.
-* [Подробнее](https://habr.com/ru/post/338590/). 
 ---
 
 ### LiveData
