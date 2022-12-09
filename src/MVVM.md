@@ -4,7 +4,7 @@
 
 [все лекции](https://github.com/dmitryweiner/android-lectures/blob/master/README.md)
 
-[видео]()
+[видео](https://youtu.be/iUvHZ1uW2mU)
 ---
 
 ![MVVM architecture](assets/mvvm/mvvm-architecture.png)
@@ -291,7 +291,7 @@ class MainViewModel : ViewModel() {
 
 ### Подсоединение ViewModel напрямую к layout
 ```
-<layout xmlns:android="https://schemas.android.com/apk/res/android">
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
     <data>
         <variable name="viewmodel" 
                   type="com.weiner.myapplication.MainViewModel"/>
@@ -311,7 +311,7 @@ class MainViewModel : ViewModel() {
 ---
 
 ### Синтаксис layout
-* Всё, что в скобках `${...}` будет интерпретировано как Kotlin:
+* Всё, что в скобках `@{...}` будет интерпретировано как Kotlin:
 
 ```xml
 <TextView

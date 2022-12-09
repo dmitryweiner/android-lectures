@@ -21,7 +21,7 @@
 
 [все лекции](https://github.com/dmitryweiner/android-lectures/blob/master/README.md)
 
-[видео]()</script></section><section  data-markdown><script type="text/template">
+[видео](https://youtu.be/iUvHZ1uW2mU)</script></section><section  data-markdown><script type="text/template">
 ![MVVM architecture](assets/mvvm/mvvm-architecture.png)</script></section><section  data-markdown><script type="text/template">
 ![MVVM architecture](assets/mvvm/architecture.png)</script></section><section  data-markdown><script type="text/template">
 ### Идея класса ViewModel
@@ -270,7 +270,7 @@ class MainViewModel : ViewModel() {
 ```</script></section></section><section  data-markdown><script type="text/template">
 ### Подсоединение ViewModel напрямую к layout
 ```
-<layout xmlns:android="https://schemas.android.com/apk/res/android">
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
     <data>
         <variable name="viewmodel" 
                   type="com.weiner.myapplication.MainViewModel"/>
@@ -288,7 +288,7 @@ class MainViewModel : ViewModel() {
 </layout>
 ```</script></section><section  data-markdown><script type="text/template">
 ### Синтаксис layout
-* Всё, что в скобках `${...}` будет интерпретировано как Kotlin:
+* Всё, что в скобках `@{...}` будет интерпретировано как Kotlin:
 
 ```xml
 <TextView
