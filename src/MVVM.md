@@ -323,11 +323,14 @@ android:transitionName='@{"image_" + id}'/>
 ---
 
 ### EditText ↔ ViewModel
+* Можно связать модель и EditText:
+
 ```kotlin
 class MainViewModel : ViewModel() {
 
     val input = MutableLiveData("")
 
+    // метод вызывается при изменении EditText
     fun setInput(e: Editable) {
         input.postValue(e.toString())
     }
