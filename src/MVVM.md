@@ -323,6 +323,21 @@ android:transitionName='@{"image_" + id}'/>
 ---
 
 ### EditText ↔ ViewModel
+```kotlin
+class MainViewModel : ViewModel() {
+
+    val input = MutableLiveData("")
+
+    fun setInput(e: Editable) {
+        input.postValue(e.toString())
+    }
+}
+```
+
+```xml
+<EditText
+    android:afterTextChanged="@{viewmodel.setInput}"/>
+```
 ---
 
 ### Идея репозитория
