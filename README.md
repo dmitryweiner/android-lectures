@@ -62,4 +62,5 @@
   * https://github.com/skydoves/android-developer-roadmap
   * [Roman Andrushchenko: очень хороший канал на Youtube](https://www.youtube.com/channel/UCofyDdGnCssPNwABNkxLFKg)
   * [Биржа заказов](https://workspace.ru/tasks/mobile-programming/)
+  * [Полезные UI библиотеки](https://github.com/wasabeef/awesome-android-ui)
   * [20 Open Source проектов](https://apptractor.ru/info/articles/20-open-source-proektov-dlya-android-kotoryie-mogut-nauchit-vas-novomu.html)

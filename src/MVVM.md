@@ -328,6 +328,7 @@ android:transitionName='@{"image_" + id}'/>
 ```kotlin
 class MainViewModel : ViewModel() {
 
+    // эта строка будет отображаться в TextView
     val input = MutableLiveData("")
 
     // метод вызывается при изменении EditText
@@ -340,6 +341,8 @@ class MainViewModel : ViewModel() {
 ```xml
 <EditText
     android:afterTextChanged="@{viewmodel.setInput}"/>
+<TextView
+    android:text="@{viewmodel.input}"/>
 ```
 ---
 
