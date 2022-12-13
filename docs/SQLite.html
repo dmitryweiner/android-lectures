@@ -313,6 +313,11 @@ val dbHelper = DBHelper(this)
 ```kotlin
 val id = dbHelper.add("Покормить кота") 
 // в id теперь лежит свежесгенерированный ID из базы
+```
+* Редактирование записи:
+```kotlin
+// в id лежит ID записи
+dbHelper.update(id, "Покормил кота", true) 
 ```</script></section><section  data-markdown><script type="text/template">
 ### Пример использования в Activity
 * Получение всех записей:

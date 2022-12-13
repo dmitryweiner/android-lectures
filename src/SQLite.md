@@ -331,6 +331,11 @@ val dbHelper = DBHelper(this)
 val id = dbHelper.add("Покормить кота") 
 // в id теперь лежит свежесгенерированный ID из базы
 ```
+* Редактирование записи:
+```kotlin
+// в id лежит ID записи
+dbHelper.update(id, "Покормил кота", true) 
+```
 ---
 
 ### Пример использования в Activity
