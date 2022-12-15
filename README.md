@@ -27,6 +27,7 @@
 * [Запрос разрешений](https://dmitryweiner.github.io/android-lectures/Permissions.html#/).
   * Разрешения в Manifest.xml.
   * Запрос разрешений во время выполнения.
+  * [Запись и чтение файлов](https://dmitryweiner.github.io/android-lectures/Files.html#/).
 * [Построение архитектуры MVVM](https://dmitryweiner.github.io/android-lectures/MVVM.html#/):
   * LiveData, observer.
   * ViewModel.
