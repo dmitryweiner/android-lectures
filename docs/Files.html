@@ -1,26 +1,37 @@
-### 💾 Запись и чтение файлов 📖
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+
+    <title>Программирование мобильных приложений</title>
+    <link rel="shortcut icon" href="./favicon.ico" />
+    <link rel="stylesheet" href="./dist/reset.css" />
+    <link rel="stylesheet" href="./dist/reveal.css" />
+    <link rel="stylesheet" href="./dist/theme/serif.css" id="theme" />
+    <link rel="stylesheet" href="./css/highlight/androidstudio.css" />
+
+
+  </head>
+  <body>
+    <div class="reveal">
+      <div class="slides"><section  data-markdown><script type="text/template">### 💾 Запись и чтение файлов 📖
 
 [все лекции](https://github.com/dmitryweiner/android-lectures/blob/master/README.md)
-
----
-
+</script></section><section  data-markdown><script type="text/template">
 ### Места для хранения файлов
 * Private storage - внутренний каталог приложения. 
 Туда может писать и читать только наше приложение, зато без запроса разрешений.
 * Shared storage - общее хранилище файлов, куда имеют доступ многие приложения.
   * EXTERNAL_STORAGE - внешняя SD-карта.
-
----
-
+</script></section><section  data-markdown><script type="text/template">
 ### Изменения в API Android
 * <= 6 - можно писать на SD-карту, указав это в Manifest.xml.
 * <= 10 - можно писать на карту, запросив разрешение во время выполнения.
 * 11 - можно писать только в Scoped storage:
   * Фото.
   * Документы.
-  * Загрузки.
----
-
+  * Загрузки.</script></section><section  data-markdown><script type="text/template">
 ### Запись в Private storage
 
 ```kotlin
@@ -45,9 +56,7 @@ fun writeToPrivateStorage() {
 }
 ```
 
-Пишет файл в `/data/data/%PACKAGE_NAME%/files/file.txt`
----
-
+Пишет файл в `/data/data/%PACKAGE_NAME%/files/file.txt`</script></section><section  data-markdown><script type="text/template">
 ### Чтение из private storage
 
 ```kotlin
@@ -70,15 +79,11 @@ fun readFromPrivateStorage() {
         }
     }
 }
-```
----
-
+```</script></section><section  data-markdown><script type="text/template">
 ### Запись в shared storage
 * Добавить нужные права в `AndroidManifest.xml`.
 * [Запросить права во время выполнения](https://dmitryweiner.github.io/android-lectures/Permissions.html#/11).
-* Записать файл.
----
-
+* Записать файл.</script></section><section  data-markdown><script type="text/template">
 ### Добавление прав в AndroidManifest.xml
 ```xml
 <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
@@ -89,9 +94,7 @@ fun readFromPrivateStorage() {
     >
     <!-- ... -->
 </application>
-```
----
-
+```</script></section><section  data-markdown><script type="text/template">
 ### Запись в shared storage
 
 ```kotlin
@@ -130,9 +133,7 @@ fun writeToSharedStorage() {
         }
     }
 }
-```
----
-
+```</script></section><section  data-markdown><script type="text/template">
 ### Варианты каталогов
 
 ```kotlin
@@ -158,99 +159,53 @@ public class Environment {
     public static String DIRECTORY_RINGTONES = "Ringtones";
     public static String DIRECTORY_SCREENSHOTS = "Screenshots";
 }
-```
----
-
+```</script></section><section  data-markdown><script type="text/template">
 ![](assets/files/dirs.webp)
-
----
-
+</script></section><section  data-markdown><script type="text/template">
 ### Запись в shared storage
 
 ```kotlin
-```
----
-
+```</script></section><section  data-markdown><script type="text/template">
 ### Запись с помощью интента
-
----
-
+</script></section><section  data-markdown><script type="text/template">
 ### 
-
----
-
+</script></section><section  data-markdown><script type="text/template">
 ### 
-
----
-
+</script></section><section  data-markdown><script type="text/template">
 ### 
-
----
-
+</script></section><section  data-markdown><script type="text/template">
 ### 
-
----
-
+</script></section><section  data-markdown><script type="text/template">
 ### 
-
----
-
+</script></section><section  data-markdown><script type="text/template">
 ### 
-
----
-
+</script></section><section  data-markdown><script type="text/template">
 ### 
-
----
-
+</script></section><section  data-markdown><script type="text/template">
 ### 
-
----
-
+</script></section><section  data-markdown><script type="text/template">
 ### 
-
----
-
+</script></section><section  data-markdown><script type="text/template">
 ### 
-
----
-
+</script></section><section  data-markdown><script type="text/template">
 ### 
-
----
-
+</script></section><section  data-markdown><script type="text/template">
 ### 
-
----
-
+</script></section><section  data-markdown><script type="text/template">
 ### 
-
----
-
+</script></section><section  data-markdown><script type="text/template">
 ### 
-
----
-
+</script></section><section  data-markdown><script type="text/template">
 ### 
-
----
-
+</script></section><section  data-markdown><script type="text/template">
 ### 
-
----
-
+</script></section><section  data-markdown><script type="text/template">
 ### 
-
----
-
+</script></section><section  data-markdown><script type="text/template">
 ### 
-
----
-
+</script></section><section  data-markdown><script type="text/template">
 ### 
-
----
-
+</script></section><section  data-markdown><script type="text/template">
 ### Полезные ссылки
 * https://learntodroid.com/android-file-io-tutorial-with-internal-and-external-storage/
 * https://androidexplained.github.io/android/android11/scoped-storage/2020/09/29/file-saving-android-11.html
@@ -258,3 +213,55 @@ public class Environment {
 * https://www.digitalocean.com/community/tutorials/android-external-storage-read-write-save-file
 * https://stackoverflow.com/questions/65637610/saving-files-in-android-11-to-external-storagesdk-30
 
+</script></section></div>
+    </div>
+
+    <script src="./dist/reveal.js"></script>
+
+    <script src="./plugin/markdown/markdown.js"></script>
+    <script src="./plugin/highlight/highlight.js"></script>
+    <script src="./plugin/zoom/zoom.js"></script>
+    <script src="./plugin/notes/notes.js"></script>
+    <script src="./plugin/math/math.js"></script>
+    <script>
+      function extend() {
+        var target = {};
+        for (var i = 0; i < arguments.length; i++) {
+          var source = arguments[i];
+          for (var key in source) {
+            if (source.hasOwnProperty(key)) {
+              target[key] = source[key];
+            }
+          }
+        }
+        return target;
+      }
+
+      // default options to init reveal.js
+      var defaultOptions = {
+        controls: true,
+        progress: true,
+        history: true,
+        center: true,
+        transition: 'default', // none/fade/slide/convex/concave/zoom
+        plugins: [
+          RevealMarkdown,
+          RevealHighlight,
+          RevealZoom,
+          RevealNotes,
+          RevealMath
+        ]
+      };
+
+      // options from URL query string
+      var queryOptions = Reveal().getQueryHash() || {};
+
+      var options = extend(defaultOptions, {}, queryOptions);
+    </script>
+
+
+    <script>
+      Reveal.initialize(options);
+    </script>
+  </body>
+</html>

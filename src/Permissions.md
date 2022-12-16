@@ -272,26 +272,53 @@ fun calPhoneWithPermissions(phoneNumber: String) {
 
 ### Запрос нескольких разрешений за раз
 ``` kotlin
+val permissions = arrayOf(
+    Manifest.permission.READ_EXTERNAL_STORAGE,
+    Manifest.permission.WRITE_EXTERNAL_STORAGE
+)
+
 val requestPermissionLauncher =
     registerForActivityResult(ActivityResultContracts.RequestMultiplePermissions()) { permissionsStatusMap ->
-        // permissionStatusMap is of type <String, Boolean>
-        // if all permissions accepted
-        if (!permissionsStatusMap.containsValue(false)) {
-            // Разрешение дали 😊
-        } else {
-            // Разрешение не дали 😭
+        if (permissionsStatusMap.containsValue(false)) {
+            Toast.makeText(
+                applicationContext,
+                "Приложению нужно разрешение для записи/чтения на SD-карту",
+                Toast.LENGTH_SHORT
+            ).show()
         }
     }
-    
-requestPermissionLauncher.launch(
-    arrayOf(
-        android.Manifest.permission.READ_CONTACTS, 
-        android.Manifest.permission.WRITE_CONTACTS, 
-        android.Manifest.permission.WRITE_EXTERNAL_STORAGE, 
-        android.Manifest.permission.READ_SMS, 
-        android.Manifest.permission.CAMERA
-    )
-)
+
+
+fun checkPermissions(): Boolean {
+    val results = permissions.map {
+        ContextCompat.checkSelfPermission(
+            this,
+            it
+        ) == PackageManager.PERMISSION_GRANTED
+    }
+    return results.all { it }
+}
+
+fun shouldShowRequestPermissionsRationale(): Boolean {
+    val results = permissions.map {
+        shouldShowRequestPermissionRationale(it)
+    }
+    return results.all { it }
+}
+
+when {
+    checkPermissions() -> { /* делаем, что собирались */ }
+    shouldShowRequestPermissionsRationale() -> {
+        Toast.makeText(
+            applicationContext,
+            "Приложению нужно разрешение для записи/чтения на SD-карту",
+            Toast.LENGTH_SHORT
+        ).show()
+    }
+    else -> {
+        requestPermissionLauncher.launch(permissions)
+    }
+}
 ```
 ---
 
