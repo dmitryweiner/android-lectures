@@ -92,6 +92,52 @@ fun readFromPrivateStorage() {
 ```
 ---
 
+### Получение пути к shared storage
+
+* Для Android ≥ 10 используется метод `getExternalStoragePublicDirectory`,
+для более старых `getExternalStorageDirectory`:
+```kotlin
+if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+    path = Environment.getExternalStoragePublicDirectory(
+        Environment.DIRECTORY_DOCUMENTS
+    )
+} else {
+    path = Environment.getExternalStorageDirectory()
+}
+```
+* Для Android ≥ 10 надо выбрать каталог:
+```kotlin
+path = Environment.getExternalStoragePublicDirectory(
+    Environment.DIRECTORY_DOCUMENTS
+)
+```
+---
+
+### Варианты каталогов
+
+```java
+public class Environment {
+    public static String DIRECTORY_ALARMS = "Alarms";
+    public static String DIRECTORY_AUDIOBOOKS = "Audiobooks";
+    public static String DIRECTORY_DCIM = "DCIM";
+    public static String DIRECTORY_DOCUMENTS = "Documents";
+    public static String DIRECTORY_DOWNLOADS = "Download";
+    public static String DIRECTORY_MOVIES = "Movies";
+    public static String DIRECTORY_MUSIC = "Music";
+    public static String DIRECTORY_NOTIFICATIONS = "Notifications";
+    public static String DIRECTORY_PICTURES = "Pictures";
+    public static String DIRECTORY_PODCASTS = "Podcasts";
+    public static String DIRECTORY_RECORDINGS = "Recordings";
+    public static String DIRECTORY_RINGTONES = "Ringtones";
+    public static String DIRECTORY_SCREENSHOTS = "Screenshots";
+}
+```
+---
+
+![](assets/files/dirs.webp)
+
+---
+
 ### Запись в shared storage
 
 ```kotlin
@@ -133,122 +179,46 @@ fun writeToSharedStorage() {
 ```
 ---
 
-### Варианты каталогов
+### Запись с помощью интента
 
-```kotlin
-path = Environment.getExternalStoragePublicDirectory(
-    // тут можно выбрать, в какой каталог писать
-    Environment.DIRECTORY_DOCUMENTS
-)
-```
+* Начиная с Android 11 разработчикам рекомендуется использовать
+scoped storage и писать в него с помощью интента:
 
-```java
-public class Environment {
-    public static String DIRECTORY_ALARMS = "Alarms";
-    public static String DIRECTORY_AUDIOBOOKS = "Audiobooks";
-    public static String DIRECTORY_DCIM = "DCIM";
-    public static String DIRECTORY_DOCUMENTS = "Documents";
-    public static String DIRECTORY_DOWNLOADS = "Download";
-    public static String DIRECTORY_MOVIES = "Movies";
-    public static String DIRECTORY_MUSIC = "Music";
-    public static String DIRECTORY_NOTIFICATIONS = "Notifications";
-    public static String DIRECTORY_PICTURES = "Pictures";
-    public static String DIRECTORY_PODCASTS = "Podcasts";
-    public static String DIRECTORY_RECORDINGS = "Recordings";
-    public static String DIRECTORY_RINGTONES = "Ringtones";
-    public static String DIRECTORY_SCREENSHOTS = "Screenshots";
-}
-```
----
-
-![](assets/files/dirs.webp)
-
----
-
-### Запись в shared storage
-
-```kotlin
-```
+![]()
 ---
 
 ### Запись с помощью интента
 
+```kotlin
+val CREATE_FILE = 1
+fun writeViaIntent() {
+    val FILE_NAME = "file.txt"
+    val intent = Intent(Intent.ACTION_CREATE_DOCUMENT)
+    intent.addCategory(Intent.CATEGORY_OPENABLE)
+    intent.type = "application/txt"
+    intent.putExtra(Intent.EXTRA_TITLE, FILE_NAME)
+    startActivityForResult(intent, CREATE_FILE)
+}
+
+override fun onActivityResult(
+    requestCode: Int, resultCode: Int, resultData: Intent?) {
+    super.onActivityResult(requestCode, resultCode, resultData)
+    val text = "Какие-то данные"
+    if (requestCode == CREATE_FILE
+        && resultCode == Activity.RESULT_OK) {
+        resultData?.data?.also { uri ->
+            Toast.makeText(this, "Файл сохранён: ${uri.toString()}", Toast.LENGTH_SHORT).show()
+            val fos = contentResolver.openOutputStream(uri)
+            fos?.write(text.toByteArray())
+        }
+    }
+}
+```
 ---
 
-### 
+### Демо-репозиторий
 
----
-
-### 
-
----
-
-### 
-
----
-
-### 
-
----
-
-### 
-
----
-
-### 
-
----
-
-### 
-
----
-
-### 
-
----
-
-### 
-
----
-
-### 
-
----
-
-### 
-
----
-
-### 
-
----
-
-### 
-
----
-
-### 
-
----
-
-### 
-
----
-
-### 
-
----
-
-### 
-
----
-
-### 
-
----
-
-### 
-
+https://github.com/dmitryweiner/kotlin-write-files
 ---
 
 ### Полезные ссылки
