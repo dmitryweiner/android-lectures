@@ -219,6 +219,8 @@ override fun onActivityResult(
 ### Демо-репозиторий
 
 https://github.com/dmitryweiner/kotlin-write-files
+
+![](assets/files/demo.png)
 ---
 
 ### Полезные ссылки
