@@ -92,6 +92,52 @@ fun readFromPrivateStorage() {
 ```
 ---
 
+### Получение пути к shared storage
+
+* Для Android ≥ 10 используется метод `getExternalStoragePublicDirectory`,
+для более старых `getExternalStorageDirectory`:
+```kotlin
+if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+    path = Environment.getExternalStoragePublicDirectory(
+        Environment.DIRECTORY_DOCUMENTS
+    )
+} else {
+    path = Environment.getExternalStorageDirectory()
+}
+```
+* Для Android ≥ 10 надо выбрать каталог:
+```kotlin
+path = Environment.getExternalStoragePublicDirectory(
+    Environment.DIRECTORY_DOCUMENTS
+)
+```
+---
+
+### Варианты каталогов
+
+```java
+public class Environment {
+    public static String DIRECTORY_ALARMS = "Alarms";
+    public static String DIRECTORY_AUDIOBOOKS = "Audiobooks";
+    public static String DIRECTORY_DCIM = "DCIM";
+    public static String DIRECTORY_DOCUMENTS = "Documents";
+    public static String DIRECTORY_DOWNLOADS = "Download";
+    public static String DIRECTORY_MOVIES = "Movies";
+    public static String DIRECTORY_MUSIC = "Music";
+    public static String DIRECTORY_NOTIFICATIONS = "Notifications";
+    public static String DIRECTORY_PICTURES = "Pictures";
+    public static String DIRECTORY_PODCASTS = "Podcasts";
+    public static String DIRECTORY_RECORDINGS = "Recordings";
+    public static String DIRECTORY_RINGTONES = "Ringtones";
+    public static String DIRECTORY_SCREENSHOTS = "Screenshots";
+}
+```
+---
+
+![](assets/files/dirs.webp)
+
+---
+
 ### Запись в shared storage
 
 ```kotlin
@@ -133,72 +179,12 @@ fun writeToSharedStorage() {
 ```
 ---
 
-### Варианты каталогов
+### Запись с помощью интента
 
-```kotlin
-path = Environment.getExternalStoragePublicDirectory(
-    // тут можно выбрать, в какой каталог писать
-    Environment.DIRECTORY_DOCUMENTS
-)
-```
+* Начиная с Android 11 разработчикам рекомендуется использовать
+scoped storage и писать в него с помощью интента:
 
-```java
-public class Environment {
-    public static String DIRECTORY_ALARMS = "Alarms";
-    public static String DIRECTORY_AUDIOBOOKS = "Audiobooks";
-    public static String DIRECTORY_DCIM = "DCIM";
-    public static String DIRECTORY_DOCUMENTS = "Documents";
-    public static String DIRECTORY_DOWNLOADS = "Download";
-    public static String DIRECTORY_MOVIES = "Movies";
-    public static String DIRECTORY_MUSIC = "Music";
-    public static String DIRECTORY_NOTIFICATIONS = "Notifications";
-    public static String DIRECTORY_PICTURES = "Pictures";
-    public static String DIRECTORY_PODCASTS = "Podcasts";
-    public static String DIRECTORY_RECORDINGS = "Recordings";
-    public static String DIRECTORY_RINGTONES = "Ringtones";
-    public static String DIRECTORY_SCREENSHOTS = "Screenshots";
-}
-```
----
-
-![](assets/files/dirs.webp)
-
----
-
-### Чтение из shared storage
-
-```kotlin
-fun readFromSharedStorage() {
-    val FILE_NAME = "file.txt"
-    var path: File? = null
-    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
-        path = Environment.getExternalStoragePublicDirectory(
-            // тут можно выбрать, из какого каталога читать
-            Environment.DIRECTORY_DOCUMENTS
-        )
-    } else {
-        path = Environment.getExternalStorageDirectory()
-    }
-
-    var fin: FileInputStream? = null
-    try {
-        val file = File(path, FILE_NAME)
-        fin = FileInputStream(file);
-        val bytes = ByteArray(fin.available())
-        fin.read(bytes)
-        val text = String(bytes)
-        Toast.makeText(this, "Данные из файла: ${text}", Toast.LENGTH_SHORT).show()
-    } catch (ex: Exception) {
-        Toast.makeText(this, ex.message, Toast.LENGTH_SHORT).show()
-    } finally {
-        try {
-            if (fin != null) fin.close()
-        } catch (ex: IOException) {
-            Toast.makeText(this, ex.message, Toast.LENGTH_SHORT).show()
-        }
-    }
-}
-```
+![](assets/files/intent.png)
 ---
 
 ### Запись с помощью интента
@@ -230,25 +216,18 @@ override fun onActivityResult(
 ```
 ---
 
-### Чтение с помощью интента
-
-```kotlin
-```
----
-
 ### Демо-репозиторий
 
 https://github.com/dmitryweiner/kotlin-write-files
-
 ---
 
 ### Полезные ссылки
+
 * https://learntodroid.com/android-file-io-tutorial-with-internal-and-external-storage/
 * https://androidexplained.github.io/android/android11/scoped-storage/2020/09/29/file-saving-android-11.html
 * https://betterprogramming.pub/android-scoped-storage-demystified-3024a062ba24
 * https://www.digitalocean.com/community/tutorials/android-external-storage-read-write-save-file
 * https://stackoverflow.com/questions/65637610/saving-files-in-android-11-to-external-storagesdk-30
-
 ---
 
 ![](assets/files/monkey.png)
