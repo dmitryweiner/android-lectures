@@ -184,7 +184,7 @@ fun writeToSharedStorage() {
 * Начиная с Android 11 разработчикам рекомендуется использовать
 scoped storage и писать в него с помощью интента:
 
-![]()
+![](assets/files/intent.png)
 ---
 
 ### Запись с помощью интента
