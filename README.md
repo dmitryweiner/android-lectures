@@ -4,7 +4,10 @@
   * [Классы, наследование, объекты](https://dmitryweiner.github.io/android-lectures/Kotlin-objects.html).
   * [Массивы и коллекции](https://dmitryweiner.github.io/android-lectures/Kotlin-collections.html).
 * [Android Studio. Основы работы. Компиляция в APK](https://dmitryweiner.github.io/android-lectures/Android-studio.html).
-* [Анатомия приложения](https://dmitryweiner.github.io/android-lectures/Application-structure.html).
+* [Анатомия приложения](https://dmitryweiner.github.io/android-lectures/Application-structure.html):
+  * Компиляция.
+  * Структура проекта.
+  * [Строковые ресурсы, многоязычность](https://dmitryweiner.github.io/android-lectures/String-resources.html).
 * Пользовательский интерфейс:
   * [Разметка. Работа с компонентами](https://dmitryweiner.github.io/android-lectures/Layout-forms.html).
   * [RecyclerView: бесконечный список](https://dmitryweiner.github.io/android-lectures/Recycler-view.html).

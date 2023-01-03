@@ -151,6 +151,8 @@ class MainActivity : AppCompatActivity() {
     <string name="app_name">My Application</string>
 </resources>
 ```
+
+[Подробнее](https://dmitryweiner.github.io/android-lectures/String-resources.html)
 ---
 
 ### Доступ к ресурсам в коде
@@ -167,25 +169,6 @@ R.id.button
 R.string.app_name
 // или так
 val s = resources.getText(R.string.app_name)
-```
----
-
-### Доступ к строковым ресурсам
-```xml
-<string name="earth">Earth</string>
-<string name="moon">Moon</string>
-<string-array name="system">
-    <item>@string/earth</item>
-    <item>@string/moon</item>
-</string-array>
-```
-
-```kotlin
-val s = resources.getText(R.string.earth)
-println(s) // Earth
-
-val arr = resources..getStringArray(R.string.system)
-println(arr.joinToString(", ")) // Earth, Moon
 ```
 ---
 
