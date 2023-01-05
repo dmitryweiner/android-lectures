@@ -1,25 +1,72 @@
-### Использование ресурсов в приложении
+### 📝 Использование строковых ресурсов в приложении
 
 [все лекции](https://github.com/dmitryweiner/android-lectures/blob/master/README.md)
 ---
 
-### Доступ к строковым ресурсам
+### Типы строковых ресурсов
+* String - просто строка.
+* String array - набор строк.
+* Quantity strings - строки с числительными (для плюрализации).
+---
+
+### Использование строк
+* Строки лежат в файле `res/values/strings.xml`:
 ```xml
-<string name="earth">Earth</string>
-<string name="moon">Moon</string>
-<string-array name="system">
-    <item>@string/earth</item>
-    <item>@string/moon</item>
-</string-array>
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="hello">Hello!</string>
+</resources>
 ```
 
+* Использование в коде:
 ```kotlin
-val s = resources.getText(R.string.earth)
-println(s) // Earth
-
-val arr = resources..getStringArray(R.string.system)
-println(arr.joinToString(", ")) // Earth, Moon
+val s = resources.getText(R.string.hello)
+println(s) // "Hello!"
 ```
+---
+
+### Использование строк лейаутах
+
+```xml
+<TextView
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:text="@string/hello" />
+```
+
+<input type="text" value="Hello!" />
+---
+
+### Строки с переносами
+
+---
+
+### Массивы строк
+
+---
+
+### Плюрализация
+
+---
+
+### Шаблонные строки с параметрами
+
+---
+
+### Мультиязычность
+
+---
+
+### 
+
+---
+
+### 
+
+---
+
+### 
+
 ---
 
 ### Полезные ссылки
