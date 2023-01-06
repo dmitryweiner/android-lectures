@@ -340,6 +340,29 @@ spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
 * [Как настроить его вид и заполнить список](https://developer.alexanderklimov.ru/android/views/spinner.php).
 ---
 
+#### Список, берущий значения из файла ресурсов
+ 
+* Строки лежат в файле `res/values/strings.xml`:
+
+```xml
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="planets">
+        <item>Меркурий</item>
+        <item>Венера</item>
+        <item>Земля</item>
+        <item>Марс</item>
+    </string-array>
+</resources>
+```
+
+* В лейауте:
+
+```xml
+<Spinner android:entries="@array/planets" />
+```
+---
+
 ### Ползунок
 <input type="range">
 
