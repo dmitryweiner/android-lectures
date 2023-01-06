@@ -1,14 +1,27 @@
-### 📝 Использование строковых ресурсов в приложении
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
 
-[все лекции](https://github.com/dmitryweiner/android-lectures/blob/master/README.md)
----
+    <title>Программирование мобильных приложений</title>
+    <link rel="shortcut icon" href="./favicon.ico" />
+    <link rel="stylesheet" href="./dist/reset.css" />
+    <link rel="stylesheet" href="./dist/reveal.css" />
+    <link rel="stylesheet" href="./dist/theme/serif.css" id="theme" />
+    <link rel="stylesheet" href="./css/highlight/androidstudio.css" />
 
+
+  </head>
+  <body>
+    <div class="reveal">
+      <div class="slides"><section  data-markdown><script type="text/template">### 📝 Использование строковых ресурсов в приложении
+
+[все лекции](https://github.com/dmitryweiner/android-lectures/blob/master/README.md)</script></section><section  data-markdown><script type="text/template">
 ### Типы строковых ресурсов
 * String - просто строка.
 * String array - набор строк.
-* Quantity strings - строки с числительными (для плюрализации).
----
-
+* Quantity strings - строки с числительными (для плюрализации).</script></section><section  data-markdown><script type="text/template">
 ### Использование строк
 * Строки лежат в файле `res/values/strings.xml`:
 ```xml
@@ -22,9 +35,7 @@
 ```kotlin
 val s = resources.getText(R.string.hello)
 println(s) // "Hello!"
-```
----
-
+```</script></section><section  data-markdown><script type="text/template">
 ### Использование строк лейаутах
 
 ```xml
@@ -34,9 +45,7 @@ println(s) // "Hello!"
     android:text="@string/hello" />
 ```
 
-<input type="text" value="Hello!" />
----
-
+<input type="text" value="Hello!" /></script></section><section  data-markdown><script type="text/template">
 ### Строки с переносами
 * Строку с переносами можно обернуть в двойные кавычки `""`:
 ```xml
@@ -46,9 +55,7 @@ println(s) // "Hello!"
 одиннадцать часов пятнадцать
 минут и сорок пять секунд"</string>
 </resources>
-```
----
-
+```</script></section><section  data-markdown><script type="text/template">
 ### Массивы строк
 
 * Набор строк, объединённых одним смыслом, можно хранить в массиве:
@@ -70,9 +77,7 @@ println(s) // "Hello!"
 ```kotlin
 val planets: Array = resources.getStringArray(R.array.planets)
 printr(planets.joinToString(",")) // Меркурий, Венера, Земля, Марс
-```
----
-
+```</script></section><section  data-markdown><script type="text/template">
 ### Массивы строк
 
 * Тот же массив можно использовать прямо в лейауте:
@@ -83,9 +88,7 @@ printr(planets.joinToString(",")) // Меркурий, Венера, Земля,
     android:layout_height="wrap_content"
     android:entries="@array/planets"
 />
-```
----
-
+```</script></section><section  data-markdown><script type="text/template">
 ### Шаблонные строки с параметрами
 
 * Иногда бывает нужно вставлять в строки какие-нибудь подстроки (например, имя). 
@@ -95,9 +98,7 @@ printr(planets.joinToString(",")) // Меркурий, Венера, Земля,
 <string name="welcome_message">
     Привет, %1$s! У вас %2$d новых сообщений.
 </string>
-```
----
-
+```</script></section><section  data-markdown><script type="text/template">
 ### Шаблонные строки с параметрами
 
 * `%[parameter_index$][format_type]`:
@@ -105,9 +106,7 @@ printr(planets.joinToString(",")) // Меркурий, Венера, Земля,
   * `format type` - тип параметра:
     * `s` - string.
     * `d` - decimal integer.
-    * `f` - floating point number.
----
-
+    * `f` - floating point number.</script></section><section  data-markdown><script type="text/template">
 ### Шаблонные строки с параметрами
 
 * Наполнение параметров значениями:
@@ -120,9 +119,7 @@ val s = resources.getText(
     6 // второй параметр
 )
 println(s) // "Привет, Вася! У вас 6 новых сообщений."
-```
----
-
+```</script></section><section  data-markdown><script type="text/template">
 ### Плюрализация
 
 * Если нужно выводить разные строки в зависимости от количества:
@@ -140,9 +137,7 @@ println(s) // "Привет, Вася! У вас 6 новых сообщений
     <item quantity="few">У вас %1$d новых сообщения.</item>
     <item quantity="other">У вас %1$d новых сообщений.</item>
 </plurals>
-```
----
-
+```</script></section><section  data-markdown><script type="text/template">
 ### Плюрализация
 * Варианты `quantity`:
   * "zero" - 0
@@ -159,9 +154,7 @@ println(s) // "Привет, Вася! У вас 6 новых сообщений
         <item quantity=["zero" | "one" | "two" | "few" | "many" | "other"]>text_string</item>
     </plurals>
 </resources>
-```
----
-
+```</script></section><section  data-markdown><script type="text/template">
 ### Плюрализация
 
 * Использование в коде:
@@ -182,9 +175,7 @@ val s = resources.getQuantityString(
     0  // что выводить
 )
 println(s) // "У вас 0 новых сообщений."
-```
----
-
+```</script></section><section  data-markdown><script type="text/template">
 ### Мультиязычность
 
 * На устройстве можно выбрать язык интерфейса.
@@ -194,25 +185,72 @@ println(s) // "У вас 0 новых сообщений."
   * values/strings.xml - английский (дефолт).
   * values_ru/strings.xml - русский.
   * values_uz/strings.xml - узбекский.
-  * и т.д.
----
-
+  * и т.д.</script></section><section  data-markdown><script type="text/template">
 ### Мультиязычность
 
 ![](assets/resources/string.png)
 
-[Подробнее](https://www.tutlane.com/tutorial/android/android-localization-multi-language-with-examples)
----
-
+[Подробнее](https://www.tutlane.com/tutorial/android/android-localization-multi-language-with-examples)</script></section><section  data-markdown><script type="text/template">
 ### Мультиязычность
 
 Удобно пользоваться встроенным в Android Studio 
 [редактором переводов](https://developer.android.com/studio/write/translations-editor):
 
-![](assets/resources/translation.png)
----
-
+![](assets/resources/translation.png)</script></section><section  data-markdown><script type="text/template">
 ### Полезные ссылки
 * https://developer.android.com/guide/topics/resources/string-resource
 * https://stackoverflow.com/questions/3656371/is-it-possible-to-have-placeholders-in-strings-xml-for-runtime-values
 * https://www.tutlane.com/tutorial/android/android-localization-multi-language-with-examples
+</script></section></div>
+    </div>
+
+    <script src="./dist/reveal.js"></script>
+
+    <script src="./plugin/markdown/markdown.js"></script>
+    <script src="./plugin/highlight/highlight.js"></script>
+    <script src="./plugin/zoom/zoom.js"></script>
+    <script src="./plugin/notes/notes.js"></script>
+    <script src="./plugin/math/math.js"></script>
+    <script>
+      function extend() {
+        var target = {};
+        for (var i = 0; i < arguments.length; i++) {
+          var source = arguments[i];
+          for (var key in source) {
+            if (source.hasOwnProperty(key)) {
+              target[key] = source[key];
+            }
+          }
+        }
+        return target;
+      }
+
+      // default options to init reveal.js
+      var defaultOptions = {
+        controls: true,
+        progress: true,
+        history: true,
+        center: true,
+        transition: 'default', // none/fade/slide/convex/concave/zoom
+        slideNumber: true,
+        plugins: [
+          RevealMarkdown,
+          RevealHighlight,
+          RevealZoom,
+          RevealNotes,
+          RevealMath
+        ]
+      };
+
+      // options from URL query string
+      var queryOptions = Reveal().getQueryHash() || {};
+
+      var options = extend(defaultOptions, {}, queryOptions);
+    </script>
+
+
+    <script>
+      Reveal.initialize(options);
+    </script>
+  </body>
+</html>

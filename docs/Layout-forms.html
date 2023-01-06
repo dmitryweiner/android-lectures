@@ -311,6 +311,27 @@ spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
 }
 ```
 * [Как настроить его вид и заполнить список](https://developer.alexanderklimov.ru/android/views/spinner.php).</script></section><section  data-markdown><script type="text/template">
+#### Список, берущий значения из файла ресурсов
+ 
+* Строки лежат в файле `res/values/strings.xml`:
+
+```xml
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="planets">
+        <item>Меркурий</item>
+        <item>Венера</item>
+        <item>Земля</item>
+        <item>Марс</item>
+    </string-array>
+</resources>
+```
+
+* В лейауте:
+
+```xml
+<Spinner android:entries="@array/planets" />
+```</script></section><section  data-markdown><script type="text/template">
 ### Ползунок
 <input type="range">
 
@@ -394,7 +415,8 @@ seekBar.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener{
 https://developer.android.com/codelabs/basic-android-kotlin-training-xml-layouts</script></section><section  data-markdown><script type="text/template">
 ### Полезные ссылки
 * https://developer.alexanderklimov.ru/android/layout/constraintlayout.php
-* https://developer.alexanderklimov.ru/android/views/</script></section></div>
+* https://developer.alexanderklimov.ru/android/views/
+</script></section></div>
     </div>
 
     <script src="./dist/reveal.js"></script>
@@ -425,6 +447,7 @@ https://developer.android.com/codelabs/basic-android-kotlin-training-xml-layouts
         history: true,
         center: true,
         transition: 'default', // none/fade/slide/convex/concave/zoom
+        slideNumber: true,
         plugins: [
           RevealMarkdown,
           RevealHighlight,

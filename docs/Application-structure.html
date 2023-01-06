@@ -143,7 +143,9 @@ class MainActivity : AppCompatActivity() {
 <resources>
     <string name="app_name">My Application</string>
 </resources>
-```</script></section><section  data-markdown><script type="text/template">
+```
+
+[Подробнее](https://dmitryweiner.github.io/android-lectures/String-resources.html)</script></section><section  data-markdown><script type="text/template">
 ### Доступ к ресурсам в коде
 * Ко всем ресурсам можно получить доступ в коде через конструкцию `R.%ТИП_РЕСУРСА%.%ИМЯ_РЕСУРСА%`.
 
@@ -158,23 +160,6 @@ R.id.button
 R.string.app_name
 // или так
 val s = resources.getText(R.string.app_name)
-```</script></section><section  data-markdown><script type="text/template">
-### Доступ к строковым ресурсам
-```xml
-<string name="earth">Earth</string>
-<string name="moon">Moon</string>
-<string-array name="system">
-    <item>@string/earth</item>
-    <item>@string/moon</item>
-</string-array>
-```
-
-```kotlin
-val s = resources.getText(R.string.earth)
-println(s) // Earth
-
-val arr = resources..getStringArray(R.string.system)
-println(arr.joinToString(", ")) // Earth, Moon
 ```</script></section><section  data-markdown><script type="text/template">
 ### Тесты
 * Android Studio умеет запускать (и генерирует некие начальные) тесты:
@@ -214,7 +199,8 @@ class ExampleUnitTest {
 ### Полезные ссылки
 * https://developer.alexanderklimov.ru/android/theory/
 * https://developer.android.com/guide
-* <iframe width="560" height="315" src="https://www.youtube.com/embed/h3ylwK6MINI" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></script></section></div>
+* <iframe width="560" height="315" src="https://www.youtube.com/embed/h3ylwK6MINI" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+</script></section></div>
     </div>
 
     <script src="./dist/reveal.js"></script>
@@ -245,6 +231,7 @@ class ExampleUnitTest {
         history: true,
         center: true,
         transition: 'default', // none/fade/slide/convex/concave/zoom
+        slideNumber: true,
         plugins: [
           RevealMarkdown,
           RevealHighlight,
