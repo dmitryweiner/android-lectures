@@ -7,6 +7,18 @@
 [видео](https://youtu.be/KDGBungg4LE)
 ---
 
+### ООП
+* ООП - парадигма программирования, означает Объектно Ориентированное Программирование.
+* Принципы:
+  * Инкапсуляция.
+  * Наследование.
+  * Полиморфизм.
+* [Подробнее](https://ru.wikipedia.org/wiki/%D0%9E%D0%B1%D1%8A%D0%B5%D0%BA%D1%82%D0%BD%D0%BE-%D0%BE%D1%80%D0%B8%D0%B5%D0%BD%D1%82%D0%B8%D1%80%D0%BE%D0%B2%D0%B0%D0%BD%D0%BD%D0%BE%D0%B5_%D0%BF%D1%80%D0%BE%D0%B3%D1%80%D0%B0%D0%BC%D0%BC%D0%B8%D1%80%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D0%B5).
+----
+
+![](assets/kotlin-objects/oop.png)
+---
+
 ### Классы
 * [POJO](https://en.wikipedia.org/wiki/Plain_old_Java_object)-класс в Java:
 
@@ -56,7 +68,7 @@ val customer = Customer("Joe Smith")
 ```
 ---
 
-### Доступ к полям класса
+### Доступ к полям класса: оператор точка "."
 ```kotlin
 class Customer(name: String) {
     val customerKey = name.uppercase()
@@ -116,6 +128,12 @@ class Counter() {
         }
 }
 ```
+---
+
+### Дефолтное поведение классов
+* Классы в Kotlin по умолчанию `public` и `final`, это не надо указывать отдельно.
+* Чтобы дать другому классу возможность наследовать от этого, нужно добавить модификатор `open`.
+* Все поля класса по умолчанию `public`, это не нужно указывать отдельно.
 ---
 
 ### Наследование
@@ -182,6 +200,24 @@ class Child : MyInterface {
 
 [Подробнее](https://kotlinlang.org/docs/interfaces.html)
 ---
+
+### Статические методы и поля классов
+
+* В Kotlin нет статических полей и методов, как в Java.
+* Вместо этого есть классы-компаньоны, в которых лежат методы и константы, доступные
+без создания экземпляра родительского класса:
+
+```kotlin
+class Example {
+    companion object {
+        const val CONSTANT = "something"
+    }
+}
+
+println(Example.CONSTANT) // "something"
+```
+---
+
 ### Специальные классы
 * `data` - для хранения данных.
 * `sealed` - запечатанные (без возможности изменения).

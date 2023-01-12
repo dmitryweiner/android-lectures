@@ -155,7 +155,7 @@ val x: String = y as String
 var a: String = "abc" // Regular initialization means non-null by default
 a = null // compilation error
 ```
-* Если она может содержать `null`, это указывается при объявлении типа знаком `?`:
+* Если она может содержать `null` (nullable), это указывается при объявлении типа знаком `?`:
 ```kotlin
 var b: String? = "abc" // can be set to null
 b = null // ok
@@ -163,22 +163,52 @@ b = null // ok
 ---
 
 ### Проверка на `null`
-* Явная:
+* Компилятор следит за nullable переменными. Такой код вызовет ошибку:
 
 ```kotlin
 val b: String? = "Kotlin"
-if (b != null && b.length > 0) {
+print("String of length ${b.length}") // Only safe (?.) or non-null asserted (!!.) calls are allowed on a nullable receiver of type String?
+```
+
+* Можно явно проверить на `null`:
+
+```kotlin
+val b: String? = "Kotlin"
+if (b != null) {
     print("String of length ${b.length}")
 } else {
     print("Empty string")
 }
 ```
+---
 
-* Через оператор `?.`:
+### Оператор `?.`
+
+* Безопасный доступ к полям, которые могут быть `null`, осуществляется через оператор `?.`:
 
 ```kotlin
 val b: String? = null
-println(b?.length)
+println(b?.length) // null, нет исключения
+```
+
+* Этот оператор можно использовать в цепочке:
+```kotlin
+val departmentHead = bob?.department?.head?.name
+```
+* Оператор `?.` не вызывает исключений, просто возвращает null, если одна из переменных в цепочке `null`.
+---
+
+### Накричать на компилятор `!!`
+
+* Если переменная nullable (то есть тип у неё со знаком `?`), но мы точно знаем, 
+что там лежит значение, то можно обратиться к ней, используя оператор `!!`.
+* Это выключит проверку компилятора на `null`.
+* Однако, если там всё-таки лежит `null`, произойдёт [NPE](https://en.wikipedia.org/wiki/Null_pointer).
+
+```kotlin
+val b: String? = "Я строка"
+println(b.length) // Only safe (?.) or non-null asserted (!!.) calls are allowed on a nullable receiver of type String?
+println(b!!.length) // 8
 ```
 ---
 
@@ -441,6 +471,7 @@ fun reverseString(s: String): String {
 }
 ```
 ---
+
 * Форматирование кода важно: плохо отформатированный код тяжело воспринимается и как правило содержит ошибки.
 * Android Studio умеет форматировать код самостоятельно при нажатии комбинации клавиш `Ctrl + Alt + L`:
 
@@ -456,6 +487,11 @@ fun reverseString(s: String): String {
     return s.split("").reversed().joinToString("")
 }
 ```
+---
+
+### Задачи
+* Пройти квиз https://www.w3schools.com/quiztest/quiztest.php?qtest=KOTLIN
+* Ещё квиз (посложнее) https://kotlinquiz.com/
 ---
 
 ### Задачи
