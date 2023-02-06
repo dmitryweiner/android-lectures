@@ -30,12 +30,11 @@
 
 ![Андрей Бреслав](assets/kotlin/breslav.png)</script></section><section  data-markdown><script type="text/template">
 ### Основные особенности
-* Статически типизирован.
-* Умеет выводить типы (как TypeScript).
-* Компилируется в байт-код.
-* Исполняется на JVM.
-* Полностью функционально совместим с Java (лёгкая миграция).
-* Есть ООП.</script></section><section  data-markdown><script type="text/template">
+* Реализует принципы [ООП](https://ru.wikipedia.org/wiki/%D0%9E%D0%B1%D1%8A%D0%B5%D0%BA%D1%82%D0%BD%D0%BE-%D0%BE%D1%80%D0%B8%D0%B5%D0%BD%D1%82%D0%B8%D1%80%D0%BE%D0%B2%D0%B0%D0%BD%D0%BD%D0%BE%D0%B5_%D0%BF%D1%80%D0%BE%D0%B3%D1%80%D0%B0%D0%BC%D0%BC%D0%B8%D1%80%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D0%B5).
+* Статически типизирован, умеет сам выводить типы (как TypeScript).
+* Null-безопасный.
+* Компилируется в байт-код. Исполняется на JVM.
+* Полностью функционально совместим с Java (лёгкая миграция).</script></section><section  data-markdown><script type="text/template">
 ### Почему Kotlin, а не Java
 * Лаконичность.
 * Легче работать с типами.
@@ -52,8 +51,7 @@ val a = 1
 ```
 * var для изменяемых переменных:
 ```kotlin
-var i: Int
-i = 1
+var i = 1
 i++
 ```
 * **Всегда** лучше предпочитать val для [иммутабельности данных](https://ru.wikipedia.org/wiki/%D0%9D%D0%B5%D0%B8%D0%B7%D0%BC%D0%B5%D0%BD%D1%8F%D0%B5%D0%BC%D1%8B%D0%B9_%D0%BE%D0%B1%D1%8A%D0%B5%D0%BA%D1%82).</script></section><section  data-markdown><script type="text/template">
@@ -88,29 +86,64 @@ if (j != 2) {
 * Array.
 * Object.
 * [Подробнее](https://kotlinlang.org/docs/basic-types.html).</script></section><section  data-markdown><script type="text/template">
+### Литералы типов
+
+```kotlin
+val i = 1 // Int
+val l = 3000000000L // Long
+val b: Byte = 1 // Byte
+
+val f = 1.0f // Float
+val d = 1.0 // Double
+
+val c = 'c' // Char
+val s = "str" // String
+
+val bool = true // Boolean
+```
+
+[Подробнее](https://kotlinlang.org/docs/numbers.html)</script></section><section  data-markdown><script type="text/template">
 ### Автоматический вывод типа
 * Если переменной при объявлении присваивается значение, тип указывать **не надо**:
 ```kotlin
 val a = 1 // Int
 val s = "123" // String
 ```</script></section><section  data-markdown><script type="text/template">
-### Строки и шаблоны
-* Char:
+### Строки и символы
+* Символ:
 ```kotlin
 val ch = '1' // Char
 ```
-* Многострочная строка:
+* Строка:
+```kotlin
+val str = "123" // String
+```
+* Многострочная строка с переносами:
 ```kotlin
 val text = """
     for (c in "foo")
     print(c)
 """
-```
-* Использование шаблонов:
+```</script></section><section  data-markdown><script type="text/template">
+### Шаблонные строки
+* Если в строке написать символ `$` и имя переменной, то вместо этого подставится значение переменной:
 ```kotlin
 val i = 10
 println("i = $i") // prints "i = 10"
-```</script></section><section  data-markdown><script type="text/template">
+```
+* Если написать `${выражение}`, то вместо этого подставится значение выражения:
+```kotlin
+val i = 10
+println("i + 10 = ${i + 10}") // prints "i + 10 = 20"
+```
+* [Подробнее](https://kotlinlang.org/docs/strings.html#string-templates).</script></section><section  data-markdown><script type="text/template">
+### Шаблонные строки 
+```kotlin
+val s = "abc"
+println("$s.length is ${s.length}")
+```
+
+[Что выведет?](https://pl.kotl.in/EeFQu81j4)</script></section><section  data-markdown><script type="text/template">
 ### Явная конвертация типов
 ```kotlin
 val b: Byte = 1 // OK, literals are checked statically
