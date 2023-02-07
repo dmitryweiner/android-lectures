@@ -4,7 +4,7 @@
 
 [все лекции](https://github.com/dmitryweiner/android-lectures/blob/master/README.md)
 
-[видео](https://youtu.be/negdjkC0hLg)
+[видео](https://youtu.be/2PzsRfnV108)
 ---
 
 ### История создания
