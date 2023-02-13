@@ -13,6 +13,7 @@
   * Инкапсуляция.
   * Наследование.
   * Полиморфизм.
+  * Абстракция.
 * [Подробнее](https://ru.wikipedia.org/wiki/%D0%9E%D0%B1%D1%8A%D0%B5%D0%BA%D1%82%D0%BD%D0%BE-%D0%BE%D1%80%D0%B8%D0%B5%D0%BD%D1%82%D0%B8%D1%80%D0%BE%D0%B2%D0%B0%D0%BD%D0%BD%D0%BE%D0%B5_%D0%BF%D1%80%D0%BE%D0%B3%D1%80%D0%B0%D0%BC%D0%BC%D0%B8%D1%80%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D0%B5).
 ----
 
@@ -40,8 +41,22 @@ public class MyBean {
 * Тот же класс в Kotlin:
 
 ```kotlin
-public class MyBean(val someProperty: String)
+class MyBean(val someProperty: String)
 ```
+---
+
+### Класс
+```kotlin
+class ClassName(// как будто конструктор
+    // поля класса
+    val fieldName: String, 
+    val fieldName1: Boolean, 
+    val fieldName2: Int, 
+) { 
+    // методы класса
+}
+```
+
 ---
 
 ### Класс
@@ -50,9 +65,9 @@ public class MyBean(val someProperty: String)
 class Person(
     val firstName: String, 
     val lastName: String, 
-    var isEmployed: Boolean = true) { /*...*/ }
+    var isEmployed: Boolean = true)
 ```
-* Инициализация поля класса:
+* Инициализация поля класса, которого нет в конструкторе:
 ```kotlin
 class Customer(name: String) {
     val customerKey = name.uppercase()
@@ -63,23 +78,19 @@ class Customer(name: String) {
 
 ### Создание экземпляра класса
 ```kotlin
-val invoice = Invoice()
-val customer = Customer("Joe Smith")
-```
----
-
-### Доступ к полям класса: оператор точка "."
-```kotlin
 class Customer(name: String) {
-    val customerKey = name.uppercase()
+  val customerKey = name.uppercase()
 }
 
-val customer = Customer("John Smith")
-println(customer.customerKey) // JOHN SMITH
+val customer = Customer("Василий Пупкин")
+println(customer.name) // Василий Пупкин
+println(customer.customerKey) // ВАСИЛИЙ ПУПКИН
 ```
+Доступ к полям класса с помощью оператора точка "."
 ---
 
-### Явный конструктор класса
+### Выполнение кода при создании экземпляра класса
+Блок `init {}`
 ```kotlin
 class Customer(name: String) {
     var customerKey: String? = null
@@ -144,7 +155,7 @@ open class Base(p: Int)
 
 class Derived(p: Int) : Base(p)
 ```
-* Переопределение методов:
+* Переопределение методов `override`:
 
 ```kotlin
 open class Shape {
@@ -197,6 +208,8 @@ class Child : MyInterface {
     }
 }
 ```
+
+Оператор `":"` означает, что класс реализует интерфейс.
 
 [Подробнее](https://kotlinlang.org/docs/interfaces.html)
 ---
@@ -320,11 +333,16 @@ window.addMouseListener(object : MouseAdapter() {
 * [Подробнее](https://kotlinlang.org/docs/object-declarations.html).
 ---
 
-### Делегаты, lazy, lateinit
-* В Kotlin можно использовать [делегаты](https://ru.wikipedia.org/wiki/%D0%A8%D0%B0%D0%B1%D0%BB%D0%BE%D0%BD_%D0%B4%D0%B5%D0%BB%D0%B5%D0%B3%D0%B8%D1%80%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D1%8F).
-* Есть стандартные делегаты `lazy` и `lateinit` для свойств, значение которых будет вычислено при первом обращении к свойству.
-* `lazy` принимает лямбду:
+### Ленивая инициализация `by lazy`
+* Есть переменная, чьё значение имеет смысл вычислять только
+в момент доступа к ней.
+* Для можно использовать [делегат](https://ru.wikipedia.org/wiki/%D0%A8%D0%B0%D0%B1%D0%BB%D0%BE%D0%BD_%D0%B4%D0%B5%D0%BB%D0%B5%D0%B3%D0%B8%D1%80%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D1%8F)
+`by lazy`.
+* Значение будет вычислено при первом обращении к свойству.
+* `lazy` принимает лямбду, которая вызывается при попытке доступа:
+---
 
+### Ленивая инициализация `by lazy`
 ```kotlin
 val lazyValue: String by lazy {
     println("computed!")
@@ -334,11 +352,58 @@ val lazyValue: String by lazy {
 println(lazyValue)
 println(lazyValue)
 ```
-* [Различия lazy и lateinit](https://stackoverflow.com/a/36623703/3012961). 
+---
+
+### Модификатор поля `lateinit`
+* Переменная не nullable, но её значение будет присвоено гарантированно ДО первого чтения значения?
+* Тогда можно использовать `lateinit`:
+
+```kotlin
+public class MyTest {
+    lateinit var subject: TestSubject
+    init {
+        subject = TestSubject()
+    }
+    fun test() {
+        subject.method()  // dereference directly
+    }
+}
+```
+* Переменная может быть только `var`.
+---
+
+### Пример с `lateinit`
+```kotlin
+class LoginFragment : Fragment() {
+
+    private lateinit var usernameEditText: EditText
+    private lateinit var passwordEditText: EditText
+    private lateinit var loginButton: Button
+    private lateinit var statusTextView: TextView
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        usernameEditText = view.findViewById(R.id.username_edit_text)
+        passwordEditText = view.findViewById(R.id.password_edit_text)
+        loginButton = view.findViewById(R.id.login_button)
+        statusTextView = view.findViewById(R.id.status_text_view)
+    }
+}
+```
+---
+
+### Различия lazy и lateinit
+* Делегат `lazy { ... }` используется только для val полей, lateinit только для var.
+* lateinit нельзя использовать для nullable полей (со знаком ?).
+* lateinit var может быть инициализировано везде в классе, by lazy { ... } только в лямбде.
+* by lazy { ... } потокобезопасно в отличие от lateinit var.
+* [Подробнее](https://stackoverflow.com/a/36623703/3012961).
+
 ---
 
 ### Модули
-* Как и в Java, код разделяется на пакеты:
+* Как и в Java, код разделяется на модули:
 
 ```kotlin
 package org.example
@@ -353,6 +418,15 @@ import org.example.Message // Message is now accessible without qualification
 import org.example.* // everything in 'org.example' becomes accessible
 ```
 * [Подробнее](https://kotlinlang.org/docs/packages.html).
+---
+
+### Модули
+* В первой строке модуля определяется его имя:
+```kotlin
+package org.example
+```
+* Имя разбивается по доменному принципу:
+![](assets/kotlin-objects/modules.png)
 ---
 
 ### Именованный импорт
