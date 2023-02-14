@@ -21,7 +21,7 @@
 ---
 
 ### Классы
-* [POJO](https://en.wikipedia.org/wiki/Plain_old_Java_object)-класс в Java:
+* [POJO](https://ru.wikipedia.org/wiki/POJO)-класс в Java:
 
 ```java
 public class MyBean {
@@ -48,12 +48,16 @@ class MyBean(val someProperty: String)
 ### Класс
 ```kotlin
 class ClassName(// как будто конструктор
-    // поля класса
+    // поля класса, инициализирующиеся в конструкторе
     val fieldName: String, 
     val fieldName1: Boolean, 
     val fieldName2: Int, 
 ) { 
+    // поля класса, инициализирующиеся как-то иначе
+    val fieldName3 = 0
+    
     // методы класса
+    fun method() {}
 }
 ```
 
@@ -71,22 +75,28 @@ class Person(
 ```kotlin
 class Customer(name: String) {
     val customerKey = name.uppercase()
+    var counter = 0
 }
 ```
 * [Подробнее](https://kotlinlang.org/docs/classes.html).
 ---
 
 ### Создание экземпляра класса
+* В Котлине нет служебного слова `new`, поэтому для создания экземпляра просто пишем `ClassName(params...)`:
+
 ```kotlin
 class Customer(name: String) {
   val customerKey = name.uppercase()
 }
 
+// создание экземпляра:
 val customer = Customer("Василий Пупкин")
+```
+* Доступ к полям класса:
+```kotlin
 println(customer.name) // Василий Пупкин
 println(customer.customerKey) // ВАСИЛИЙ ПУПКИН
 ```
-Доступ к полям класса с помощью оператора точка "."
 ---
 
 ### Выполнение кода при создании экземпляра класса
@@ -114,6 +124,7 @@ class Person(val firstName: String, val lastName: String) {
 }
 
 val p = Person("Peter", "Griffin")
+// вызов метода:
 print(p.getFullName())
 ```
 ---
@@ -151,14 +162,15 @@ class Counter() {
 * Чтобы класс можно было наследовать, нужно добавить модификатор `open`:
 
 ```kotlin
-open class Base(p: Int)
+open class Parent(p: Int)
 
-class Derived(p: Int) : Base(p)
+class Child(p: Int) : Parent(p)
 ```
 * Переопределение методов `override`:
 
 ```kotlin
 open class Shape {
+    // метод должен быть open
     open fun draw() { /*...*/ }
     fun fill() { /*...*/ }
 }
@@ -194,6 +206,8 @@ class Rectangle : Polygon() {
 ---
 
 ### Интерфейсы
+* Интерфейс создаётся служебным словом `interface`:
+
 ```kotlin
 interface MyInterface {
     fun bar()
@@ -209,7 +223,7 @@ class Child : MyInterface {
 }
 ```
 
-Оператор `":"` означает, что класс реализует интерфейс.
+* Для имплементации интерфейса его указывают после класса через `":"`, но без `()`.
 
 [Подробнее](https://kotlinlang.org/docs/interfaces.html)
 ---
