@@ -118,8 +118,8 @@ val s = "123" // String
 ```
 ---
 
-### Строки и символы
-* Символ:
+### Строки и шаблоны
+* Char:
 ```kotlin
 val ch = '1' // Char
 ```
@@ -134,29 +134,23 @@ val text = """
     print(c)
 """
 ```
----
-
-### Шаблонные строки
-* Если в строке написать символ `$` и имя переменной, то вместо этого подставится значение переменной:
+* Использование шаблонов в строках:
 ```kotlin
 val i = 10
 println("i = $i") // prints "i = 10"
 ```
-* Если написать `${выражение}`, то вместо этого подставится значение выражения:
-```kotlin
-val i = 10
-println("i + 10 = ${i + 10}") // prints "i + 10 = 20"
-```
-* [Подробнее](https://kotlinlang.org/docs/strings.html#string-templates).
 ---
 
-### Шаблонные строки 
+### Строковые шаблоны
+В шаблоне можно использовать не только переменные, но и операторы, вызывать методы и функции, однако не стоит увлекаться:
 ```kotlin
-val s = "abc"
-println("$s.length is ${s.length}")
-```
+val i = 10
+println("i = $i") // "i = 10"
+println("i*i = ${i * i}") // "i*i = 100"
 
-[Что выведет?](https://pl.kotl.in/EeFQu81j4)
+val s = "abc"
+println("s = '$s', length = ${s.length}")
+```
 ---
 
 ### Явная конвертация типов
@@ -181,11 +175,28 @@ if (x is String) {
     print(x.length)
 }
 ```
+
+* Проверка сразу на несколько типов:
+```kotlin
+when (x) {
+    is Int -> print(x + 1)
+    is String -> print(x.length + 1)
+    is IntArray -> print(x.sum())
+}
+```
+---
+
+### Приведение типа
+* [Подробнее](https://kotlinlang.org/docs/typecasts.html).
 * Приведение типа оператором `as`:
 ```kotlin
 val x: String = y as String
 ```
-* [Подробнее](https://kotlinlang.org/docs/typecasts.html).
+* Такое приведение не безопасно, если в переменной лежит что-то, не совместимое с будущим типом (строка -> число). 
+Если есть такие сомнения, надо пользоваться безопасным приведением типа:
+```kotlin
+val x: String? = y as String?
+```
 ---
 
 ### Null safety
@@ -249,6 +260,10 @@ val b: String? = "Я строка"
 println(b.length) // Only safe (?.) or non-null asserted (!!.) calls are allowed on a nullable receiver of type String?
 println(b!!.length) // 8
 ```
+---
+
+### Boxing
+
 ---
 
 ### Операторы
