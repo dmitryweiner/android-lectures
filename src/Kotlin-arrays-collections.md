@@ -1,10 +1,26 @@
 ### Массивы и коллекции
 
-![Kotlin classes](assets/kotlin-collections/collections.png)
+![Kotlin collections](assets/kotlin-collections/list-set-map.png)
 
 [все лекции](https://github.com/dmitryweiner/android-lectures/blob/master/README.md)
 
 [видео](https://youtu.be/EpPdwcr5vJw)
+---
+
+* Массивы:
+  * Массивы типизированные.
+  * Массивы с элементами разного типа.
+* Статические коллекции:
+  * List: список значений.
+  * Map: список пар ключ-значение.
+  * Set: список уникальных значений.
+* Динамические коллекции:
+  * MutableList.
+  * MutableMap.
+  * MutableSet.
+---
+
+![collections diagram](assets/kotlin-collections/collections-diagram.png)
 ---
 
 ### Создание массива
@@ -15,7 +31,7 @@ val arr = Array(3) { i -> i * 2 } // [2, 4, 6]
 ```
 
 Первый параметр - размер. Второй параметр - лямбда для заполнения.
-* Через `arrayOf`:
+* Через `arrayOf`, в параметрах указываем элементы массива:
 
 ```kotlin
 val arr = arrayOf(1, 2, 3)
@@ -29,7 +45,7 @@ val arr = arrayOf(1, 2, 3)
 val arr = arrayOf<Int>(1, 2, 3)
 ```
 
-* Можно создавать методами `intArrayOf(), harArrayOf(), booleanArrayOf(), longArrayOf(), shortArrayOf(), byteArrayOf().`
+* Можно создавать методами `intArrayOf(), charArrayOf(), booleanArrayOf(), longArrayOf(), shortArrayOf(), byteArrayOf().`
 * Смешанный:
 
 ```kotlin
@@ -46,6 +62,33 @@ fun calc(arr: Array<Int>) {
 ```
 ---
 
+### `Array<Int>` или `IntArray`, какая разница?
+![](assets/kotlin-collections/type-mismatch.png)
+
+Почему нельзя выполнить такое присваивание, ведь типы казалось бы одинаковые?
+```kotlin
+var arr = intArrayOf(0, 1, 2) // 0, 1, 2
+val boxedArr = Array<Int>(3) { it } //  // 0, 1, 2
+arr = boxedArr // ❌ Error!
+```
+---
+
+### 📦Вoxing при создании массива
+* `intArrayOf` - это массив с примитивами, это аналог `int[]`.
+  * В массиве не может быть null'ов.
+* `Array<Int>` - это массив с boxed-элементами `Integer[]`.
+    * В массиве могут быть null'ы, т.к. это массив ссылок на объекты, ссылка может быть null.
+---
+
+### Boxed array -> typed array
+Так можно преобразовать массив:
+```kotlin
+var arr = intArrayOf(0, 1, 2)
+val boxedArr = Array<Int>(3) { it }
+arr = boxedArr.toIntArray() // ✅
+```
+---
+
 ### Размер массива
 * Хранится в свойстве `.size`:
 ```kotlin
@@ -59,9 +102,8 @@ println(arr.size) // 3
 ```kotlin
 val arr = arrayOf(1, 2, 3)
 println(2 in arr)      // true
-
-println(4 in arr)       // false
-println(4 !in arr)      // true
+println(4 in arr)      // false
+println(4 !in arr)     // true
 ```
 ---
 
