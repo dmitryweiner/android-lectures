@@ -1,27 +1,12 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-
-    <title>Программирование мобильных приложений</title>
-    <link rel="shortcut icon" href="./favicon.ico" />
-    <link rel="stylesheet" href="./dist/reset.css" />
-    <link rel="stylesheet" href="./dist/reveal.css" />
-    <link rel="stylesheet" href="./dist/theme/serif.css" id="theme" />
-    <link rel="stylesheet" href="./css/highlight/androidstudio.css" />
-
-
-  </head>
-  <body>
-    <div class="reveal">
-      <div class="slides"><section  data-markdown><script type="text/template">### Коллекции
+### Коллекции
 
 ![Kotlin collections](assets/kotlin-collections/list-set-map.png)
 
 [все лекции](https://github.com/dmitryweiner/android-lectures/blob/master/README.md)
 
-[видео](https://youtu.be/EpPdwcr5vJw)</script></section><section  data-markdown><script type="text/template">
+[видео](https://youtu.be/EpPdwcr5vJw)
+---
+
 ### Коллекции
 * Статические коллекции:
   * List: список значений.
@@ -30,16 +15,26 @@
 * Динамические коллекции (можно добавлять/удалять элементы):
   * MutableList.
   * MutableMap.
-  * MutableSet.</script></section><section  data-markdown><script type="text/template">
-![collections diagram](assets/kotlin-collections/collections-diagram.png)</script></section><section  data-markdown><script type="text/template">
+  * MutableSet.
+---
+
+![collections diagram](assets/kotlin-collections/collections-diagram.png)
+---
+
 ### List, Map, Set
 * `List` (список) - упорядоченная коллекция, в которой к элементам можно обращаться по целым индексам. Могут быть дубликаты.
 * `Set` (множество) - коллекция уникальных элементов.
-* `Map` (словарь, ассоциативный список) - набор из пар "ключ-значение". Ключи уникальны и каждый из них соответствует ровно одному значению. Значения могут иметь дубликаты.</script></section><section  data-markdown><script type="text/template">
+* `Map` (словарь, ассоциативный список) - набор из пар "ключ-значение". Ключи уникальны и каждый из них соответствует ровно одному значению. Значения могут иметь дубликаты.
+---
+
 ### 2 вида интерфейсов
 * Неизменяемый (read-only) - предоставляет операции, которые дают доступ к элементам коллекции.
-* Изменяемый (mutable) - расширяет предыдущий интерфейс и дополнительно даёт доступ к операциям добавления, удаления и обновления элементов коллекции.</script></section><section  data-markdown><script type="text/template">
-![](assets/kotlin-collections/collection-types.png)</script></section><section  data-markdown><script type="text/template">
+* Изменяемый (mutable) - расширяет предыдущий интерфейс и дополнительно даёт доступ к операциям добавления, удаления и обновления элементов коллекции.
+---
+
+![](assets/kotlin-collections/collection-types.png)
+---
+
 ### List
 ```kotlin
 val numbers = listOf("one", "two", "three", "four")
@@ -56,7 +51,9 @@ println(numbers[3]) // four
 // поиск индекса элемента по значению
 println(numbers.indexOf("two")) // 1 
 ```
-</script></section><section  data-markdown><script type="text/template">
+
+---
+
 ### Mutable List
 ```kotlin
 val numbers = mutableListOf("one", "two", "three", "four")
@@ -68,7 +65,9 @@ numbers.remove("one") // удаление элемента
 numbers[0] = "два"
 
 println(numbers.joinToString(", ")) // два, three, four, five
-```</script></section><section  data-markdown><script type="text/template">
+```
+---
+
 ### Set 
 ```kotlin
 val numbers = mutableSetOf(1, 2, 3, 3, 3, 4)
@@ -76,7 +75,9 @@ val numbers = mutableSetOf(1, 2, 3, 3, 3, 4)
 println(numbers.joinToString(", ")) // 1, 2, 3, 4
 numbers.add(5)
 println(numbers.joinToString(", ")) // 1, 2, 3, 4, 5
-```</script></section><section  data-markdown><script type="text/template">
+```
+---
+
 ### Map
 ```kotlin
 val numbersMap = mapOf("key1" to 1, "key2" to 2, "key3" to 3, "key4" to 1)
@@ -87,7 +88,9 @@ println("All values: ${numbersMap.values}") // [1, 2, 3, 1]
 if ("key2" in numbersMap) println("Value by key \"key2\": ${numbersMap["key2"]}")    
 if (1 in numbersMap.values) println("The value 1 is in the map")
 if (numbersMap.containsValue(1)) println("The value 1 is in the map") // аналогичен предыдущему условию
-```</script></section><section  data-markdown><script type="text/template">
+```
+---
+
 ### Mutable Map
 ```kotlin
 val map = mutableMapOf(
@@ -104,14 +107,18 @@ map["key4"] = map["key4"]!! + 1
 
 // или так
 map["key4"] = map.getOrDefault("key4", 0) + 1
-```</script></section><section  data-markdown><script type="text/template">
+```
+---
+
 ### Задачи
 #### Задачи необходимо решать в виде функции, принимающей на вход массив, возвращающей ответ
 * Найти максимальную разницу между элементами массива.
 ```kotlin
 f(arrayOf(-7, 12, 4, 6, -4, -12, 0)) // 24 
 f(arrayOf()) // 0 
-```</script></section><section  data-markdown><script type="text/template">
+```
+---
+
 * Найти, сколько есть в массиве пар чисел, дающих в сумме 0.
 Число из пары не может участвовать в других парах.
 ```kotlin
@@ -122,14 +129,18 @@ f(arrayOf(-1, 1, -1, 1)) // 2
 f(arrayOf(1, 1, 1, 0, -1)) // 1
 f(arrayOf(0, 0)) // 1 
 f(arrayOf()) // 0 
-```</script></section><section  data-markdown><script type="text/template">
+```
+---
+
 * Реализовать функцию, которой на вход подаётся массив целых чисел со знаком,
    функция возвращает, сколько раз сменился знак.
 ```kotlin
 signCount(arrayOf(1, 0, -1, -3, -5, 5, -1)) === 3
 signCount(arrayOf(1, 0, 1, 3, 5, 5, 1)) === 0
 signCount(arrayOf(-11, 1, 3, 5, 1)) === 1
-```</script></section><section  data-markdown><script type="text/template">
+```
+---
+
 * Написать функцию, возвращающую самый часто встречающийся символ в переданной строке:
 
 ```kotlin
@@ -144,64 +155,15 @@ mostRare("ток кот кукож ток кот") // "кукож"
 mostRare(
   "кот ток кот кукож ток кот ток кукож"
 ) // "кукож"
-```</script></section><section  data-markdown><script type="text/template">
+```
+---
+
 ### Задачи
-https://developer.android.com/codelabs/basic-android-kotlin-training-collections</script></section><section  data-markdown><script type="text/template">
+https://developer.android.com/codelabs/basic-android-kotlin-training-collections
+---
+
 ### Полезные ссылки
 * https://developer.alexanderklimov.ru/android/kotlin/array.php
 * https://metanit.com/kotlin/tutorial/2.3.php
 * https://bimlibik.github.io/posts/kotlin-collections/
 * https://kotlinlang.ru/docs/collections-overview.html
-</script></section></div>
-    </div>
-
-    <script src="./dist/reveal.js"></script>
-
-    <script src="./plugin/markdown/markdown.js"></script>
-    <script src="./plugin/highlight/highlight.js"></script>
-    <script src="./plugin/zoom/zoom.js"></script>
-    <script src="./plugin/notes/notes.js"></script>
-    <script src="./plugin/math/math.js"></script>
-    <script>
-      function extend() {
-        var target = {};
-        for (var i = 0; i < arguments.length; i++) {
-          var source = arguments[i];
-          for (var key in source) {
-            if (source.hasOwnProperty(key)) {
-              target[key] = source[key];
-            }
-          }
-        }
-        return target;
-      }
-
-      // default options to init reveal.js
-      var defaultOptions = {
-        controls: true,
-        progress: true,
-        history: true,
-        center: true,
-        transition: 'default', // none/fade/slide/convex/concave/zoom
-        slideNumber: true,
-        plugins: [
-          RevealMarkdown,
-          RevealHighlight,
-          RevealZoom,
-          RevealNotes,
-          RevealMath
-        ]
-      };
-
-      // options from URL query string
-      var queryOptions = Reveal().getQueryHash() || {};
-
-      var options = extend(defaultOptions, {}, queryOptions);
-    </script>
-
-
-    <script>
-      Reveal.initialize(options);
-    </script>
-  </body>
-</html>

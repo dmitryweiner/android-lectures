@@ -2,7 +2,8 @@
 * Язык Kotlin:
   * [Основы языка](https://dmitryweiner.github.io/android-lectures/Kotlin-basics.html).
   * [Классы, наследование, объекты](https://dmitryweiner.github.io/android-lectures/Kotlin-objects.html).
-  * [Массивы и коллекции](https://dmitryweiner.github.io/android-lectures/Kotlin-arrays-collections.html).
+  * [Массивы](https://dmitryweiner.github.io/android-lectures/Kotlin-arrays.html).
+  * [Коллекции](https://dmitryweiner.github.io/android-lectures/Kotlin-collections.html).
 * [Android Studio. Основы работы. Компиляция в APK](https://dmitryweiner.github.io/android-lectures/Android-studio.html).
 * [Анатомия приложения](https://dmitryweiner.github.io/android-lectures/Application-structure.html):
   * Компиляция.
